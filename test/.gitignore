@@ -1,0 +1,9 @@
+_push.bat
+_pull.bat
+.vs/
+Debug/
+Release/
+*.vcxproj.filters
+*.vcxproj.userd
+.codelite
+__codelite.workspace
