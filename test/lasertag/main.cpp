@@ -1,7 +1,7 @@
 // simple IR signal detector
 
 #include "hwlib.hpp"
-
+#include "ir_protocol.hpp"
 int main( void ){
    
    // kill the watchdog
@@ -10,21 +10,10 @@ int main( void ){
    namespace target = hwlib::target;
    
    auto tsop_signal = target::pin_in( target::pins::d8 );
-   auto tsop_gnd    = target::pin_out( target::pins::d9 );
-   auto tsop_vdd    = target::pin_out( target::pins::d10 );
-   tsop_gnd.set( 0 );
-   tsop_vdd.set( 1 );
+   auto ir_led	    = target::d2_36kHz();
+   hwlib::wait_ms(500); // omdat hwlib kkkk skeer is
    
-   auto led         = target::pin_out( target::pins::led );
-   
-   auto const active = 100'000;
-   auto last_signal = hwlib::now_us() - active;
-   
-   for(;;){
-      if( tsop_signal.get() == 0 ){
-         last_signal = hwlib::now_us();
-      }
-      led.set( ( last_signal + active) > hwlib::now_us() );
-   }
+   ir_protocol p(tsop_signal, ir_led);
+   p.send(32, 27);
 }
 
