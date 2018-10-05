@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES :=
+SOURCES := ir_protocol.cpp
 
 # header files in this project
-HEADERS :=
+HEADERS := ir_protocol.hpp
 
 # other places to look for files for this project
 SEARCH  := 
