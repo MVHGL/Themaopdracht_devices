@@ -29,16 +29,20 @@ void ir_protocol::send_bit(const bool& value) {
 }
 
 void ir_protocol::send(const uint16_t& player_id, const uint16_t& data) {
+	// Check if player_id or data isn't larger then 31
 	if (!(player_id > 31 || data > 31)) {
 		uint16_t message = 0x8000 | get_checksum(player_id, data);
 		message |= (data << 5) | player_id;
 
-		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
-			send_bit(((message >> i) & 1));
+		// Send data twice
+		for(uint16_t i = 0; i < 2; i++){
+			for (uint16_t i = 15; i >= 0 && i < 16; i--) {
+				send_bit(((message >> i) & 1));
+			}
+			hwlib::wait_ms(3);
 		}
-	}
-	else {
-		hwlib::cout << "{ERROR} Size too big" << '\n';
+	}else {
+		hwlib::cout << "{ERROR} player_id or data size too large!" << '\n';
 	}
 }
 
