@@ -34,4 +34,9 @@
 *.bin
 *.ld
 *.map
+
+# codelite specific files
+*.project
+
+#bmptk
 bmptk_fixed_size_stack.c

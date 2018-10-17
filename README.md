@@ -9,3 +9,8 @@ Repo for the HU cursus Devices
 **lib/:** A folder that contains statically linkable .lib files (precompiled code) and is part of a library.</br>
 **src/:** The application and only the application’s source files.</br>
 **test/:** All test code files.</br>
+
+# Prerequisites
+* [hwlib](https://github.com/wovo/hwlib)
+	Library for close to the hardware programming
+
