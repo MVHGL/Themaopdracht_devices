@@ -4,7 +4,7 @@
 
 /* Boundary object to communicate with the hardware */
 class KeyPad {
-private
+private:
 	KeyPadListener& keyPad;
 	/* hwlib::pins */
 public:
