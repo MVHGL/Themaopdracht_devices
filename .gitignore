@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+*.elf
+*.bin
+*.ld
+*.map
+bmptk_fixed_size_stack.c
