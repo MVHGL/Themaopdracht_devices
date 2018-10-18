@@ -1,11 +1,23 @@
 #include "KeyPadController.hpp"
 
+void KeyPadController::buttonHashTagPressed() { // #
+	/* ... */
+}
+
+void KeyPadController::buttonStarPressed() { // *
+	/* ... */
+}
+
 void KeyPadController::buttonAPressed() { // A
 	/* ... */
 }
 
 void KeyPadController::buttonBPressed() { // B
+	/* ... */
+}
 
+void KeyPadController::buttonCPressed() { // C
+	/* ... */
 }
 
 void KeyPadController::button1Pressed() { // 1

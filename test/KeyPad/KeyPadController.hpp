@@ -6,8 +6,11 @@ class KeyPadController : public KeyPadListener {
 private:
 	/* Some variables maybe */
 public:
+	void buttonHashTagPressed() override;
+	void buttonStarPressed() override;
 	void buttonAPressed() override;
 	void buttonBPressed() override;
+	void buttonCPressed() override;
 	void button1Pressed() override;
 	void button2Pressed() override;
 	void button3Pressed() override;
