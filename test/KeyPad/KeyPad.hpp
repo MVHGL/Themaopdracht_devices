@@ -1,12 +1,11 @@
 #pragma once
 #include "hwlib.hpp"
-#include "KeyPadListener.hpp"
 #include <array>
+#include "rtos.hpp"
 
 /* Boundary object to communicate with the hardware */
-class KeyPad {
+class Keypad {
 private:
-	KeyPadListener& keyPadListener;
 	std::array<hwlib::pin_out*, 4> columns;
 	std::array<hwlib::pin_in*, 4> rows;
 	char keys[4][4] = {
@@ -17,8 +16,8 @@ private:
 	};
 	
 public:
-	KeyPad(KeyPadListener& keyPadListener, const std::array<hwlib::pin_in*, 4>& rows, 
-	const std::array<hwlib::pin_out*, 4>& columns);
+	Keypad(const std::array<hwlib::pin_in*, 4>& rows, 
+		const std::array<hwlib::pin_out*, 4>& columns);
 	
-	void buttonPressed();
+	char getChar();
 };

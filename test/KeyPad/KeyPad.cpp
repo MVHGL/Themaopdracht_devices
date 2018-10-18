@@ -1,9 +1,8 @@
 #include "KeyPad.hpp"
 
-KeyPad::KeyPad(KeyPadListener& keyPadListener, const std::array<hwlib::pin_in*, 4>& rows, 
+Keypad::Keypad(const std::array<hwlib::pin_in*, 4>& rows, 
 	const std::array<hwlib::pin_out*, 4>& columns):
 			   
-	keyPadListener(keyPadListener),
 	columns{columns},
 	rows{rows}
 	{
@@ -11,15 +10,15 @@ KeyPad::KeyPad(KeyPadListener& keyPadListener, const std::array<hwlib::pin_in*, 
 			columns[i]->set(1);	
 	}
 
-void KeyPad::buttonPressed() {
-	for (int i = 0; i < 4; i++) {
+char Keypad::getChar() {
+	char pressedChar = 0;
+	for (int i = 0; i < 4; ++i) {
 		columns[i]->set(0);	
-		for (int j = 0; j < 4; j++) {
-			if (!rows[j]->get()) {
-				keyPadListener.buttonPressed(keys[j][i]);
-				hwlib::wait_ms(100);
-			}
-		}
+		for (int j = 0; j < 4; ++j)
+			if (!rows[j]->get()) 
+				pressedChar = keys[j][i];
+		
 		columns[i]->set(1);
 	}
+	return pressedChar;
 }

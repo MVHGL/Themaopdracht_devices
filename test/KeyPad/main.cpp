@@ -18,10 +18,7 @@ int main() {
 	std::array<hwlib::pin_in*, 4> rows = { &row0, &row1, &row2, &row3 };
 	std::array<hwlib::pin_out*, 4> columns = { &column0, &column1, &column2, &column3 };
 	
-	KeyPadController controller;
-	KeyPad keyPad(controller, rows, columns);
+	KeypadController controller(rows, columns);
 	
-	while(true) {
-		keyPad.buttonPressed();
-	}
+	rtos::run();
 }
