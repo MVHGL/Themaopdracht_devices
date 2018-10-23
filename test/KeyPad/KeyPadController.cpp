@@ -3,16 +3,16 @@
 
 KeypadController::KeypadController(const std::array<hwlib::pin_in*, 4>& rows, 
 		const std::array<hwlib::pin_out*, 4>& columns):
-	timer(this, "KeypadController Timer"),
+	clock(this, 100'000, "KeypadController clock"),
 	keypad(rows, columns)
 	{ }
 
 void KeypadController::main() {
 	while (true) {
+		wait(clock);
 		if (keypad.getChar() != 0) {
 			/* logica */
-			timer.set(500'000);
-			wait(timer);
+			hwlib::cout << keypad.getChar();
 		}
 	}
 }

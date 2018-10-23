@@ -4,7 +4,7 @@
 
 class KeypadController : public rtos::task<> {
 private:
-	rtos::timer timer;
+	rtos::clock clock;
 	Keypad keypad;
 public:
 	KeypadController(const std::array<hwlib::pin_in*, 4>& rows, 

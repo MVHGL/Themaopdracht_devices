@@ -15,8 +15,9 @@ char Keypad::getChar() {
 	for (int i = 0; i < 4; ++i) {
 		columns[i]->set(0);	
 		for (int j = 0; j < 4; ++j)
-			if (!rows[j]->get()) 
+			if (!rows[j]->get()) {
 				pressedChar = keys[j][i];
+			}
 		
 		columns[i]->set(1);
 	}
