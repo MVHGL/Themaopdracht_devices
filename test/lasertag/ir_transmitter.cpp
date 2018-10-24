@@ -39,13 +39,13 @@ void ir_transmitter::send(const uint16_t& player_id, const uint16_t& data) {
 		hwlib::wait_us(3'000);
 		
 		// Send data twice
-		for(uint16_t i = 0; i < 2; i++){
+		for(uint8_t i = 0; i < 2; i++){
 			for (uint16_t i = 15; i >= 0 && i < 16; i--) {
 				send_bit(((message >> i) & 1));
 			}
 			hwlib::wait_ms(3);
 		}
-	}else {
+	} else {
 		hwlib::cout << "{ERROR} player_id or data size too large!" << '\n';
 	}
 }

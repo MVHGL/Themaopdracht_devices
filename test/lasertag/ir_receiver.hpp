@@ -1,23 +1,19 @@
 #pragma once
 #include <cstdint>
 #include "rtos.hpp"
+#include "PauseListener.hpp"
 
 class ir_receiver : public rtos::task<>
 {
 private:
 	hwlib::pin_in & receiver;
-	int pause_count;
+	PauseListener& pauseListener;
 	rtos::clock clock;
-	rtos::channel<int, 34> pauses;
-	int counter;
-	enum state_t {IDLE, SIGNAL, MESSAGE};
+	enum state_t {IDLE, SIGNAL};
 	state_t state = IDLE;
-	
-	void pause_detected(const int& n);
-	void get();
+	int pauseCounter;
 public:
-	ir_receiver(hwlib::pin_in & receiver);
-	void print();
+	ir_receiver(PauseListener& pauseListener, hwlib::pin_in & receiver);
 	void main() override;
 };
 

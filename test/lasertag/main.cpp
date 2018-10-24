@@ -2,6 +2,8 @@
 #include "hwlib.hpp"
 #include "ir_transmitter.hpp"
 #include "ir_receiver.hpp"
+#include "MessageDecoder.hpp"
+
 int main( void ){
    // kill the watchdog
    WDT->WDT_MR = WDT_MR_WDDIS;
@@ -11,8 +13,8 @@ int main( void ){
    auto tsop_signal = target::pin_in( target::pins::d8 );
    auto ir_led	    = target::d2_36kHz();
    hwlib::wait_ms(500); 
-   
-   ir_receiver receiver(tsop_signal);
+   MessageDecoder decoder;
+   ir_receiver receiver(decoder, tsop_signal);
    rtos::run();
 }
 
