@@ -1,8 +1,9 @@
 #include "ir_receiver.hpp"
-#include <bitset>
+
 ir_receiver::ir_receiver(hwlib::pin_in & receiver):
 	task("IR receiver task"),
 	receiver(receiver),
+	decoder(),
 	pause_count(0),
 	clock(this, 100, "IR Received clock"),
 	pauses(this, "IR Receiver channel pauses"),
@@ -40,16 +41,7 @@ void ir_receiver::print() {
 				msg2 <<= 1;
 		}
 	}
-	//hwlib::cout << '\n';
-	//for (int i = 15; i >= 0 && i < 16; i--) {
-	//	hwlib::cout << ((msg1 >> i) & 1);
-	//}
-	//hwlib::cout << '\n';
-	//for (int i = 15; i >= 0 && i < 16; i--) {
-	//	hwlib::cout << ((msg2 >> i) & 1);
-	//}
-	//hwlib::cout << "\n\n";
-	//hwlib::cout << msg1 << ' ' << msg2 << '\n';
+	decoder.write_message(msg1, msg2);
 }
 
 void ir_receiver::main() {
