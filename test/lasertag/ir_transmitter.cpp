@@ -33,25 +33,28 @@ void ir_transmitter::send(const uint16_t& player_id, const uint16_t& data) {
 		uint16_t message = 0x8000 | get_checksum(player_id, data);
 		message |= (data << 5) | player_id;
 		
-		transmitter.set(1); // Prevent receiver from getting garbage
-		hwlib::wait_us(3'500);
-		transmitter.set(0);
-		hwlib::wait_us(1'000);
-		
-		// Send data twice
+		// Send data
 		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
 			send_bit(((message >> i) & 1));
 		}
+		// Wait 3 ms before sending message again
 		hwlib::wait_ms(3);
+		
+		// Send data again
 		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
 			send_bit(((message >> i) & 1));
 		}
-		
+		// Send last pulse to mark the end of transmission
+		transmitter.set(1);
+		hwlib::wait_us(400);
+		transmitter.set(0);
+		/*
+		// Print message in binary
 		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
 			hwlib::cout << ((message >> i) & 1);
 		}
-		hwlib::cout << '\n';
-		hwlib::cout << message << '\n';
+		 */
+		hwlib::cout << "Message send!\n";
 	}else {
 		hwlib::cout << "{ERROR} player_id or data size too large!" << '\n';
 	}

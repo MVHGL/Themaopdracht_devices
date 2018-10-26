@@ -1,9 +1,8 @@
 struct Weapon{
-	uint16_t w_id = 999;
-	char[] name = "Unknown";
-	uint16_t damage = 0;
-	uint16_t ammo = 0;
-	uint16_t fire_rate = 100;
+	char[35] name;
+	uint16_t damage;
+	uint16_t ammo;
+	uint16_t fire_rate;
 }
 
 struct player{
@@ -15,39 +14,56 @@ struct player{
 
 /* ----- WEAPON DEFINITIONS ----- */
 
-Weapon p_90;
-Weapon ak47;
-Weapon m1911;
-Weapon rpg;
-Weapon m107;
+Weapon weapon
 
 
 /* ----- WEAPON PARAMETERS ----- */
 
-p_90.name = "FN-P90 (SMG)";
-p_90.damage = 10;
-p_90.ammo = 50;
-p_90.fire_rate = 400;
+enum weapon_id = {p90, ak47, m1911, rpg, m107, bfg};
 
-ak47.name = "AK-47 (AR)";
-ak47.damage = 25;
-ak47.ammo = 30;
-ak47.fire_rate = 1'000;
-
-m1911.name = "M1911 (pistol)";
-m1911.damage = 15;
-m1911.ammo = 14;
-m1911.fire_rate = 500;
-
-rpg.name = "RPG (Launcher)";
-rpg.damage = 100;
-rpg.ammo = 2;
-rpg.fire_rate = 7'000;
-
-m107.name = "Barrett M107A1 (Sniper)";
-m107.damage = 60;
-m107.ammo = 10;
-m107.fire_rate = 2'500;
+switch(weapon_id){
+	case p90:
+		weapon.name = "FN-P90 (SMG)";
+		weapon.damage = 10;
+		weapon.ammo = 50;
+		weapon.fire_rate = 400;
+		break;
+	case ak47:
+		weapon.name = "AK-47 (AR)";
+		weapon.damage = 25;
+		weapon.ammo = 30;
+		weapon.fire_rate = 1'000;
+		break;
+	case m1911:
+		weapon.name = "M1911 (pistol)";
+		weapon.damage = 15;
+		weapon.ammo = 14;
+		weapon.fire_rate = 500;
+		break;
+	case rpg:
+		weapon.name = "RPG (Launcher)";
+		weapon.damage = 100;
+		weapon.ammo = 2;
+		weapon.fire_rate = 7'000;
+		break;
+	case m107:
+		weapon.name = "Barrett M107A1 (Sniper)";
+		weapon.damage = 60;
+		weapon.ammo = 10;
+		weapon.fire_rate = 2'500;
+		break;
+	case bfg:
+		weapon.name = "Big Fucking Gun 9000";
+		weapon.damage = 100;
+		weapon.ammo = 1;
+		weapon.fire_rate = 8'000;
+		break;
+	default:
+		weapon.name = "UNKOWN";
+		weapon.damage = 0;
+		weapon.ammo = 999;
+		weapon.fire_rate = 100;
+}
 
 
 
