@@ -34,18 +34,25 @@ void ir_transmitter::send(const uint16_t& player_id, const uint16_t& data) {
 		message |= (data << 5) | player_id;
 		
 		transmitter.set(1); // Prevent receiver from getting garbage
-		hwlib::wait_us(200);
+		hwlib::wait_us(3'500);
 		transmitter.set(0);
-		hwlib::wait_us(3'000);
+		hwlib::wait_us(1'000);
 		
 		// Send data twice
-		for(uint8_t i = 0; i < 2; i++){
-			for (uint16_t i = 15; i >= 0 && i < 16; i--) {
-				send_bit(((message >> i) & 1));
-			}
-			hwlib::wait_ms(3);
+		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
+			send_bit(((message >> i) & 1));
 		}
-	} else {
+		hwlib::wait_ms(3);
+		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
+			send_bit(((message >> i) & 1));
+		}
+		
+		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
+			hwlib::cout << ((message >> i) & 1);
+		}
+		hwlib::cout << '\n';
+		hwlib::cout << message << '\n';
+	}else {
 		hwlib::cout << "{ERROR} player_id or data size too large!" << '\n';
 	}
 }

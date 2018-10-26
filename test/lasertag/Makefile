@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := ir_transmitter.cpp ir_receiver.cpp MessageDecoder.cpp
+SOURCES := ir_transmitter.cpp ir_receiver.cpp
 
 # header files in this project
-HEADERS := ir_transmitter.hpp ir_receiver.hpp PauseListener.hpp MessageDecoder.hpp
+HEADERS := ir_transmitter.hpp ir_receiver.hpp
 
 # other places to look for files for this project
 SEARCH  := 
