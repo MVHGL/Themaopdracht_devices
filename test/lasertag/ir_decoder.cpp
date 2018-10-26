@@ -17,7 +17,7 @@ void ir_decoder::check_message() {
 	
 	if (checksum == new_checksum) {
 		garbage = messages.read();
-		hwlib::cout << "Received 1st time containing: " << data << ' ' << player_id << '\n';
+		//hwlib::cout << "Received 1st time containing: " << data << ' ' << player_id << '\n';
 		// something.messageReceived(player_id, data);
 	} else {
 		message = messages.read();
