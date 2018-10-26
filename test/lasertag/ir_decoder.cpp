@@ -1,5 +1,5 @@
 #include "ir_decoder.hpp"
-#include <bitset>
+
 ir_decoder::ir_decoder():
 	task("IR decoder"),
 	messages(this, "IR decoder messages channel")
