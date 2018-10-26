@@ -1,5 +1,5 @@
 #include "ir_receiver.hpp"
-
+#include <bitset>
 ir_receiver::ir_receiver(hwlib::pin_in & receiver):
 	task("IR receiver task"),
 	receiver(receiver),
@@ -24,42 +24,39 @@ void ir_receiver::get() {
 
 void ir_receiver::print() {
 	int pause = 0, msg1 = 0, msg2 = 0;
-	pause = pauses.read();
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < 17; i++) {
 		pause = pauses.read();
-		//hwlib::cout << "msg1 " << pause << '\t';
 		if (pause > 200 && pause < 2'000) {
-			msg1 <<= 1;
 			msg1 |= (pause < 1'000) ? 1 : 0;
+			if (i != 16) 
+				msg1 <<= 1;
 		}
 	}
-	pause = pauses.read();
-	hwlib::cout << '\n';
 	for (int i = 0; i < 16; i++) {
 		pause = pauses.read();
-		//hwlib::cout << "msg2 "<< pause << '\t';
 		if (pause > 200 && pause < 2'000) {
-			msg2 <<= 1;
 			msg2 |= (pause < 1'000) ? 1 : 0;
+			if (i != 15) 
+				msg2 <<= 1;
 		}
 	}
-	hwlib::cout << '\n';
-	for (int i = 0; i < 16; i++) {
-		hwlib::cout << (msg1 & 1);
-		msg1 >>= 1;
-	}
-	hwlib::cout << '\n';
-	for (int i = 0; i < 16; i++) {
-		hwlib::cout << (msg2 & 1);
-		msg2 >>= 1;
-	}
+	//hwlib::cout << '\n';
+	//for (int i = 15; i >= 0 && i < 16; i--) {
+	//	hwlib::cout << ((msg1 >> i) & 1);
+	//}
+	//hwlib::cout << '\n';
+	//for (int i = 15; i >= 0 && i < 16; i--) {
+	//	hwlib::cout << ((msg2 >> i) & 1);
+	//}
+	//hwlib::cout << "\n\n";
+	//hwlib::cout << msg1 << ' ' << msg2 << '\n';
 }
 
 void ir_receiver::main() {
 	while (true) {
 		switch (state) {
 			case IDLE:
-				if (counter == 34) {
+				if (counter == 33) {
 					state = MESSAGE;
 					counter = 0;
 				}

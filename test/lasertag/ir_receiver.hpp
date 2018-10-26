@@ -8,7 +8,7 @@ private:
 	hwlib::pin_in & receiver;
 	int pause_count;
 	rtos::clock clock;
-	rtos::channel<int, 34> pauses;
+	rtos::channel<int, 33> pauses;
 	int counter;
 	enum state_t {IDLE, SIGNAL, MESSAGE};
 	state_t state = IDLE;
