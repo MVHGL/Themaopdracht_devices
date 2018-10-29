@@ -2,6 +2,7 @@
 #include <cstdint>
 #include "rtos.hpp"
 #include "ir_decoder.hpp"
+#include "mainGameControlTask.hpp"
 
 class ir_receiver : public rtos::task<>
 {
@@ -18,7 +19,7 @@ private:
 	void pause_detected(const int& n);
 	void get();
 public:
-	ir_receiver(hwlib::pin_in & receiver);
+	ir_receiver(hwlib::pin_in & receiver, mainGameControlTask& mainGame);
 	void putMessage();
 	void main() override;
 };

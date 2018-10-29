@@ -1,9 +1,9 @@
 #include "ir_receiver.hpp"
 
-ir_receiver::ir_receiver(hwlib::pin_in & receiver):
+ir_receiver::ir_receiver(hwlib::pin_in & receiver, mainGameControlTask& mainGame):
 	task("IR receiver task"),
 	receiver(receiver),
-	decoder(),
+	decoder(mainGame),
 	pause_count(0),
 	clock(this, 100, "IR Received clock"),
 	pauses(this, "IR Receiver channel pauses"),
@@ -63,7 +63,7 @@ void ir_receiver::main() {
 				}
 				break;
 			case MESSAGE:
-				print();
+				putMessage();
 				state = IDLE;
 				break;
 		}
