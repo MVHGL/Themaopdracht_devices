@@ -23,7 +23,7 @@ void ir_receiver::get() {
 	}
 }
 
-void ir_receiver::print() {
+void ir_receiver::putMessage() {
 	int pause = 0, msg1 = 0, msg2 = 0;
 	for (int i = 0; i < 17; i++) {
 		pause = pauses.read();

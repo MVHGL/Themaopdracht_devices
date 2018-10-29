@@ -19,7 +19,7 @@ private:
 	void get();
 public:
 	ir_receiver(hwlib::pin_in & receiver);
-	void print();
+	void putMessage();
 	void main() override;
 };
 

@@ -2,7 +2,8 @@
 
 ir_decoder::ir_decoder():
 	task("IR decoder"),
-	messages(this, "IR decoder messages channel")
+	messages(this, "IR decoder messages channel"),
+	mainGame()
 	{ }
 
 void ir_decoder::write_message(const int& message1, const int& message2) {
@@ -17,14 +18,15 @@ void ir_decoder::check_message() {
 	
 	if (checksum == new_checksum) {
 		garbage = messages.read();
-		//hwlib::cout << "Received 1st time containing: " << data << ' ' << player_id << '\n';
-		// something.messageReceived(player_id, data);
+		mainGame.messageReceived(player_id, data);
+		// hwlib::cout << "Received 1st time containing: " << data << ' ' << player_id << '\n';
 	} else {
 		message = messages.read();
 		new_checksum = extract(message);
 		if (checksum == new_checksum) {
-			//hwlib::cout << "Received 2nd time containing: " << data << ' ' << player_id << '\n';
-			// something.messageReceived(player_id, data);
+			mainGame.messageReceived(player_id, data);
+			// hwlib::cout << "Received 2nd time containing: " << data << ' ' << player_id << '\n';
+
 		} else {
 			hwlib::cout << "Something went wrong\n";
 		}
