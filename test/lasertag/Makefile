@@ -12,7 +12,7 @@
 SOURCES := ir_transmitter.cpp ir_receiver.cpp  ir_decoder.cpp mainGameControlTask.cpp
 
 # header files in this project
-HEADERS := ir_transmitter.hpp ir_receiver.hpp ir_decoder.hpp mainGameControlTask.hpp
+HEADERS := ir_transmitter.hpp ir_receiver.hpp ir_decoder.hpp mainGameControlTask.hpp playerData.hpp
 
 # other places to look for files for this project
 SEARCH  := 

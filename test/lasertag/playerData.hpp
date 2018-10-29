@@ -1,3 +1,4 @@
+#include <cstdint>
 struct Weapon{
 	char[35] name;
 	uint16_t damage;
@@ -5,7 +6,7 @@ struct Weapon{
 	uint16_t fire_rate;
 }
 
-struct player{
+struct Player{
 	uint16_t p_id = 99;
 	uint16_t hp = 100;
 	uint16_t shield = 0;
@@ -14,8 +15,8 @@ struct player{
 
 /* ----- WEAPON DEFINITIONS ----- */
 
-Weapon weapon
-
+Weapon weapon;
+Player player;
 
 /* ----- WEAPON PARAMETERS ----- */
 

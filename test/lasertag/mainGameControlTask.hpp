@@ -8,6 +8,7 @@ class mainGameControlTask : public rtos::task<> {
 public:
 	mainGameControlTask();
 	void IRMessageReceived(const uint16_t& playerID, const uint16_t& data);
+	void handleMessageReceived();
 	void main() override;
 };
 
