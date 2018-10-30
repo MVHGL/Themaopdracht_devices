@@ -16,12 +16,7 @@ int main( void ){
 	
 	mainGameControlTask mainGame;
 	ir_receiver receiver(tsop_signal, mainGame);
+	ir_transmitter transmitter(ir_led);
 	rtos::run();
-    
-	while(true){
-		ir_transmitter transmitter(ir_led);
-		transmitter.send(31,31);
-		hwlib::wait_ms(3000);
-	}
 }
 

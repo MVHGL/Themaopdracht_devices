@@ -1,5 +1,10 @@
 #include "ir_transmitter.hpp"
 ir_transmitter::ir_transmitter(hwlib::pin_out & transmitter):
+	task(1, "transmitterTask"),
+	playerIDPool("Player ID pool"),
+	dataPool("Data pool"),
+	transmitFlag(this, "Transmit flag"),
+	transmitMutex("Transmit mutex"),
 	transmitter(transmitter)
 	{}
 
@@ -28,35 +33,49 @@ void ir_transmitter::send_bit(const bool& value) {
 }
 
 void ir_transmitter::send(const uint16_t& player_id, const uint16_t& data) {
-	// Check if player_id or data isn't larger then 31
-	if (!(player_id > 31 || data > 31)) {
-		uint16_t message = 0x8000 | get_checksum(player_id, data);
-		message |= (data << 5) | player_id;
+	playerIDPool.write(player_id);
+	dataPool.write(data);
+	transmitFlag.set();
+}
+
+void ir_transmitter::main(){
+	state = IDLE;
+	while(true){
+		switch(state){
+			case IDLE:
+				wait(transmitFlag);
+				state = SEND;
+				break;
+			case SEND:
+				// Reserve mutex
+				transmitMutex.wait();
+				// Check if player_id or data isn't larger then 31
+				if (!(player_id > 31 || data > 31)) {
+					// Calculate checksum
+					uint16_t message = 0x8000 | get_checksum(player_id, data);
+					message |= (data << 5) | player_id;
+					
+					// Send data
+					for (uint16_t i = 15; i >= 0 && i < 16; i--) {
+						send_bit(((message >> i) & 1));
+					}
+					// Wait 3 ms before sending message again
+					hwlib::wait_ms(3);
 		
-		// Send data
-		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
-			send_bit(((message >> i) & 1));
+					// Send data again
+					for (uint16_t i = 15; i >= 0 && i < 16; i--) {
+						send_bit(((message >> i) & 1));
+					}
+					// Send last pulse to mark the end of transmission
+					transmitter.set(1);
+					hwlib::wait_us(400);
+					transmitter.set(0);
+				}
+				// Release mutex
+				transmitMutex.signal();
+				state = IDLE;
+				break;
 		}
-		// Wait 3 ms before sending message again
-		hwlib::wait_ms(3);
-		
-		// Send data again
-		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
-			send_bit(((message >> i) & 1));
-		}
-		// Send last pulse to mark the end of transmission
-		transmitter.set(1);
-		hwlib::wait_us(400);
-		transmitter.set(0);
-		/*
-		// Print message in binary
-		for (uint16_t i = 15; i >= 0 && i < 16; i--) {
-			hwlib::cout << ((message >> i) & 1);
-		}
-		 */
-		hwlib::cout << "Message send!\n";
-	}else {
-		hwlib::cout << "{ERROR} player_id or data size too large!" << '\n';
 	}
 }
 
