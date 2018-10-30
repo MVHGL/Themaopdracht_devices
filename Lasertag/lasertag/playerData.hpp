@@ -20,9 +20,8 @@ Player player;
 
 /* ----- WEAPON PARAMETERS ----- */
 
-/*enum weapon_id = {p90, ak47, m1911, rpg, m107, bfg};
-weapon_id id;*/
-void setWeapon(int weaponID){
+
+void setWeapon(const int & weaponID){
 	enum weapon_id {p90, ak47, m1911, rpg, m107, bfg};
 	switch(weaponID){
 		case p90:
@@ -68,28 +67,6 @@ void setWeapon(int weaponID){
 			weapon.fire_rate = 100;
 	}
 }
-
-/*struct weapon{
-	string name;
-	int damage;
-	int ammo;
-	int fire_rate;
-};*/
-
-/*struct weapons{
-	weapon P90;
-	weapon AK-47;
-	weapon m1911;
-	weapon RPG;
-	weapon M107;
-	weapon bfg;
-	weapon default;
-};
-
-weapons = {{"P90", 10, 50, 400}, { "AK-47 (AR)", 25, 30, 1'000}, {"M1911 (pistol)", 15, 14, 500}, {"RPG (Launcher)", 100, 2, 7'000}, 
-{"Barrett M107A1 (Sniper)", 60, 10, 2'500}, {"Big Fucking Gun 9000", 100, 1, 8'000}, {"UNKNOWN", 0, 999, 100}};*/
-
-
 
 /* Functions */
 

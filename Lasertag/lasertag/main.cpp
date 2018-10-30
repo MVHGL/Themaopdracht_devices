@@ -14,9 +14,9 @@ int main( void ){
 	auto ir_led	    = target::d2_36kHz();
 	hwlib::wait_ms(500); 
 	
-	mainGameControlTask mainGame;
-	ir_receiver receiver(tsop_signal, mainGame);
 	ir_transmitter transmitter(ir_led);
+	mainGameControlTask mainGame(transmitter);
+	ir_receiver receiver(tsop_signal, mainGame);
 	rtos::run();
 }
 

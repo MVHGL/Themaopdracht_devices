@@ -1,11 +1,10 @@
 #include "mainGameControlTask.hpp"
 #include "playerData.hpp"
 
-mainGameControlTask::mainGameControlTask():
+mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter):
 	task("Maingame control task"),
-	messages(this, "Main game task messages channel")
-{
-}
+	messages(this, "Main game task messages channel"),
+	transmitter(transmitter) {}
 
 void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint16_t& data) {
 	messages.write(playerID);
@@ -20,6 +19,9 @@ void mainGameControlTask::handleMessageReceived() {
 	}*/
 }
 
+void mainGameControlTask::gameTimeOver() {
+	return;
+}
 
 void mainGameControlTask::main() {
 	while (true) {
@@ -28,6 +30,8 @@ void mainGameControlTask::main() {
 				// auto event = wait(messages + ... + ... + ...);
 				// if (event == messages)
 				wait(messages);
+				hwlib::cout << messages.read() << '\n';
+				hwlib::cout << messages.read() << '\n';
 				state = MESSAGE_RECEIVE;
 				break;
 			case SET_PLAYER: 

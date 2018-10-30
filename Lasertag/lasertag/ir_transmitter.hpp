@@ -11,8 +11,11 @@ private:
 	rtos::pool<uint16_t> dataPool;
 	rtos::flag transmitFlag;
 	rtos::mutex transmitMutex;
+	
 	uint16_t get_checksum(const uint16_t&, const uint16_t&);
+	void writeIRMessage();
 	void send_bit(const bool& value);
+	
 	enum state_t{IDLE, SEND};
 	state_t state;
 public:

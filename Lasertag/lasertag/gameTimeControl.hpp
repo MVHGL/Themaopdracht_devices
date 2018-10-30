@@ -9,10 +9,11 @@ private:
 	mainGameControlTask& mainGame;
 	enum state_t { IDLE, KEEP_TIME };
 	state_t state = IDLE;
+	
 	void checkTime();
+	bool gameTimeOver();
 public:
 	gameTimeControl(const Time& time, mainGameControlTask& mainGame);
-	bool gameTimeOver();
 	void main() override;
 };
 

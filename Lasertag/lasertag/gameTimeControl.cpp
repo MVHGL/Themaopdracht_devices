@@ -19,10 +19,8 @@ void gameTimeControl::main() {
 				break;
 			case KEEP_TIME:
 				time.updateTime();  // clock waited one second, so edit the time
-				if (!gameTimeOver()) // if time has NOT ended
-					state = KEEP_TIME;
-				else // game time has ended, end the game
-					// mainGame.gameTimeOver();
+				if (gameTimeOver()) // if time has ended
+					mainGame.gameOver();
 				state = IDLE;
 				break;
 		}
