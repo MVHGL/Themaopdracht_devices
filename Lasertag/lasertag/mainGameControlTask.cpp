@@ -1,11 +1,12 @@
 #include "mainGameControlTask.hpp"
 
-mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter):
+mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter, displayTask& display):
 	task("Maingame control task"),
 	messages(this, "Main game task messages channel"),
 	timeCompletedFlag(this, "Time completed flag"),
 	transmitter(transmitter),
-	triggerFlag(this, "Triggerflag")
+	triggerFlag(this, "Triggerflag"),
+	display(display)
 	{}
 
 void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint16_t& data) {
@@ -26,7 +27,7 @@ void mainGameControlTask::handleMessageReceived() {
 	
 	if (player.hp > 0) {
 		display.shotBy(playerID, enemyWeapon.name);
-		display.showHitPoints(player.hp);
+		display.showHealth(player.hp);
 	} else {
 		gameOver();
 	}
@@ -39,12 +40,13 @@ void mainGameControlTask::gameOver() {
 void mainGameControlTask::main() {
 	while (true) {
 		switch (state) {
-			case IDLE:
+			case IDLE:{
 				auto event = wait(messages + timeCompletedFlag + triggerFlag);
 				if 		(event == messages) 			state = MESSAGE_RECEIVE;
 				else if (event == timeCompletedFlag) 	state = GAME_OVER;
 				else if (event == triggerFlag)			state = TRIGGER;
 				break;
+			}
 			case SET_PLAYER: 
 				
 				break;

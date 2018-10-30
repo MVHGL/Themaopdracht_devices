@@ -1,11 +1,11 @@
 #include "gameTimeControl.hpp"
-
-gameTimeControl::gameTimeControl(const Time& time, mainGameControlTask& mainGame):
+gameTimeControl::gameTimeControl(const Time& time, mainGameControlTask& mainGame, displayTask& display):
 	task("Game time control task"),
 	time(time),
 	clock(this, 1'000'000, "Game Time control clock"),
 	timeStart(this, "Time flag"),
-	mainGame(mainGame)
+	mainGame(mainGame),
+	display(display)
 {
 }
 

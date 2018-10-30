@@ -1,3 +1,4 @@
+#pragma once
 class Time {
 private:
 	int sec;
