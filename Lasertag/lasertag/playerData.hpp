@@ -1,17 +1,17 @@
 #include <cstdint>
 struct Weapon{
-	char[35] name;
+	const char* name;
 	uint16_t damage;
 	uint16_t ammo;
 	uint16_t fire_rate;
-}
+};
 
 struct Player{
 	uint16_t p_id = 99;
 	uint16_t hp = 100;
 	uint16_t shield = 0;
 	uint16_t score = 0;
-}
+};
 
 /* ----- WEAPON DEFINITIONS ----- */
 
@@ -20,10 +20,11 @@ Player player;
 
 /* ----- WEAPON PARAMETERS ----- */
 
-enum weapon_id = {p90, ak47, m1911, rpg, m107, bfg};
-
+/*enum weapon_id = {p90, ak47, m1911, rpg, m107, bfg};
+weapon_id id;*/
 void setWeapon(int weaponID){
-	switch(weapon_id){
+	enum weapon_id {p90, ak47, m1911, rpg, m107, bfg};
+	switch(weaponID){
 		case p90:
 			weapon.name = "FN-P90 (SMG)";
 			weapon.damage = 10;
@@ -68,14 +69,14 @@ void setWeapon(int weaponID){
 	}
 }
 
-struct weapon{
+/*struct weapon{
 	string name;
 	int damage;
 	int ammo;
 	int fire_rate;
-};
+};*/
 
-struct weapons{
+/*struct weapons{
 	weapon P90;
 	weapon AK-47;
 	weapon m1911;
@@ -86,12 +87,12 @@ struct weapons{
 };
 
 weapons = {{"P90", 10, 50, 400}, { "AK-47 (AR)", 25, 30, 1'000}, {"M1911 (pistol)", 15, 14, 500}, {"RPG (Launcher)", 100, 2, 7'000}, 
-{"Barrett M107A1 (Sniper)", 60, 10, 2'500}, {"Big Fucking Gun 9000", 100, 1, 8'000}, {"UNKNOWN", 0, 999, 100}};
+{"Barrett M107A1 (Sniper)", 60, 10, 2'500}, {"Big Fucking Gun 9000", 100, 1, 8'000}, {"UNKNOWN", 0, 999, 100}};*/
 
 
 
 /* Functions */
 
-void setPlayer(playerID){
+void setPlayer(int playerID){
 	player.p_id = playerID;
 }

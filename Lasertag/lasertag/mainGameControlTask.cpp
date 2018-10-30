@@ -13,15 +13,11 @@ void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint
 }
 
 void mainGameControlTask::handleMessageReceived() {
-	int read = messages.read();
+	/*int read = messages.read();
 	player.hp -= weapons[];
 	break;
 			
-	}
-}
-
-void mainGameControlTask::gameOver() {
-	//doe iets
+	}*/
 }
 
 
@@ -35,25 +31,25 @@ void mainGameControlTask::main() {
 				state = MESSAGE_RECEIVE;
 				break;
 			case SET_PLAYER: 
-				wait(playerFlag);
-				int playerID = playerPool.read();
-				setPlayer(playerID);
+				//wait(playerFlag);
+				//int playerID = playerPool.read();
+				//setPlayer(playerID);
 				break;
 			case SET_WEAPON: 
-				wait(weaponFlag);
-				int weapon = weaponPool.read();
-				setWeapon(weapon);
+				//wait(weaponFlag);
+				//int weapon = weaponPool.read();
+				//setWeapon(weapon);
 				break;
 			case TRIGGER: 
-				wait(triggerFlag);
-				transmitterController.send(player.p_id, weapon.id); // data klopt nog niet(tweede parameter)
+				//wait(triggerFlag);
+				//transmitterController.send(player.p_id, weapon.id); // data klopt nog niet(tweede parameter)
 				break;
 			case MESSAGE_RECEIVE:
-				handleMessageReceveived();
+				//handleMessageReceveived();
 				break;
 			case GAME_OVER:
-				wait(timeCompletedFlag);
-				gameOver();
+				//wait(timeCompletedFlag);
+				//gameOver();
 				break;
 		}
 	}
