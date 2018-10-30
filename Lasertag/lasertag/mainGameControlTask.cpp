@@ -1,11 +1,10 @@
 #include "mainGameControlTask.hpp"
 #include "playerData.hpp"
 
-mainGameControlTask::mainGameControlTask():
+mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter):
 	task("Maingame control task"),
-	messages(this, "Main game task messages channel")
-{
-}
+	messages(this, "Main game task messages channel"),
+	transmitter(transmitter) {}
 
 void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint16_t& data) {
 	messages.write(playerID);
@@ -13,17 +12,16 @@ void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint
 }
 
 void mainGameControlTask::handleMessageReceived() {
-	int read = messages.read();
+	/*int read = messages.read();
 	player.hp -= weapons[];
 	break;
 			
-	}
+	}*/
 }
 
-void mainGameControlTask::gameOver() {
-	//doe iets
+void mainGameControlTask::gameTimeOver() {
+	return;
 }
-
 
 void mainGameControlTask::main() {
 	while (true) {
@@ -32,28 +30,30 @@ void mainGameControlTask::main() {
 				// auto event = wait(messages + ... + ... + ...);
 				// if (event == messages)
 				wait(messages);
+				hwlib::cout << messages.read() << '\n';
+				hwlib::cout << messages.read() << '\n';
 				state = MESSAGE_RECEIVE;
 				break;
 			case SET_PLAYER: 
-				wait(playerFlag);
-				int playerID = playerPool.read();
-				setPlayer(playerID);
+				//wait(playerFlag);
+				//int playerID = playerPool.read();
+				//setPlayer(playerID);
 				break;
 			case SET_WEAPON: 
-				wait(weaponFlag);
-				int weapon = weaponPool.read();
-				setWeapon(weapon);
+				//wait(weaponFlag);
+				//int weapon = weaponPool.read();
+				//setWeapon(weapon);
 				break;
 			case TRIGGER: 
-				wait(triggerFlag);
-				transmitterController.send(player.p_id, weapon.id); // data klopt nog niet(tweede parameter)
+				//wait(triggerFlag);
+				//transmitterController.send(player.p_id, weapon.id); // data klopt nog niet(tweede parameter)
 				break;
 			case MESSAGE_RECEIVE:
-				handleMessageReceveived();
+				//handleMessageReceveived();
 				break;
 			case GAME_OVER:
-				wait(timeCompletedFlag);
-				gameOver();
+				//wait(timeCompletedFlag);
+				//gameOver();
 				break;
 		}
 	}
