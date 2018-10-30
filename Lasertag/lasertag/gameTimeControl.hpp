@@ -6,6 +6,7 @@ class gameTimeControl : public rtos::task<> {
 private:
 	Time time;
 	rtos::clock clock;
+	rtos::flag timeStart;
 	mainGameControlTask& mainGame;
 	enum state_t { IDLE, KEEP_TIME };
 	state_t state = IDLE;
@@ -14,6 +15,7 @@ private:
 	bool gameTimeOver();
 public:
 	gameTimeControl(const Time& time, mainGameControlTask& mainGame);
+	void startGameTimer();
 	void main() override;
 };
 

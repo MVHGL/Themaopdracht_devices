@@ -8,6 +8,9 @@ Time::Time(const int& sec, const int& min) :
 		if (min < 0) this->min = 0;
 		if (sec < 0) this->sec = 0;
 	}
+	
+Time::Time():
+	sec(0), min(0) {}
 
 int Time::getMin() const { return min; }
 

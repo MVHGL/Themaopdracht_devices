@@ -1,5 +1,5 @@
 #include <cstdint>
-struct Weapon{
+struct Weapon {
 	const char* name;
 	uint16_t damage;
 	uint16_t ammo;
@@ -13,15 +13,7 @@ struct Player{
 	uint16_t score = 0;
 };
 
-/* ----- WEAPON DEFINITIONS ----- */
-
-Weapon weapon;
-Player player;
-
-/* ----- WEAPON PARAMETERS ----- */
-
-
-void setWeapon(const int & weaponID){
+void weaponLookup(const int & weaponID, Weapon& weapon){
 	enum weapon_id {p90, ak47, m1911, rpg, m107, bfg};
 	switch(weaponID){
 		case p90:
@@ -66,10 +58,4 @@ void setWeapon(const int & weaponID){
 			weapon.ammo = 999;
 			weapon.fire_rate = 100;
 	}
-}
-
-/* Functions */
-
-void setPlayer(int playerID){
-	player.p_id = playerID;
 }
