@@ -29,17 +29,18 @@ int main() {
 	auto oled= hwlib::window_ostream(display, font);
 	
 	//pin voor het verzenden van ir signal. 
-	auto IRLed= hwlib::target::pin_out(hwlib::target::pins::d7);
+	auto IRLed= hwlib::target::pin_out(hwlib::target::pins::d5);
 	auto transmitter = ir_transmitter(IRLed); 
-	
 
 	while(1){;
+		transmitter.send(10, 11) ; 
 		auto c = keypad.getc();
 		oled << "\f " << c << hwlib::flush;
 		if (c =='C'){
 			while(1){
 				if(keypad.getc()=='#'){
-					transmitter.send(0, 0);
+					transmitter.send(10, 10);
+					hwlib::wait_ms(100);
 					oled << "\f " << '#' << "\t0001" << "game" << "\t0002" << "initialised."<< hwlib::flush;
 				}
 				if(keypad.getc()=='*'){
