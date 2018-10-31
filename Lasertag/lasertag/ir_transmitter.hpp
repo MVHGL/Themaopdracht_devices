@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _IR_TRANSMITTER_HPP
+#define _IR_TRANSMITTER_HPP
 #include "hwlib.hpp"
 #include <cstdint>
 #include "rtos.hpp"
@@ -24,3 +25,4 @@ public:
 	void send(const uint16_t & player_id, const uint16_t & data);
 	void main() override;
 };
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _TIME_HPP
+#define _TIME_HPP
 class Time {
 private:
 	int sec;
@@ -11,3 +12,4 @@ public:
 	int getMin() const;
 	void updateTime();
 };
+#endif

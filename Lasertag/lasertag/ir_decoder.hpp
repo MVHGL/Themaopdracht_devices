@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _IR_DECODER_HPP
+#define _IR_DECODER_HPP
 #include "rtos.hpp"
 #include "mainGameControlTask.hpp"
 
@@ -17,4 +18,4 @@ public:
 	void write_message(const int& message1, const int& message2);
 	void main() override;
 };
-
+#endif

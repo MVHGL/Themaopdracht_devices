@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _DISPLAYTASK_HPP
+#define _DISPLAYTASK_HPP
 #include "hwlib.hpp"
 #include "rtos.hpp"
 #include "time.hpp"
@@ -35,4 +36,4 @@ public:
 	void gameOver(void);
 	void shotBy(const uint16_t & player_id, hwlib::string<40> w_name);
 };
-
+#endif

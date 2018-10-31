@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GAMETIMECONTROL_HPP
+#define _GAMETIMECONTROL_HPP
 #include "time.hpp"
 #include "rtos.hpp"
 #include "mainGameControlTask.hpp"
@@ -20,4 +21,4 @@ public:
 	void startGameTimer();
 	void main() override;
 };
-
+#endif

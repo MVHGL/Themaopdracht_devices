@@ -1,5 +1,6 @@
-#pragma once
-#include "hwlib:hpp"
+#ifndef _TRIGGER_HPP
+#define _TRIGGER_HPP
+#include "hwlib.hpp"
 
 class trigger
 {
@@ -8,4 +9,4 @@ public:
 
 
 };
-
+#endif

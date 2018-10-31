@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _TRIGGERTASK_HPP
+#define _TRIGGERTASK_HPP
 #include "rtos.hpp"
 #include "hwlib.hpp"
 #include "mainGameControlTask.hpp"
@@ -18,4 +19,4 @@ public:
 	void weaponSet();
 	void main() override;
 };
-
+#endif

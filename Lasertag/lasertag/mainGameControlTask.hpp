@@ -1,8 +1,9 @@
-#pragma once
+#ifndef _MAINGAMECONTROLTASK_HPP
+#define _MAINGAMECONTROLTASK_HPP
 #include "rtos.hpp"
 #include "ir_transmitter.hpp"
-#include "playerData.hpp"
 #include "displayTask.hpp"
+#include "playerData.hpp"
 class mainGameControlTask : public rtos::task<> {
 private:
 	rtos::channel<int, 2> messages;
@@ -16,7 +17,6 @@ private:
 	Weapon enemyWeapon;
 	Weapon ownWeapon;
 	Player player;
-	
 	void handleMessageReceived();
 public:
 	mainGameControlTask(ir_transmitter& transmitter, displayTask& display);
@@ -25,4 +25,4 @@ public:
 	void gameOver();
 	void main() override;
 };
-
+#endif

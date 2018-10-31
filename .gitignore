@@ -40,3 +40,16 @@
 
 #bmptk
 bmptk_fixed_size_stack.c
+
+#other custom ignores
+_push.bat
+_pull.bat
+.vs/
+Debug/
+Release/
+*.vcxproj.filters
+*.vcxproj.userd
+.codelite
+__codelite.workspace
+*.bat
+Makefile.*

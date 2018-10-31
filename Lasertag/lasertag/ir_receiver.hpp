@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _IR_RECEIVER_HPP
+#define _IR_RECEIVER_HPP
 #include <cstdint>
 #include "rtos.hpp"
 #include "ir_decoder.hpp"
@@ -23,4 +24,5 @@ public:
 	void putMessage();
 	void main() override;
 };
+#endif
 
