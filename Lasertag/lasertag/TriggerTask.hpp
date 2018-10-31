@@ -14,6 +14,7 @@ private:
 	rtos::clock clock;
 	
 	enum state_t { IDLE, CHECKING };
+	uint16_t fireRate;
 public:
 	TriggerTask(hwlib::pin_in& trigger, mainGameControlTask& mainGame);
 	void weaponSet();

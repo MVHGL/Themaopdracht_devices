@@ -9,7 +9,8 @@ mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter, displayTas
 	display(display),
 	playerIdPool("playerId pool"),
 	weaponIdPool("WeaponId pool"),
-	setPlayerParamsFlag(this, "Set player params flag")
+	setPlayerParamsFlag(this, "Set player params flag"),
+	control(Time(5, 0), this, display)
 	{}
 
 void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint16_t& data) {

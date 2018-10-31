@@ -5,14 +5,16 @@
 #include "mainGameControlTask.hpp"
 #include "gameTimeControl.hpp"
 #include "displayTask.hpp"
+#include "TriggerTask.hpp"
 
 int main( void ){
    // kill the watchdog
 	WDT->WDT_MR = WDT_MR_WDDIS;
    
 	namespace target	= hwlib::target;
-	auto tsop_signal	= target::pin_in( target::pins::d10 );
+	auto tsop_signal	= target::pin_in(target::pins::d10);
 	auto ir_led			= target::d2_36kHz();
+	auto trigger		= target::pin_in(target::pins::d9);
 	
 	// Display configuration
 	auto scl			= hwlib::target::pin_oc(hwlib::target::pins::scl);
@@ -23,10 +25,11 @@ int main( void ){
 	auto screen			= hwlib::window_ostream(oled, font);
 	
 	hwlib::wait_ms(500); 
-	
 	ir_transmitter transmitter(ir_led);
 	displayTask display(screen);
-	mainGameControlTask mainGame(transmitter, display);
+	mainGameControlTask mainGame(transmitter, display, );
+	gameTimeControl gameTimeController(Time(5, 0), mainGame, display);
+	TriggerTask triggerTask(trigger, mainGame);
 	ir_receiver receiver(tsop_signal, mainGame);
 	rtos::run();
 }

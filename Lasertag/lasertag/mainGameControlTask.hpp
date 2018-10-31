@@ -4,6 +4,8 @@
 #include "ir_transmitter.hpp"
 #include "displayTask.hpp"
 #include "playerData.hpp"
+#include "gameTimeControl.hpp"
+
 class mainGameControlTask : public rtos::task<> {
 private:
 	rtos::channel<int, 2> messages;
@@ -11,8 +13,8 @@ private:
 	ir_transmitter& transmitter;
 	rtos::flag triggerFlag;
 	displayTask& display;
-	rtos::pool playerIdPool;
-	rtos::pool weaponIdPool;
+	rtos::pool<uint16_t> playerIdPool;
+	rtos::pool<uint16_t> weaponIdPool;
 	rtos::flag setPlayerParamsFlag;
 	enum state_t {IDLE, SET_PLAYER, SET_WEAPON, TRIGGER, MESSAGE_RECEIVE, GAME_OVER};
 	state_t state = IDLE;
@@ -20,6 +22,7 @@ private:
 	Weapon enemyWeapon;
 	Weapon ownWeapon;
 	Player player;
+	gameTimeControl control;
 	void handleMessageReceived();
 public:
 	mainGameControlTask(ir_transmitter& transmitter, displayTask& display);

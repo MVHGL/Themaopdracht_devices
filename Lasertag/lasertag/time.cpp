@@ -3,8 +3,8 @@
 Time::Time(const int& min, const int& sec) :
 	min(min), sec(sec)
 	{
-		if (sec > 60) this->sec = 60;
-		if (min > 60) this->min = 60;
+		if (sec > 60) this->sec = 59;
+		if (min > 60) this->min = 59;
 		if (min < 0) this->min = 0;
 		if (sec < 0) this->sec = 0;
 	}
@@ -21,7 +21,7 @@ Time Time::getTime() const { return *this; }
 void Time::updateTime() { 
 	if (sec == 0 && min > 0) {
 		min--;
-		sec = 60;
+		sec = 59;
 	}
 	else if (sec > 0) {
 		sec--;

@@ -1,13 +1,13 @@
 #include "TriggerTask.hpp"
 
-TriggerTask::TriggerTask(hwlib::pin_in& trigger, mainGameControlTask& mainGame)
-	task(this, "Triggertask"),
+TriggerTask::TriggerTask(hwlib::pin_in& trigger, mainGameControlTask& mainGame):
+	task("Triggertask"),
 	trigger(trigger),
 	mainGame(mainGame),
 	fireRateTimer(this, "Fire rate timer"),
 	fireRateFlag(this, "Fire rate flag"),
-	fireRatePool(this, "Fire rate pool"),
-	clock(this, 500'000) {}
+	fireRatePool("Fire rate pool"),
+	clock(this, 500'000, "Triggertask clock") {}
 
 void TriggerTask::weaponSet() {
 	fireRateFlag.set();
@@ -17,11 +17,13 @@ void TriggerTask::main() {
 	state_t state = IDLE;
 	while (true) {
 		switch (state) {
-			case IDLE:
+			case IDLE: {
 				wait(fireRateFlag);
-				uint16_t fireRate = fireRatePool.read() * 1'000;
+				fireRate = fireRatePool.read() * 1'000;
 				state = CHECKING;
-			case CHECKING:
+				break;
+			}
+			case CHECKING: {
 				wait(clock);
 				if (trigger.get()) {
 					mainGame.triggered();
@@ -29,5 +31,6 @@ void TriggerTask::main() {
 				}
 				break;
 			}
+		}
 	}
 }
