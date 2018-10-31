@@ -11,6 +11,9 @@ private:
 	ir_transmitter& transmitter;
 	rtos::flag triggerFlag;
 	displayTask& display;
+	rtos::pool playerIdPool;
+	rtos::pool weaponIdPool;
+	rtos::flag setPlayerParamsFlag;
 	enum state_t {IDLE, SET_PLAYER, SET_WEAPON, TRIGGER, MESSAGE_RECEIVE, GAME_OVER};
 	state_t state = IDLE;
 	uint16_t ownWeaponID;
@@ -23,6 +26,7 @@ public:
 	void IRMessageReceived(const uint16_t& playerID, const uint16_t& data);
 	void triggered();
 	void gameOver();
+	void setPlayerParams(const uint16_t& playerID, const uint16_t& weaponID);
 	void main() override;
 };
 #endif

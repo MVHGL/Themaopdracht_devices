@@ -6,7 +6,10 @@ mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter, displayTas
 	timeCompletedFlag(this, "Time completed flag"),
 	transmitter(transmitter),
 	triggerFlag(this, "Triggerflag"),
-	display(display)
+	display(display),
+	playerIdPool("playerId pool"),
+	weaponIdPool("WeaponId pool"),
+	setPlayerParamsFlag(this, "Set player params flag")
 	{}
 
 void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint16_t& data) {
@@ -35,6 +38,12 @@ void mainGameControlTask::handleMessageReceived() {
 
 void mainGameControlTask::gameOver() {
 	timeCompletedFlag.set();
+}
+
+void mainGameControlTask::setPlayerParams(const uint16_t& playerID, const uint16_t& weaponID){
+	playerIdPool.write(playerID);
+	weaponIdPool.write(weaponID);
+	setPlayerParamsFlag.set();
 }
 
 void mainGameControlTask::main() {

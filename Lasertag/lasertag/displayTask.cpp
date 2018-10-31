@@ -90,7 +90,6 @@ void displayTask::showWeapon(hwlib::string<40> weapon){
 	weaponNamePool.write(weapon);
 	showWeaponFlag.set();
 }
-
 void displayTask::showHealth(const uint16_t & hp){
 	healthPool.write(hp);
 	healthFlag.set();
