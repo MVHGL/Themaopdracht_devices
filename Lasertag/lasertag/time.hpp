@@ -2,11 +2,11 @@
 #define _TIME_HPP
 class Time {
 private:
-	int sec;
 	int min;
+	int sec;
 public:
 	Time();
-	Time(const int& sec, const int& min);
+	Time(const int& min, const int& sec);
 	Time getTime() const;
 	int getSec() const;
 	int getMin() const;

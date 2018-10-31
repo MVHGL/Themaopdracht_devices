@@ -1,7 +1,6 @@
 #ifndef _PLAYERDATA_HPP
 #define _PLAYERDATA_HPP
 #include "hwlib.hpp"
-//#include <cstdint>
 struct Weapon {
 	hwlib::string<40> name;
 	uint16_t damage;

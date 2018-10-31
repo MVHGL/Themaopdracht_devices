@@ -41,6 +41,15 @@ void mainGameControlTask::main() {
 	while (true) {
 		switch (state) {
 			case IDLE:{
+				//Time testtime(10, 15);
+				//display.showGameTime(testtime);
+				//display.showHealth(player.hp);
+				//weaponLookup(5, ownWeapon);
+				//weaponLookup(3, enemyWeapon);
+				//display.showAmmo(ownWeapon.ammo);
+				//display.showWeapon(ownWeapon.name);
+				//display.shotBy(2, enemyWeapon.name);
+				//display.gameOver();
 				auto event = wait(messages + timeCompletedFlag + triggerFlag);
 				if 		(event == messages) 			state = MESSAGE_RECEIVE;
 				else if (event == timeCompletedFlag) 	state = GAME_OVER;

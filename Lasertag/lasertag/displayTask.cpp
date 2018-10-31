@@ -14,7 +14,8 @@ displayTask::displayTask(hwlib::window_ostream & display):
 	gameOverFlag(this, "Game over flag"),
 	enemyWeaponNamePool("Enemy weapon pool"),
 	playerIdPool("Player ID pool"),
-	shotByFlag(this, "Shot by flag")
+	shotByFlag(this, "Shot by flag"),
+	shotByClock(this, 5'000'000, "Shot by timeout clock")
 	
 {}
 
@@ -31,6 +32,7 @@ void displayTask::main(){
 					state_d = SHOW;
 				}else if(display_event == showWeaponFlag){
 					weaponName = weaponNamePool.read();
+					state_d = SHOW;
 				}else if(display_event == healthFlag){
 					health = healthPool.read();
 					state_d = SHOW;
@@ -39,24 +41,38 @@ void displayTask::main(){
 				}else if(display_event == shotByFlag){
 					enemyWeaponName = enemyWeaponNamePool.read();
 					player_id = playerIdPool.read();
-					state_d = SHOW;
+					state_d = SHOT;
 				}
 				break;
 			}
 			case SHOW:{
 				display << "\f"
-						<< "\t0000" << "Health: " << health
-						<< "\t0100" << "Ammo: " << ammo
-						<< "\t0040" << time.getMin() << ":" << time.getSec()
-						<< "\t0510" << weaponName
+						<< "\t0000" << "HP: " << health
+						<< "\t1100" << time.getMin() << ":" << time.getSec()
+						<< "\t0006" << weaponName
+						<< "\t0007" << "Ammo: " << ammo
 						<< hwlib::flush;
 				state_d = IDLE;
 				break;
 			}
+			case SHOT:{
+				display << "\f"
+						<< "\t0000" << "HP: " << health
+						<< "\t1100" << time.getMin() << ":" << time.getSec()
+						<< "\t0002" << "Shot by: " << player_id
+						<< "\t0003" << "\\w: " << enemyWeaponName
+						<< "\t0006" << weaponName
+						<< "\t0007" << "Ammo: " << ammo
+						<< hwlib::flush;
+				wait(shotByClock);
+				state_d = SHOW;
+				break;
+			}
 			case GAME_OVER:{
 				display << "\f"
-						<< "\t0403" << "GAME OVER!"
+						<< "\t0303" << "GAME OVER!"
 						<< hwlib::flush;
+				state_d = IDLE;
 				break;
 			}
 		}
@@ -71,7 +87,8 @@ void displayTask::showAmmo(const uint16_t & ammo){
 	ammoFlag.set();
 }
 void displayTask::showWeapon(hwlib::string<40> weapon){
-	
+	weaponNamePool.write(weapon);
+	showWeaponFlag.set();
 }
 
 void displayTask::showHealth(const uint16_t & hp){
@@ -82,7 +99,7 @@ void displayTask::gameOver(void){
 	gameOverFlag.set();
 }
 void displayTask::shotBy(const uint16_t & player_id, hwlib::string<40> w_name){
-	weaponNamePool.write(w_name);
+	enemyWeaponNamePool.write(w_name);
 	playerIdPool.write(player_id);
 	shotByFlag.set();
 }

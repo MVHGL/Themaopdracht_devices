@@ -19,7 +19,8 @@ private:
 	rtos::pool<hwlib::string<40>> enemyWeaponNamePool;
 	rtos::pool<uint16_t> playerIdPool;
 	rtos::flag shotByFlag;
-	enum display_state {IDLE, SHOW, GAME_OVER};
+	rtos::clock shotByClock;
+	enum display_state {IDLE, SHOW, SHOT, GAME_OVER};
 	display_state state_d = IDLE;
 	uint16_t ammo = 0;
 	uint16_t health = 0;

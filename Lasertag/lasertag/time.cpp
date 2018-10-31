@@ -1,7 +1,7 @@
 #include "time.hpp"
 
-Time::Time(const int& sec, const int& min) :
-	sec(sec), min(min)
+Time::Time(const int& min, const int& sec) :
+	min(min), sec(sec)
 	{
 		if (sec > 60) this->sec = 60;
 		if (min > 60) this->min = 60;
@@ -10,7 +10,7 @@ Time::Time(const int& sec, const int& min) :
 	}
 	
 Time::Time():
-	sec(0), min(0) {}
+	min(0), sec(0) {}
 
 int Time::getMin() const { return min; }
 
