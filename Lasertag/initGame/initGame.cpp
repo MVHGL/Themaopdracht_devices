@@ -1,6 +1,6 @@
 #include "initGame.hpp"
 
-initGame::main() override;{
+initGame::main() override{
 	enum state_t= {IDLE, ADJUST_TTIME, BUTTON_PRESSED, SEND_IR_TIME, START_GAME};
 	state= state_t; 
 	state=IDLE;
