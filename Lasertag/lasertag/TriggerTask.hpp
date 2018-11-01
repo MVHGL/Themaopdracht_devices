@@ -17,7 +17,8 @@ private:
 	uint16_t fireRate;
 public:
 	TriggerTask(hwlib::pin_in& trigger, mainGameControlTask& mainGame);
-	void weaponSet();
+	void weaponSet(const uint16_t& fireRate);
+	void getTriggerState();
 	void main() override;
 };
 #endif

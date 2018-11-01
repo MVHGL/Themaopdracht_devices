@@ -1,5 +1,6 @@
 #ifndef _MAINGAMECONTROLTASK_HPP
 #define _MAINGAMECONTROLTASK_HPP
+
 #include "rtos.hpp"
 #include "ir_transmitter.hpp"
 #include "displayTask.hpp"
@@ -22,10 +23,11 @@ private:
 	Weapon enemyWeapon;
 	Weapon ownWeapon;
 	Player player;
-	gameTimeControl control;
+	gameTimeControl& timerControl;
 	void handleMessageReceived();
 public:
-	mainGameControlTask(ir_transmitter& transmitter, displayTask& display);
+	mainGameControlTask(ir_transmitter& transmitter, displayTask& display, gameTimeControl& timerControl);
+	
 	void IRMessageReceived(const uint16_t& playerID, const uint16_t& data);
 	void triggered();
 	void gameOver();

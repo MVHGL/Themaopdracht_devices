@@ -27,8 +27,8 @@ int main( void ){
 	hwlib::wait_ms(500); 
 	ir_transmitter transmitter(ir_led);
 	displayTask display(screen);
-	mainGameControlTask mainGame(transmitter, display, );
-	gameTimeControl gameTimeController(Time(5, 0), mainGame, display);
+	gameTimeControl control(display);
+	mainGameControlTask mainGame(transmitter, display, control);
 	TriggerTask triggerTask(trigger, mainGame);
 	ir_receiver receiver(tsop_signal, mainGame);
 	rtos::run();

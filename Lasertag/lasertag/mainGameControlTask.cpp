@@ -1,6 +1,6 @@
 #include "mainGameControlTask.hpp"
 
-mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter, displayTask& display):
+mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter, displayTask& display, gameTimeControl& timerControl):
 	task("Maingame control task"),
 	messages(this, "Main game task messages channel"),
 	timeCompletedFlag(this, "Time completed flag"),
@@ -10,7 +10,7 @@ mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter, displayTas
 	playerIdPool("playerId pool"),
 	weaponIdPool("WeaponId pool"),
 	setPlayerParamsFlag(this, "Set player params flag"),
-	control(Time(5, 0), this, display)
+	timerControl(timerControl)
 	{}
 
 void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint16_t& data) {
@@ -51,15 +51,18 @@ void mainGameControlTask::main() {
 	while (true) {
 		switch (state) {
 			case IDLE:{
-				//Time testtime(10, 15);
-				//display.showGameTime(testtime);
-				//display.showHealth(player.hp);
-				//weaponLookup(5, ownWeapon);
-				//weaponLookup(3, enemyWeapon);
-				//display.showAmmo(ownWeapon.ammo);
-				//display.showWeapon(ownWeapon.name);
-				//display.shotBy(2, enemyWeapon.name);
-				//display.gameOver();
+				timerControl.startGameTimer();
+				if (!timerControl.isGameTimeOver()) {  
+					display.showGameTime(Time(5, 0));
+					display.showHealth(player.hp);
+					weaponLookup(5, ownWeapon);
+					weaponLookup(3, enemyWeapon);
+					display.showAmmo(ownWeapon.ammo);
+					display.showWeapon(ownWeapon.name);
+					display.shotBy(2, enemyWeapon.name);
+				} else 
+					state = GAME_OVER;
+				
 				auto event = wait(messages + timeCompletedFlag + triggerFlag);
 				if 		(event == messages) 			state = MESSAGE_RECEIVE;
 				else if (event == timeCompletedFlag) 	state = GAME_OVER;
@@ -67,20 +70,25 @@ void mainGameControlTask::main() {
 				break;
 			}
 			case SET_PLAYER: 
-				
 				break;
 			case SET_WEAPON: 
+				break;
+			case TRIGGER:
+				if (!timerControl.isGameTimeOver()) {  
+					transmitter.send(player.p_id, ownWeaponID);
+					ownWeapon.ammo -= 1;
+					state = IDLE;
+				} else 
+					state = GAME_OVER;
 				
 				break;
-			case TRIGGER: 
-				transmitter.send(player.p_id, ownWeaponID);
-				break;
 			case MESSAGE_RECEIVE:
+				if (!timerControl.isGameTimeOver()) { /*...*/ } else state = GAME_OVER;
 				handleMessageReceived();
 				state = IDLE;
 				break;
 			case GAME_OVER:
-				
+				display.gameOver();
 				break;
 		}
 	}

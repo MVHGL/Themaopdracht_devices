@@ -9,8 +9,13 @@ TriggerTask::TriggerTask(hwlib::pin_in& trigger, mainGameControlTask& mainGame):
 	fireRatePool("Fire rate pool"),
 	clock(this, 500'000, "Triggertask clock") {}
 
-void TriggerTask::weaponSet() {
+void TriggerTask::weaponSet(const uint16_t& fireRate) {
 	fireRateFlag.set();
+	fireRatePool.write(fireRate);
+}
+
+void TriggerTask::getTriggerState() {
+	return trigger.get();
 }
 
 void TriggerTask::main() {
