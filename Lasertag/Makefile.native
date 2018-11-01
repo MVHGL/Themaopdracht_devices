@@ -15,4 +15,4 @@ TARGET            := native
 PROJECT_CPP_FLAGS += -fexceptions 
 
 # defer to the Makefile.shared
-include           $(RELATIVE)/Makefile.link
+include           $(RELATIVE)/Makefile.shared

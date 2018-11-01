@@ -16,8 +16,8 @@ STACK_SIZE        ?= 81920
 HEAP              ?= BMPTK
 
 # add the rtos
-RTOS              := C:/Users/crisv/Desktop/2e_jaar/TI_git/rtos/
+RTOS              ?= C:\ti-software\rtos
 include           $(RTOS)/makefile.inc
 
 # defer to the Makefile.link
-include           $(RELATIVE)/Makefile.link
+include           $(RELATIVE)/makefile.link

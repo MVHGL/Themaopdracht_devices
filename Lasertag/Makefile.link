@@ -10,7 +10,7 @@
 
 # the location of the ti software directory
 RELATIVE          ?= .
-TI-SOFTWARE       := C:/Users/crisv/Desktop/2e_jaar/TI_git
+TI-SOFTWARE       := C:/ti-software
 
 # add Catch
 SEARCH            += $(TI-SOFTWARE)/Catch/include
@@ -20,7 +20,7 @@ HWLIB             ?= $(TI-SOFTWARE)/hwlib
 include           $(HWLIB)/Makefile.inc
 
 # set BMPTK to the bmptk subdirectory
-BMPTK := $(TI-SOFTWARE)/bmptk
+BMPTK := C:/ti-software/bmptk
 
 # Defer to the bmptk/Makefile.inc to do the work
 include $(BMPTK)/Makefile.inc
