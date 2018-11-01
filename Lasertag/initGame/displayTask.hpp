@@ -8,11 +8,14 @@ private:
 	rtos::pool<int> statePool;
 	rtos::channel<char, 5> displayChannel;
 	int state = 0;
+	enum state = {IDLE, DISPLAY};
+	
 public:
 	displayTask();
 	void main();
 	void showState(const int state);
 	void setState(const int state);
+	void show(char c);
 
 };
 

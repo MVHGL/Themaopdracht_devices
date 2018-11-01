@@ -35,7 +35,7 @@ int main() {
 	auto transmitter = ir_transmitter(IRLed); 
 	
 	initGame initGameTask(oled);
-	displayTask displaytask;
+	displayTask displaytask(oled);
 	//task task task(keypad)
 	//rtos::run();
 }
