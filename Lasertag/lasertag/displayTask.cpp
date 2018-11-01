@@ -13,11 +13,12 @@ displayTask::displayTask(hwlib::window_ostream & display):
 	healthFlag(this, "Health flag"),
 	gameOverFlag(this, "Game over flag"),
 	enemyWeaponNamePool("Enemy weapon pool"),
-	playerIdPool("Player ID pool"),
+	enemyPlayerIdPool("Enemy player ID pool"),
 	shotByFlag(this, "Shot by flag"),
 	shotByClock(this, 5'000'000, "Shot by timeout clock"),
 	choicePool("Choosing weapon or player ID"),
-	choiceFlag(this, "Set weapon or player ID flag")
+	choiceFlag(this, "Set weapon or player ID flag"),
+	playerIdPool("Player id pool")
 {}
 
 void displayTask::main(){
@@ -46,12 +47,13 @@ void displayTask::main(){
 					state_d = GAME_OVER;
 				}else if(display_event == shotByFlag){
 					enemyWeaponName = enemyWeaponNamePool.read();
-					enemy_player_id = playerIdPool.read();
+					enemy_player_id = enemyPlayerIdPool.read();
 					state_d = SHOT;
 				}
 				else if(display_event == choiceFlag){
 					weapon_or_player = choicePool.read();
-					player_id = playerIDPool.read();
+					player_id[0] = playerIdPool.read();
+					player_id[1] = playerIdPool.read();
 					state_d = CHOICE;
 				}
 				break;
@@ -62,7 +64,8 @@ void displayTask::main(){
 						<< "\t1100" << time.getMin() << ":" << time.getSec()
 						<< "\t0006" << weaponName
 						<< "\t0007" << "Ammo: " << ammo
-						<< '/' << hwlib::flush;
+						<< '/' << ammoStr
+						<< hwlib::flush;
 				state_d = IDLE;
 				break;
 			}
@@ -91,10 +94,9 @@ void displayTask::main(){
 					display << "\f"
 						<< "\t0000" << "Choose a weapon:"
 						<< "\t0002" << "[W]> " 
-						<< "\t0502" << weapon_id[0];
+						<< "\t0502" << weapon_id[0]
 						<< hwlib::flush;
-				}
-				else if (){
+				}else{
 					display << "\f"
 						<< "\t0000" << "Choose ID: "
 						<< "\t0002" << "[PID]> "

@@ -52,6 +52,7 @@ void mainGameControlTask::main() {
 	weaponLookup(1, ownWeapon);
 	display.showAmmo(ownWeapon.ammo);
 	display.showWeapon(ownWeapon.name);
+	display.showHealth(player.hp);
 	while (true) {
 		switch (state) {
 			case IDLE:{
