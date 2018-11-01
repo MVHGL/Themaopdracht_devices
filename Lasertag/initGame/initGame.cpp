@@ -1,5 +1,14 @@
 #include "initGame.hpp"
 
+initGame::initGame(displayTask& display){
+	task("initGameTask")
+}
+
+void initGame::buttonPressed(hwlib::istream & keypad){
+	keypadChannel.write(keypad.getc())
+}
+
+
 initGame::main() override{
 	enum state_t= {IDLE, ADJUST_TTIME, BUTTON_PRESSED, SEND_IR_TIME, START_GAME};
 	state= state_t; 
