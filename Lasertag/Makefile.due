@@ -8,17 +8,16 @@
 # 
 #############################################################################
 
-
 # settings for Arduino Due projects
 TARGET            ?= arduino_due
-SERIAL_PORT       ?= COM2
+SERIAL_PORT       ?= COM4
 CONSOLE_BAUDRATE  ?= 2400
 STACK_SIZE        ?= 81920
 HEAP              ?= BMPTK
 
 # add the rtos
-RTOS              ?= C:\ti-software\rtos
+RTOS              := C:/Users/crisv/Desktop/2e_jaar/TI_git/rtos/
 include           $(RTOS)/makefile.inc
 
 # defer to the Makefile.link
-include           $(RELATIVE)/makefile.link
+include           $(RELATIVE)/Makefile.link

@@ -1,7 +1,7 @@
 #include "initGame.hpp"
 
 initGame::initGame(displayTask& display){
-	task("initGameTask")
+	task("initGameTask");
 }
 
 void initGame::buttonPressed(hwlib::istream & keypad){
@@ -24,7 +24,8 @@ initGame::main() override{
 				break; 
 			}
 		case ADJUST_TIME: 
-			buttonTimer.set(20);
+			initTimer.set(20);
+			auto event == wait(initTimer);
 			min_tientallen= int(keypad.getc()-48);
 			if (min_tientallen >=0 && min_tientallen <10)
 			{

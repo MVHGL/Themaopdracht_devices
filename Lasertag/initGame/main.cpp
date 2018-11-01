@@ -23,8 +23,8 @@ int main() {
 	auto keypad   = hwlib::keypad< 16 >( matrix, "123A456B789C*0#D" );
 	
 	//display 
-	auto scl= hwlib::target::pin_oc(hwlib::target::pins::d9);
-	auto sda = hwlib::target::pin_oc(hwlib::target::pins::d8);
+	auto scl= hwlib::target::pin_oc(hwlib::target::pins::a9);
+	auto sda = hwlib::target::pin_oc(hwlib::target::pins::a8);
 	auto i2c_bus = hwlib::i2c_bus_bit_banged_scl_sda(scl,sda);
 	auto display = hwlib::glcd_oled_buffered(i2c_bus, 0x3c);
 	auto font = hwlib::font_default_8x8(); 
@@ -34,7 +34,8 @@ int main() {
 	auto IRLed= hwlib::target::pin_out(hwlib::target::pins::d5);
 	auto transmitter = ir_transmitter(IRLed); 
 	
-	//task task task(transmitter)
+	initGame initGameTask(oled);
+	displayTask displaytask;
 	//task task task(keypad)
 	//rtos::run();
 }

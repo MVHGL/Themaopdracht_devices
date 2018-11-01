@@ -11,8 +11,8 @@
 # settings for native (PC) projects
 TARGET            := native
 
-# enable exeptions (disabled by eefualt by bmptk)
+# enable exeptions (disabled by default by bmptk)
 PROJECT_CPP_FLAGS += -fexceptions 
 
 # defer to the Makefile.shared
-include           $(RELATIVE)/Makefile.shared
+include           $(RELATIVE)/Makefile.link
