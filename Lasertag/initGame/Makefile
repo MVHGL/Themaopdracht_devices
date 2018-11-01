@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := ir_transmitter.cpp
+SOURCES := transmitterControl.cpp
 
 # header files in this project
-HEADERS := hwlib.hpp ir_transmitter.hpp
+HEADERS := hwlib.hpp transmitterControl.hpp
 
 # other places to look for files for this project
 SEARCH  :=
