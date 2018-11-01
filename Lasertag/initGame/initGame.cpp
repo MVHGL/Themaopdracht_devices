@@ -65,24 +65,6 @@ initGame::main() override{
 				break; 
 			}
 		}
-		if (c =='C'){
-			while(1){
-				if(keypad.getc()=='#'){
-					transmitter.send(10, 10);
-					hwlib::wait_ms(100);
-					oled << "\f " << '#' << "\t0001" << "Geef spelduur:.." << "\t0002" << hwlib::flush;
-					min_tientallen = int((keypad.getc()-48))*10;
-					oled << "\f " << '#' << "\t0001" << "Geef spelduur:"<<min_tientallen<<"." << "\t0002" << hwlib::flush;
-					min= int((keypad.getc()-48));
-					oled << "\f " << '#' << "\t0001" << "Geef spelduur:"<<min_tientallen<<min <<"Druk op # om de tijd instellen" << "\t0002" << hwlib::flush;
-					if 
-				}
-				if(keypad.getc()=='*'){
-					oled << "\f " << '*' << "\t0002" <<"Nothing send."<<"\t0003" << "returning to menu." << hwlib::flush;
-					break;
-				}
-			}
-		}
 		
 	}
 }

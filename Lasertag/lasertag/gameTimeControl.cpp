@@ -1,19 +1,21 @@
 #include "gameTimeControl.hpp"
-gameTimeControl::gameTimeControl(const Time& time, mainGameControlTask& mainGame, displayTask& display):
+
+gameTimeControl::gameTimeControl(displayTask& display):
 	task("Game time control task"),
-	time(time),
 	clock(this, 1'000'000, "Game Time control clock"),
 	timeStart(this, "Time flag"),
-	mainGame(mainGame),
 	display(display)
 {
 }
 
-void gameTimeControl::startGameTimer() {
-	timeStart.set();
+void gameTimeControl::setTime(const Time& time) {
+	this->time = time;
 }
 
-bool gameTimeControl::gameTimeOver() {
+void gameTimeControl::startGameTimer() {	 
+	timeStart.set();
+}
+bool gameTimeControl::isGameTimeOver() {
 	return (time.getMin() == 0 && time.getSec() == 0);
 }
 
@@ -26,9 +28,8 @@ void gameTimeControl::main() {
 				break;
 			case KEEP_TIME:
 				wait(clock);
-				time.updateTime();  // clock waited one second, so edit the time
-				if (gameTimeOver()) {// if time has ended
-					mainGame.gameOver();
+				time.updateTime();  	// clock waited one second, so edit the time
+				if (isGameTimeOver()) {	// if time has ended
 					display.gameOver();
 					state = IDLE;
 				} else {
