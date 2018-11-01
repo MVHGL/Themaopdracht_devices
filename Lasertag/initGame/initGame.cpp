@@ -25,7 +25,7 @@ initGame::main() override{
 			}
 		case ADJUST_TIME: 
 			initTimer.set(20);
-			auto event == wait(initTimer);
+			auto event = wait(initTimer);
 			min_tientallen= int(keypad.getc()-48);
 			if (min_tientallen >=0 && min_tientallen <10)
 			{
@@ -33,7 +33,11 @@ initGame::main() override{
 				state= BUTTON_PRESSED_TWO; 
 				break
 			}
-			//als timer timed out is : state= idle 
+			else if (event== initTimer) 
+			{
+				state=IDLE;
+				break;
+			}
 		case BUTTON_PRESSED_TWO: 
 			min = int(keypad.getc()-48); 
 			if (min >= 0 && min <10)
@@ -42,7 +46,11 @@ initGame::main() override{
 				state= SEND_IR_TIME;
 				break; 
 			}
-			//als timer timed out is : state= idle 
+			else if (event== initTimer) 
+			{
+				state=IDLE;
+				break;
+			} 
 		case SEND_IR_TIME:
 			if (keypad.getc()=='#')
 			{
