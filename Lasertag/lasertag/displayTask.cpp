@@ -18,7 +18,8 @@ displayTask::displayTask(hwlib::window_ostream & display):
 	shotByClock(this, 5'000'000, "Shot by timeout clock"),
 	choicePool("Choosing weapon or player ID"),
 	choiceFlag(this, "Set weapon or player ID flag"),
-	playerIdPool("Player id pool")
+	playerIdPool("Player id pool"),
+	startNewGameFlag(this, "Start new game flag")
 {}
 
 void displayTask::main(){
@@ -86,6 +87,7 @@ void displayTask::main(){
 				display << "\f"
 						<< "\t0303" << "GAME OVER!"
 						<< hwlib::flush;
+				wait(startNewGameFlag);
 				state_d = IDLE;
 				break;
 			}
@@ -130,7 +132,7 @@ void displayTask::gameOver(void){
 }
 void displayTask::shotBy(const uint16_t & player_id, hwlib::string<40> w_name){
 	enemyWeaponNamePool.write(w_name);
-	playerIdPool.write(player_id);
+	enemyPlayerIdPool.write(player_id);
 	shotByFlag.set();
 }
 

@@ -23,6 +23,7 @@ private:
 	rtos::pool<bool> choicePool;
 	rtos::flag choiceFlag;
 	rtos::pool<uint16_t> playerIdPool;
+	rtos::flag startNewGameFlag;
 	enum display_state {IDLE, SHOW, SHOT, GAME_OVER, CHOICE};
 	display_state state_d = IDLE;
 	// Variables

@@ -18,12 +18,14 @@ void ir_receiver::get() {
 	}
 	else {
 		pause_count += 100;
-		if (pause_count >= 3'000)
+		if (pause_count >= 3'000) {
 			pause_count = 0;
+		}
 	}
 }
 
 void ir_receiver::putMessage() {
+	mutex.wait();
 	int pause = 0, msg1 = 0, msg2 = 0;
 	for (int i = 0; i < 17; i++) {
 		pause = pauses.read();
@@ -42,6 +44,7 @@ void ir_receiver::putMessage() {
 		}
 	}
 	decoder.write_message(msg1, msg2);
+	mutex.signal();
 }
 
 void ir_receiver::main() {

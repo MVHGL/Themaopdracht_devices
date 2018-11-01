@@ -17,6 +17,7 @@ private:
 	rtos::pool<uint16_t> playerIdPool;
 	rtos::pool<uint16_t> weaponIdPool;
 	rtos::flag setPlayerParamsFlag;
+	rtos::flag channelFullFlag;
 	enum state_t {IDLE, SET_PLAYER, SET_WEAPON, TRIGGER, MESSAGE_RECEIVE, GAME_OVER};
 	state_t state = IDLE;
 	uint16_t ownWeaponID;
@@ -24,7 +25,9 @@ private:
 	Weapon ownWeapon;
 	Player player;
 	gameTimeControl& timerControl;
+	
 	void handleMessageReceived();
+	void handleTriggerButton();
 public:
 	mainGameControlTask(ir_transmitter& transmitter, displayTask& display, gameTimeControl& timerControl);
 	

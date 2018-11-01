@@ -19,13 +19,14 @@ void ir_decoder::check_message() {
 	if (checksum == new_checksum) {
 		garbage = messages.read();
 		mainGame.IRMessageReceived(player_id, data);
-		// hwlib::cout << "Received 1st time containing: " << data << ' ' << player_id << '\n';
+		hwlib::cout << player_id << '\n';
+		//hwlib::cout << "Received 1st time containing: " << data << ' ' << player_id << '\n';
 	} else {
 		message = messages.read();
 		new_checksum = extract(message);
 		if (checksum == new_checksum) {
 			mainGame.IRMessageReceived(player_id, data);
-			// hwlib::cout << "Received 2nd time containing: " << data << ' ' << player_id << '\n';
+			//hwlib::cout << "Received 2nd time containing: " << data << ' ' << player_id << '\n';
 
 		} else {
 			hwlib::cout << "Something went wrong\n";

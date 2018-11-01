@@ -13,6 +13,7 @@ private:
 	int pause_count;
 	rtos::clock clock;
 	rtos::channel<int, 33> pauses;
+	rtos::mutex mutex;
 	int counter;
 	enum state_t {IDLE, SIGNAL, MESSAGE};
 	state_t state = IDLE;

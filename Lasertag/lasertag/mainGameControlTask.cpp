@@ -10,12 +10,27 @@ mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter, displayTas
 	playerIdPool("playerId pool"),
 	weaponIdPool("WeaponId pool"),
 	setPlayerParamsFlag(this, "Set player params flag"),
+	channelFullFlag(this, "Message channel full"),
 	timerControl(timerControl)
 	{}
 
 void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint16_t& data) {
 	messages.write(playerID);
 	messages.write(data);
+	channelFullFlag.set();
+}
+
+void mainGameControlTask::handleTriggerButton() {
+	if (!timerControl.isGameTimeOver()) {
+		if(ownWeapon.ammo > 0){
+			transmitter.send(player.p_id, ownWeaponID);
+			ownWeapon.ammo -=1;
+		}
+		display.showAmmo(ownWeapon.ammo);
+		state = IDLE;
+	} else {
+		state = GAME_OVER;
+	}
 }
 
 void mainGameControlTask::triggered() {
@@ -25,13 +40,14 @@ void mainGameControlTask::triggered() {
 void mainGameControlTask::handleMessageReceived() {
 	uint16_t playerID = messages.read();
 	uint16_t data = messages.read();
+	hwlib::cout << "ID " << playerID << " data " << data << '\n';
 	
 	weaponLookup(data, enemyWeapon); // check enemy weapon, and edit the struct by reference
 	player.hp -= enemyWeapon.damage;
 	
 	if (player.hp > 0) {
-		display.shotBy(playerID, enemyWeapon.name);
 		display.showHealth(player.hp);
+		display.shotBy(playerID, enemyWeapon.name);
 	} else {
 		gameOver();
 	}
@@ -58,15 +74,15 @@ void mainGameControlTask::main() {
 			case IDLE:{
 				timerControl.startGameTimer();
 				if (!timerControl.isGameTimeOver()) {  
-					//display.showHealth(player.hp);
-					//display.showAmmo(ownWeapon.ammo);
-					//display.showWeapon(ownWeapon.name);
-					//display.shotBy(2, enemyWeapon.name);
+					/*display.showHealth(player.hp);
+					display.showAmmo(ownWeapon.ammo);
+					display.showWeapon(ownWeapon.name);
+					display.shotBy(2, enemyWeapon.name);*/
 				} else 
 					state = GAME_OVER;
 				
-				auto event = wait(messages + timeCompletedFlag + triggerFlag);
-				if 		(event == messages) 			state = MESSAGE_RECEIVE;
+				auto event = wait(channelFullFlag + timeCompletedFlag + triggerFlag);
+				if 		(event == channelFullFlag) 		state = MESSAGE_RECEIVE;
 				else if (event == timeCompletedFlag) 	state = GAME_OVER;
 				else if (event == triggerFlag)			state = TRIGGER;
 				break;
@@ -76,19 +92,13 @@ void mainGameControlTask::main() {
 			case SET_WEAPON: 
 				break;
 			case TRIGGER:
-				if (!timerControl.isGameTimeOver()) {
-					if(ownWeapon.ammo > 0){
-						transmitter.send(player.p_id, ownWeaponID);
-						ownWeapon.ammo -=1;
-					}
-					display.showAmmo(ownWeapon.ammo);
-					state = IDLE;
-				} else {
-					state = GAME_OVER;
-				}
+				handleTriggerButton();
 				break;
 			case MESSAGE_RECEIVE:
-				if (!timerControl.isGameTimeOver()) { /*...*/ } else state = GAME_OVER;
+				//hwlib::cout << "Message received state mainGame\n";
+				if (!timerControl.isGameTimeOver()) { 
+				/*...*/
+				} else state = GAME_OVER;
 				handleMessageReceived();
 				state = IDLE;
 				break;
