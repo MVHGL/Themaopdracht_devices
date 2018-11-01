@@ -48,18 +48,19 @@ void mainGameControlTask::setPlayerParams(const uint16_t& playerID, const uint16
 }
 
 void mainGameControlTask::main() {
+	timerControl.setTime(Time(10,0));
+	weaponLookup(1, ownWeapon);
+	display.showAmmo(ownWeapon.ammo);
+	display.showWeapon(ownWeapon.name);
 	while (true) {
 		switch (state) {
 			case IDLE:{
 				timerControl.startGameTimer();
 				if (!timerControl.isGameTimeOver()) {  
-					display.showGameTime(Time(5, 0));
-					display.showHealth(player.hp);
-					weaponLookup(5, ownWeapon);
-					weaponLookup(3, enemyWeapon);
-					display.showAmmo(ownWeapon.ammo);
-					display.showWeapon(ownWeapon.name);
-					display.shotBy(2, enemyWeapon.name);
+					//display.showHealth(player.hp);
+					//display.showAmmo(ownWeapon.ammo);
+					//display.showWeapon(ownWeapon.name);
+					//display.shotBy(2, enemyWeapon.name);
 				} else 
 					state = GAME_OVER;
 				
@@ -74,13 +75,16 @@ void mainGameControlTask::main() {
 			case SET_WEAPON: 
 				break;
 			case TRIGGER:
-				if (!timerControl.isGameTimeOver()) {  
-					transmitter.send(player.p_id, ownWeaponID);
-					ownWeapon.ammo -= 1;
+				if (!timerControl.isGameTimeOver()) {
+					if(ownWeapon.ammo > 0){
+						transmitter.send(player.p_id, ownWeaponID);
+						ownWeapon.ammo -=1;
+					}
+					display.showAmmo(ownWeapon.ammo);
 					state = IDLE;
-				} else 
+				} else {
 					state = GAME_OVER;
-				
+				}
 				break;
 			case MESSAGE_RECEIVE:
 				if (!timerControl.isGameTimeOver()) { /*...*/ } else state = GAME_OVER;

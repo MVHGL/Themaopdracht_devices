@@ -5,7 +5,6 @@ struct Weapon {
 	hwlib::string<40> name;
 	uint16_t damage;
 	uint16_t ammo;
-	uint16_t fire_rate;
 };
 
 struct Player{
