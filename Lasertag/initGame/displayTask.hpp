@@ -9,6 +9,7 @@ private:
 	rtos::channel<char, 5> displayChannel;
 	int state = 0;
 	enum state = {IDLE, DISPLAY};
+	state state_display = IDLE;
 	
 public:
 	displayTask();

@@ -1,20 +1,22 @@
 #include "displayTask.hpp"
 
-displayTask::displayTask(){
-
+displayTask::displayTask(hwlib::istream & oled_display){
+	oled_display(oled_display),
+	Task("display task")
 }
 
 displayTask::main(){
-	enum state_t = {IDLE, DISPLAY };
-	state state_t;
-	switch(state){
+	switch(state_display){
 		case IDLE:
 			wait(displayChannel);
-			state = DISPLAY;
-		
+			state_display = DISPLAY;
+			break;
+
 		case DISPLAY:
 			char a = displayChannel.read();
 			show(a);
+			state_display = IDLE;
+			break;
 	}
 	 
 }
