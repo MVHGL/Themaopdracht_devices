@@ -53,4 +53,3 @@ Release/
 __codelite.workspace
 *.bat
 Makefile.*
-.DS_Store
