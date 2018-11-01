@@ -39,8 +39,6 @@ int main() {
 	int min=0;
 	int time=0; 
 	while(1){
-		
-		
 		switch(state){
 		case IDLE: 
 			if (keypad.getc()=='C'){
@@ -78,7 +76,7 @@ int main() {
 			}
 		case START_GAME:
 			transmitter.send(0,0); 
-			if(keypad.getc()=='d')
+			if(keypad.getc()=='D')
 			{
 				state=IDLE; 
 				break; 
