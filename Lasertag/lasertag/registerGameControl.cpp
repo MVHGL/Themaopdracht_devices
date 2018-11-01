@@ -1,8 +1,9 @@
-registerGameControl::registerGameControl(mainGameControlTask & mainGame):
+registerGameControl::registerGameControl(mainGameControlTask & mainGame, displayTask & display):
 	task("Register game parameters"),
 	mainGame(mainGame),
 	registerTimer(this, "timeout timer for registering"),
-	keypadChannel(this, "channel for user input")
+	keypadChannel(this, "channel for user input"),
+	display(display)
 	{}
 
 
@@ -39,6 +40,7 @@ void registerGameControl::main(){
 			case GET_PLAYER_ID:
 				registerTimer.set(10'000'000); // set timer for 10 seconds
 				for(int i=0; i<2; i++){ // trying to read two chars from channel
+					displayTask.showChoice(false); // show it on the oled
 					auto event = wait(registerTimer + keypadChannel);
 					if (event == keypadChannel){   // new key was pressed
 						auto input = keypadChannel.read();
@@ -65,6 +67,7 @@ void registerGameControl::main(){
 			case GET_WEAPON:
 				registerTimer.set(10'000'000); // set timer for 10 seconds
 				auto event = (registerTimer + keypadChannel;
+				displayTask.showChoice(true);
 				if (event == keypadChannel){ // new key was pressed
 					auto input = keypadChannel.read();
 					if (input >= '0' && input <= '9'){ // input was numeric

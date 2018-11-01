@@ -20,11 +20,16 @@ private:
 	rtos::pool<uint16_t> playerIdPool;
 	rtos::flag shotByFlag;
 	rtos::clock shotByClock;
-	enum display_state {IDLE, SHOW, SHOT, GAME_OVER};
+	rtos::pool choicePool<bool>;
+	rtos::flag choiceFlag;
+	enum display_state {IDLE, SHOW, SHOT, GAME_OVER, CHOICE};
 	display_state state_d = IDLE;
 	uint16_t ammo = 0;
+	uint16_t ammoStr = ammo;
 	uint16_t health = 0;
-	uint16_t player_id = 0;
+	uint16_t enemy_player_id = 0;
+	uint16_t player_id[2];
+	uint16_t weapon_id[1];
 	Time time;
 	hwlib::string<40> enemyWeaponName, weaponName;
 public:
@@ -36,5 +41,6 @@ public:
 	void showHealth(const uint16_t & hp);
 	void gameOver(void);
 	void shotBy(const uint16_t & player_id, hwlib::string<40> w_name);
+	void showChoice(const bool & weapon_or_player);
 };
 #endif
