@@ -2,9 +2,12 @@
 
 displayTask::displayTask(hwlib::window_ostream & oled_display):
 	task("displayTask"),
+	timeFlag(this, "timeFlag"),
+	timePool("timePool"),
+	commandFlag(this, "commandFlag"),
+	commandPool("commandPool"),
 	stateFlag(this, "stateFlag"),
 	statePool("statePool"),
-	displayChannel(this, "displayChannel"),
 	oled_display(oled_display)
 	{}
 
@@ -13,30 +16,74 @@ void displayTask::main(){
 		switch(state_display){
 			case IDLE:
 			{
-				wait(displayChannel);
+				auto event = wait(timeFlag + commandFlag + stateFlag);
+				if(event == timeFlag){
+					time = timePool.read();
+				}
+				if(event == commandFlag){
+					c = commandPool.read();
+				}
+				if(event == stateFlag){
+					state = statePool.read();
+				}
 				state_display = DISPLAY;
 				break;
 			}
 
 			case DISPLAY:
 			{
-				char a = displayChannel.read();
-				show(a);
-				state_display = IDLE;
-				break;
+				if(state == 1){
+					oled_display 
+					<<"\f" << "\t0000" << "time set: " << time
+					<< "\t0002" << "command: "<< c 
+					<< "\t0003" << "setting time..."
+					<< "\t0005" << "press C" <<
+					hwlib::flush;
+					state_display = IDLE;
+					break;
+				}
+				if(state == 2){
+					oled_display 
+					<<"\f" << "\t0000" << "time set: " << time
+					<< "\t0002" << "command: "<< c 
+					<< "\t0003" << "send the time "
+					<< "\t0004" << "to player."
+					<< "\t0005" << "press #" <<
+					hwlib::flush;
+					state_display = IDLE;
+					break;
+				if(state == 3){
+					oled_display 
+					<<"\f" << "\t0000" << "time set: " << time
+					<< "\t0002" << "command: "<< c 
+					<< "\t0003" << "start the game "
+					<< "\t0005" << "press *" <<
+					hwlib::flush;
+					state_display = IDLE;
+					break;					
+				}
+				if(state == 9){
+					oled_display <<"\f" <<"invalid keypress!"
+					<< hwlib::flush;
+				}
+					
+				}
 			}
 		}
 	}
 };
 
-void displayTask::show(char c){
-	oled_display << "\f" << "\t0502" << c << hwlib::flush;
+void displayTask::showTime(const int & t){
+	timePool.write(t);
+	timeFlag.set();
 };
 
-void displayTask::showState(const int state){
-	
+void displayTask::showCommand(const char & c){
+	commandPool.write(c);
+	commandFlag.set();
 };
 
-void displayTask::setState(const int state){
-	
-};
+void displayTask::showState(const int & s){
+	statePool.write(s);
+	stateFlag.set();
+}
