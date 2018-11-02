@@ -1,7 +1,9 @@
-#include "ir_transmitter.hpp"
+#include "../lasertag/ir_transmitter.hpp"
 #include "hwlib.hpp"
 #include "rtos.hpp"
-//#include "keypad.hpp"
+#include "initGame.hpp"
+#include "displayTask.hpp"
+#include "keypadTask.hpp"
 
 int main() {
 	
@@ -17,9 +19,9 @@ int main() {
 	auto IRLed= hwlib::target::pin_out(hwlib::target::pins::d5);
 	auto transmitter = ir_transmitter(IRLed); 
 	
-	keypadTask keypad_task(initGameTask);
 	displayTask displaytask(oled);
 	initGame initGameTask(displaytask, transmitter);
+	keypadTask keypad_task(initGameTask);
 	//task task task(keypad)
 	rtos::run();
 }

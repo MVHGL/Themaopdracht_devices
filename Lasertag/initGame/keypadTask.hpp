@@ -3,6 +3,7 @@
 
 #include "rtos.hpp"
 #include "hwlib.hpp"
+#include "initGame.hpp"
 
 class keypadTask : public rtos::task<>
 {
@@ -24,9 +25,10 @@ private:
 	
 	enum state_t {IDLE, BUTTON_PRESSED};
 	state_t state = IDLE;
+	initGame initGameTask;
 	
 public:
-	keypadTask();
+	keypadTask(initGame & initGameTask);
 	void main();
 
 };
