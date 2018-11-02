@@ -9,6 +9,7 @@ initGame::initGame(displayTask& displayControl, ir_transmitter & transmitterCont
 	{}
 
 void initGame::buttonPressed(const char c){
+	displayControl.show(c);
 	keypadChannel.write(c);
 };
 
@@ -26,8 +27,10 @@ void initGame::main() {
 	while(1){
 		switch(state){
 		case IDLE:									//IDLE state  (program starts here
-			wait(keypadChannel); 
-			if (keypadChannel.read()=='C'){				//Wait for a C character. 
+			wait(keypadChannel);
+			temp = keypadChannel.read();
+			//buttonPressed(temp);
+			if (temp == 'C'){				//Wait for a C character. 
 				state= ADJUST_TIME; 
 				break; 
 			}

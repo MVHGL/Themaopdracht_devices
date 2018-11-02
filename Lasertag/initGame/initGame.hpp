@@ -11,6 +11,7 @@ private:
 	displayTask & displayControl;
 	rtos::timer initTimer;
 	ir_transmitter & transmitterControl;
+	char temp;
 	
 public:
 	initGame(displayTask& displayControl, ir_transmitter & transmitterControl);

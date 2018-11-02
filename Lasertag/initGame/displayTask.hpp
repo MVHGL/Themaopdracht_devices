@@ -15,7 +15,7 @@ private:
 	state_t state_display = IDLE;
 	
 public:
-	displayTask(hwlib::window_ostream &oled_display);
+	displayTask(hwlib::window_ostream & oled_display);
 	void main();
 	void showState(const int state);
 	void setState(const int state);
