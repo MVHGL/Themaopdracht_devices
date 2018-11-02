@@ -1,19 +1,23 @@
 #include "initGame.hpp"
 
-initGame::initGame(displayTask& display){
-	task("initGameTask");
-}
+initGame::initGame(displayTask& displayControl, ir_transmitter & transmitterControl):
+	task("initGameTask"),
+	keypadChannel(this, "keyPadChannel"),
+	displayControl(displayControl),
+	initTimer(this, "initTimer"),
+	transmitterControl(transmitterControl)
+	{}
 
-void initGame::buttonPressed(hwlib::istream & keypad){
+void initGame::buttonPressed(keypadTask & keypad){
 	keypadChannel.write(keypad.getc())
-}
+};
 
 
 initGame::main() override{
 	//enum voor de states. 
-	enum state_t= {IDLE, ADJUST_TTIME, BUTTON_PRESSED, SEND_IR_TIME, START_GAME};
-	state= state_t; 
-	state=IDLE;
+	enum state_t {IDLE, ADJUST_TTIME, BUTTON_PRESSED, SEND_IR_TIME, START_GAME};
+	state = state_t; 
+	state = IDLE;
 	//integers voor de tijd. 
 	int min_tientallen=0;
 	int min=0;
@@ -28,7 +32,6 @@ initGame::main() override{
 				state= ADJUST_TIME; 
 				break; 
 			}
-			
 		case ADJUST_TIME: 								// Waits for time from keypad input.  
 			initTimer.set(20);
 			auto event = wait(initTimer+keypadChannel);

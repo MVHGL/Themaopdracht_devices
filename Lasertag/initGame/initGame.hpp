@@ -8,13 +8,14 @@
 class initGame : public rtos::task<> {
 private:
 	rtos::channel<char, 5> keypadChannel;
+	displayTask & displayControl;
 	rtos::timer initTimer;
-	displayTask & display;
-
-public:
-	initGame(displayTask& display);
-	void buttonPressed(hwlib::istream & keypad);
+	ir_transmitter & transmitterControl;
 	
-}
+public:
+	initGame(displayTask & display, ir_transmitter & transmitterControl);
+	void buttonPressed();
+	
+};
 
 #endif
