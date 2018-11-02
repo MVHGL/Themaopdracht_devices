@@ -27,15 +27,18 @@ void initGame::main() {
 	while(1){
 		switch(state){
 		case IDLE:									//IDLE state  (program starts here
+			hwlib::cout << "before keypadChannel waitable. \n";
 			wait(keypadChannel);
 			temp = keypadChannel.read();
-			//buttonPressed(temp);
+			hwlib::cout << "character read from channel: " << temp << '\n';
 			if (temp == 'C'){				//Wait for a C character. 
 				state= ADJUST_TIME; 
 				break; 
 			}
+			break;
 		case ADJUST_TIME: 								// Waits for time from keypad input.  
 		{
+			hwlib::cout << "state: adjust_time " << '\n';
 			initTimer.set(20);
 			auto event = wait(initTimer + keypadChannel);
 			if (event == keypadChannel){

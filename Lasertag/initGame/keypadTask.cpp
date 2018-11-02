@@ -11,14 +11,14 @@ void keypadTask::main(){
 		switch(state){
 			case IDLE:
 			{
-					c = keypad.getc();
-					hwlib::cout << "button pressed: " << c << " \n";
-					state = BUTTON_PRESSED;
-					break;
+				c = keypad.getc();	//poll keypad for keypress.
+				hwlib::cout << "button pressed: " << c << " \n";
+				state = BUTTON_PRESSED;
+				break;
 			}
 			case BUTTON_PRESSED:
 			{
-				initGameTask.buttonPressed(c);
+				initGameTask.buttonPressed(c); //write to channel & to display.
 				state = IDLE;
 				break;
 			}
