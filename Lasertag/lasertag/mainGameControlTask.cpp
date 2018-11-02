@@ -74,7 +74,6 @@ void mainGameControlTask::main() {
 	while (true) {
 		switch (state) {
 			case REGISTER_GAME:{
-				hwlib::cout << "Now registering a game!\n";
 				wait(setPlayerParamsFlag);
 				player.p_id = playerIdPool.read();
 				ownWeaponID = weaponIdPool.read();

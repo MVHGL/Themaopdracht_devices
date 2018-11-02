@@ -16,16 +16,22 @@ void registerGameControl::buttonPressed(const char & c){
 void registerGameControl::main(){
 	enum screen_t {PLAYER, WEAPON, MENU};
 	screen_t screen = MENU;
+	
 	uint16_t player_id = 0;
 	uint16_t weapon_id = 0;
+	
 	state_t state = IDLE;
+	
+	display.showChoice(screen);
+
 	while (1){
 		switch(state){
+		
 			/* this state will wait on the keypad until it receives */
 			/* either a command to set the player ID or weapon ID.  */
 			/* else it can send these parameters to the game with # */
 			case IDLE:{
-				screen = MENU;
+				//screen = MENU;
 				//display.showChoice(screen);
 				auto input = (keypadChannel.read());
 				if (input == 'A'){ 	// this command means we want a player ID
@@ -35,6 +41,7 @@ void registerGameControl::main(){
 					state = GET_WEAPON;
 				}
 				else if (input == '#'){
+					hwlib::cout << "starting game!!\n";
 					mainGame.setPlayerParams(player_id, weapon_id); // set the player parameters
 				}
 				break;
@@ -53,6 +60,7 @@ void registerGameControl::main(){
 					if (event == keypadChannel){   // new key was pressed
 						auto input = keypadChannel.read();
 						if (input >= '0' && input <= '9'){ // input was numeric
+							display.setNumber(input); 		// show the number on the screen
 							player_id += uint16_t(input-48); //typecast to int
 							if (i==0){
 								player_id *= 10; // first num is base 10
@@ -64,7 +72,10 @@ void registerGameControl::main(){
 						}
 					}
 				}
-
+				hwlib::cout << "je moedertje!!\n";
+				screen = MENU;
+				display.showChoice(screen);
+				
 				state = IDLE;
 				break;
 				
@@ -77,11 +88,12 @@ void registerGameControl::main(){
 			case GET_WEAPON:{
 				screen = WEAPON;
 				registerTimer.set(10'000'000); // set timer for 10 seconds
-				auto event = (registerTimer + keypadChannel);
+				auto event = wait(registerTimer + keypadChannel);
 				display.showChoice(screen);
 				if (event == keypadChannel){ // new key was pressed
 					auto input = keypadChannel.read();
 					if (input >= '0' && input <= '9'){ // input was numeric
+						display.setNumber(input);
 						weapon_id += uint16_t(input-48); //typecast to int
 					}
 					else{ // input was not numeric
@@ -90,6 +102,9 @@ void registerGameControl::main(){
 					}
 				}
 
+				screen = MENU;
+				display.showChoice(screen);
+				
 				state = IDLE;
 				break;
 				

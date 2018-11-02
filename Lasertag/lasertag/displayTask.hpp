@@ -24,6 +24,8 @@ private:
 	rtos::flag choiceFlag;
 	rtos::pool<uint16_t> playerIdPool;
 	rtos::flag startNewGameFlag;
+	rtos::pool<char> numberPool;
+	rtos::flag numberFlag;
 	enum display_state {IDLE, SHOW, SHOT, GAME_OVER, CHOICE};
 	display_state state_d = IDLE;
 	// Variables
@@ -46,5 +48,6 @@ public:
 	void gameOver(void);
 	void shotBy(const uint16_t & player_id, hwlib::string<40> w_name);
 	void showChoice(const int & screen);
+	void setNumber(const char & number);
 };
 #endif
