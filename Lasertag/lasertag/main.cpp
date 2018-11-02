@@ -6,6 +6,8 @@
 #include "gameTimeControl.hpp"
 #include "displayTask.hpp"
 #include "TriggerTask.hpp"
+#include "registerGameControl.hpp"
+#include "keypadTask.hpp"
 
 int main( void ){
    // kill the watchdog
@@ -29,6 +31,8 @@ int main( void ){
 	displayTask display(screen);
 	gameTimeControl control(display);
 	mainGameControlTask mainGame(transmitter, display, control);
+	registerGameControl registerGame(mainGame, display);
+	keypadTask(registerGame);
 	TriggerTask triggerTask(trigger, mainGame);
 	ir_receiver receiver(tsop_signal, mainGame);
 	rtos::run();

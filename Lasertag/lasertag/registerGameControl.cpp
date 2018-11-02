@@ -1,14 +1,16 @@
+#include "registerGameControl.hpp"
+
 registerGameControl::registerGameControl(mainGameControlTask & mainGame, displayTask & display):
 	task("Register game parameters"),
 	mainGame(mainGame),
+	display(display),
 	registerTimer(this, "timeout timer for registering"),
-	keypadChannel(this, "channel for user input"),
-	display(display)
+	keypadChannel(this, "channel for user input")
 	{}
 
-
-void registerGameControl::buttonPressed(hwlib::istream & keypad){
-		keypadChannel.write(keypad.getc());
+/* getting a character from the physical keypad */
+void registerGameControl::buttonPressed(const char & c){
+		keypadChannel.write(c);
 }
 
 void registerGameControl::main(){
@@ -20,7 +22,7 @@ void registerGameControl::main(){
 			/* this state will wait on the keypad until it receives */
 			/* either a command to set the player ID or weapon ID.  */
 			/* else it can send these parameters to the game with # */
-			case IDLE:
+			case IDLE:{
 				auto input = (keypadChannel.read());
 				if (input == 'a'){ 	// this command means we want a player ID
 					state = GET_PLAYER_ID;
@@ -29,25 +31,26 @@ void registerGameControl::main(){
 					state = GET_WEAPON;
 				}
 				else if (input == '#'){
-					mainGameControlTask.setPlayerParams(player_id, weapon_id); // set the player parameters
+					mainGame.setPlayerParams(player_id, weapon_id); // set the player parameters
 				}
 				break;
+			}
 
 
 			/* this state loops two times to get the player ID. this means */
 			/* that if the player wants ID 1 he or she should push 0 first */
 			/* and 1 second (eventually followed by # in the IDLE state)   */
-			case GET_PLAYER_ID:
+			case GET_PLAYER_ID:{
 				registerTimer.set(10'000'000); // set timer for 10 seconds
 				for(int i=0; i<2; i++){ // trying to read two chars from channel
-					displayTask.showChoice(false); // show it on the oled
+					display.showChoice(false); // show it on the oled
 					auto event = wait(registerTimer + keypadChannel);
 					if (event == keypadChannel){   // new key was pressed
 						auto input = keypadChannel.read();
 						if (input >= '0' && input <= '9'){ // input was numeric
 							player_id += uint16_t(input-48); //typecast to int
-							if (i=0){
-								player_id * 10; // first num is base 10
+							if (i==0){
+								player_id *= 10; // first num is base 10
 							}
 						}
 						else{
@@ -59,15 +62,17 @@ void registerGameControl::main(){
 
 				state = IDLE;
 				break;
+				
+			}
 
 
 			/* this state will do the same as GET_PLAYER_ID */
 			/* except it wil only take 1 number and set the */
 			/* weapon ID.                                   */
-			case GET_WEAPON:
+			case GET_WEAPON:{
 				registerTimer.set(10'000'000); // set timer for 10 seconds
-				auto event = (registerTimer + keypadChannel;
-				displayTask.showChoice(true);
+				auto event = (registerTimer + keypadChannel);
+				display.showChoice(true);
 				if (event == keypadChannel){ // new key was pressed
 					auto input = keypadChannel.read();
 					if (input >= '0' && input <= '9'){ // input was numeric
@@ -81,6 +86,8 @@ void registerGameControl::main(){
 
 				state = IDLE;
 				break;
+				
+			}
 		}
 	}
 }

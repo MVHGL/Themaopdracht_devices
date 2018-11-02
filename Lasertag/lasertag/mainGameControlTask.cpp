@@ -63,18 +63,30 @@ void mainGameControlTask::setPlayerParams(const uint16_t& playerID, const uint16
 }
 
 void mainGameControlTask::main() {
+	state = REGISTER_GAME;
 	timerControl.setTime(Time(10,0));
-	ownWeaponID = 2;
+	/*ownWeaponID = 2;
 	weaponLookup(ownWeaponID, ownWeapon);
 	display.showAmmo(ownWeapon.ammo);
 	display.showWeapon(ownWeapon.name);
 	display.showHealth(player.hp);
-	player.p_id = 3;
+	player.p_id = 3;*/
 	while (true) {
 		switch (state) {
+			case REGISTER_GAME:{
+				hwlib::cout << "Now registering a game!\n";
+				wait(setPlayerParamsFlag);
+				player.p_id = playerIdPool.read();
+				ownWeaponID = weaponIdPool.read();
+				weaponLookup(ownWeaponID, ownWeapon);
+				display.showAmmo(ownWeapon.ammo);
+				display.showWeapon(ownWeapon.name);
+				display.showHealth(player.hp);
+				break;
+			}
 			case IDLE:{
 				timerControl.startGameTimer();
-				if (!timerControl.isGameTimeOver()) {  
+				if (!timerControl.isGameTimeOver()) {
 					/*display.showHealth(player.hp);
 					display.showAmmo(ownWeapon.ammo);
 					display.showWeapon(ownWeapon.name);
