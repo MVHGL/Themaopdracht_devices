@@ -24,7 +24,6 @@ private:
 	hwlib::keypad<16> keypad = hwlib::keypad<16>(matrix, "123A456B789C*0#D");
 	
 	enum state_t {IDLE, BUTTON_PRESSED};
-	state_t state = IDLE;
 	registerGameControl & registerGame;
 	char c;
 	

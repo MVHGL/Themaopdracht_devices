@@ -20,7 +20,7 @@ private:
 	rtos::pool<uint16_t> enemyPlayerIdPool;
 	rtos::flag shotByFlag;
 	rtos::clock shotByClock;
-	rtos::pool<bool> choicePool;
+	rtos::pool<int> choicePool;
 	rtos::flag choiceFlag;
 	rtos::pool<uint16_t> playerIdPool;
 	rtos::flag startNewGameFlag;
@@ -33,7 +33,7 @@ private:
 	uint16_t enemy_player_id = 0;
 	uint16_t player_id[2];
 	uint16_t weapon_id[1];
-	bool weapon_or_player;
+	int screen; // which menu screen to show at beginning of game
 	Time time;
 	hwlib::string<40> enemyWeaponName, weaponName;
 public:
@@ -45,6 +45,6 @@ public:
 	void showHealth(const uint16_t & hp);
 	void gameOver(void);
 	void shotBy(const uint16_t & player_id, hwlib::string<40> w_name);
-	void showChoice(const bool & weapon_or_player);
+	void showChoice(const int & screen);
 };
 #endif

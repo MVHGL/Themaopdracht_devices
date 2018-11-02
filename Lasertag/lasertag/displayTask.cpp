@@ -52,7 +52,7 @@ void displayTask::main(){
 					state_d = SHOT;
 				}
 				else if(display_event == choiceFlag){
-					weapon_or_player = choicePool.read();
+					screen = choicePool.read();
 					player_id[0] = playerIdPool.read();
 					player_id[1] = playerIdPool.read();
 					state_d = CHOICE;
@@ -92,18 +92,24 @@ void displayTask::main(){
 				break;
 			}
 			case CHOICE:{
-				if(weapon_or_player){
-					display << "\f"
-						<< "\t0000" << "Choose a weapon:"
-						<< "\t0002" << "[W]> " 
-						<< "\t0502" << weapon_id[0]
-						<< hwlib::flush;
-				}else{
+				if(screen == 0){
 					display << "\f"
 						<< "\t0000" << "Choose ID: "
 						<< "\t0002" << "[PID]> "
 						<< "\t0702" << player_id[0] << player_id[1]
 						<< hwlib::flush;
+				}else if (screen == 1){
+					display << "\f"
+						<< "\t0000" << "Choose a weapon:"
+						<< "\t0002" << "[W]> " 
+						<< "\t0502" << weapon_id[0]
+						<< hwlib::flush;
+				}else if (screen == 2){
+					display << "\f"
+					<< "\t0400" << "MENU:"
+					<< "\t0002" << "[A]: Player ID"
+					<< "\t0004" << "[B]: Weapon ID"
+					<< hwlib::flush;
 				}
 				break;
 			}
@@ -138,7 +144,7 @@ void displayTask::shotBy(const uint16_t & player_id, hwlib::string<40> w_name){
 
 /* make a display menu, show weapon or player ID choice. */
 /* set the bool true for weapon or false for player ID   */
-void displayTask::showChoice(const bool & weapon_or_player){
-	choicePool.write(weapon_or_player);
+void displayTask::showChoice(const int & screen){
+	choicePool.write(screen);
 	choiceFlag.set();
 }

@@ -7,6 +7,7 @@ keypadTask::keypadTask(registerGameControl & registerGame):
 
 
 void keypadTask::main(){
+	state_t state = IDLE;
 	while(1){
 		switch(state){
 			case IDLE:

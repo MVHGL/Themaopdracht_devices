@@ -14,6 +14,8 @@ void registerGameControl::buttonPressed(const char & c){
 }
 
 void registerGameControl::main(){
+	enum screen_t {PLAYER, WEAPON, MENU};
+	screen_t screen = MENU;
 	uint16_t player_id = 0;
 	uint16_t weapon_id = 0;
 	state_t state = IDLE;
@@ -23,11 +25,13 @@ void registerGameControl::main(){
 			/* either a command to set the player ID or weapon ID.  */
 			/* else it can send these parameters to the game with # */
 			case IDLE:{
+				screen = MENU;
+				//display.showChoice(screen);
 				auto input = (keypadChannel.read());
-				if (input == 'a'){ 	// this command means we want a player ID
+				if (input == 'A'){ 	// this command means we want a player ID
 					state = GET_PLAYER_ID;
 				}
-				else if (input == 'b'){	// this command means we want to choose a weapon
+				else if (input == 'B'){	// this command means we want to choose a weapon
 					state = GET_WEAPON;
 				}
 				else if (input == '#'){
@@ -41,9 +45,10 @@ void registerGameControl::main(){
 			/* that if the player wants ID 1 he or she should push 0 first */
 			/* and 1 second (eventually followed by # in the IDLE state)   */
 			case GET_PLAYER_ID:{
+				screen = PLAYER;
 				registerTimer.set(10'000'000); // set timer for 10 seconds
 				for(int i=0; i<2; i++){ // trying to read two chars from channel
-					display.showChoice(false); // show it on the oled
+					display.showChoice(screen); // show it on the oled
 					auto event = wait(registerTimer + keypadChannel);
 					if (event == keypadChannel){   // new key was pressed
 						auto input = keypadChannel.read();
@@ -70,9 +75,10 @@ void registerGameControl::main(){
 			/* except it wil only take 1 number and set the */
 			/* weapon ID.                                   */
 			case GET_WEAPON:{
+				screen = WEAPON;
 				registerTimer.set(10'000'000); // set timer for 10 seconds
 				auto event = (registerTimer + keypadChannel);
-				display.showChoice(true);
+				display.showChoice(screen);
 				if (event == keypadChannel){ // new key was pressed
 					auto input = keypadChannel.read();
 					if (input >= '0' && input <= '9'){ // input was numeric
