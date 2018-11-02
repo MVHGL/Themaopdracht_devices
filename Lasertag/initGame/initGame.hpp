@@ -13,8 +13,9 @@ private:
 	ir_transmitter & transmitterControl;
 	
 public:
-	initGame(displayTask & display, ir_transmitter & transmitterControl);
-	void buttonPressed();
+	initGame(displayTask& displayControl, ir_transmitter & transmitterControl);
+	void buttonPressed(const char c);
+	void main();
 	
 };
 

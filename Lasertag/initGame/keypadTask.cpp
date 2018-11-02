@@ -2,6 +2,7 @@
 
 keypadTask::keypadTask(initGame & initGameTask):
 	Task("KeypadTask"),
+	out0(out0),
 	initGameTask(initGameTask)
 	{}
 

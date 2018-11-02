@@ -1,6 +1,7 @@
 #include "displayTask.hpp"
 
 displayTask::displayTask(hwlib::window_ostream & oled_display)
+	displayF
 	oled_display(oled_display),
 	Task("display task")
 	{}
