@@ -14,7 +14,7 @@ private:
 	rtos::pool<int> statePool;
 	int time = 0;
 	int state = 1;
-	char c = '*';
+	char c = ' ';
 	hwlib::window_ostream &oled_display;
 	enum state_t {IDLE, DISPLAY};
 	state_t state_display = IDLE;

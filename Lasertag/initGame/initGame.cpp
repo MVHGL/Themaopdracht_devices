@@ -20,7 +20,7 @@ void initGame::main() {
 	//enum voor de states. 
 	enum state_t {IDLE, ADJUST_TIME, BUTTON_PRESSED_TWO, SEND_IR_TIME, START_GAME};
 	state_t state = IDLE;
-	buttonPressed('*');
+	buttonPressed(' ');
 	//de loop
 	while(1){
 		switch(state){
@@ -39,16 +39,17 @@ void initGame::main() {
 		}
 		case ADJUST_TIME: 												// Waits for time from keypad input.  
 		{
-			//hwlib::cout << "state: adjust_time " << '\n';
+			hwlib::cout << "state: adjust_time " << '\n';
 			s = 1;
 			auto event = wait(initTimer + keypadChannel);
 			if (event == keypadChannel){
-				hwlib::cout << "state Adjust time, event == keypadChannel \n";
+				//hwlib::cout << "state Adjust time, event == keypadChannel \n";
 				minute_tens = int(keypadChannel.read() - 48);			// Char to int minus the assci value gives a number between 0 and 9 
 				hwlib::cout << "min_tiental: " << minute_tens << '\n';
 				if (minute_tens >= 0 && minute_tens < 10)			//Checks for right input
 				{
 					minute_tens *= 10;								//Makes the first input 10 times bigger because the first given nummer represents time per 10 minuts
+					time = minute_tens;
 					hwlib::cout << "minute_tens: " << minute_tens << '\n';
 					state = BUTTON_PRESSED_TWO; 
 					break;
@@ -101,6 +102,7 @@ void initGame::main() {
 				{
 					hwlib::cout << "sending time.\n";
 					transmitterControl.send(0,time);
+					break;
 				}
 				else if (keypadChannel.read()=='*')						//If * is pressed go to startgame state
 				{

@@ -6,7 +6,9 @@
 #include "keypadTask.hpp"
 
 int main() {
-	
+	// kill the watchdog
+	WDT->WDT_MR = WDT_MR_WDDIS;
+   
 	//display 
 	auto scl= hwlib::target::pin_oc(hwlib::target::pins::a9);
 	auto sda = hwlib::target::pin_oc(hwlib::target::pins::a8);

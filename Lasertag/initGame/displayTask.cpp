@@ -12,6 +12,7 @@ displayTask::displayTask(hwlib::window_ostream & oled_display):
 	{}
 
 void displayTask::main(){
+	oled_display << '\f' << hwlib::flush;
 	while(true){
 		switch(state_display){
 			case IDLE:
@@ -19,6 +20,8 @@ void displayTask::main(){
 				auto event = wait(timeFlag + commandFlag + stateFlag);
 				if(event == timeFlag){
 					time = timePool.read();
+					state_display = DISPLAY;
+					break;
 				}
 				if(event == commandFlag){
 					c = commandPool.read();
