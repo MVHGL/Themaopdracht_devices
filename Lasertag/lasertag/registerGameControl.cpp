@@ -54,9 +54,10 @@ void registerGameControl::main(){
 			/* and 1 second (eventually followed by # in the IDLE state)   */
 			case GET_PLAYER_ID:{
 				screen = PLAYER;
+				display.showChoice(screen); // show it on the oled
+
 				//registerTimer.set(10'000'000); // set timer for 10 seconds
 				for(int i=0; i<2; i++){ // trying to read two chars from channel
-					display.showChoice(screen); // show it on the oled
 					auto event = wait(registerTimer + keypadChannel);
 					if (event == keypadChannel){   // new key was pressed
 						auto input = keypadChannel.read();
@@ -88,9 +89,9 @@ void registerGameControl::main(){
 			/* weapon ID.                                   */
 			case GET_WEAPON:{
 				screen = WEAPON;
+				display.showChoice(screen);
 				//registerTimer.set(10'000'000); // set timer for 10 seconds
 				auto event = wait(registerTimer + keypadChannel);
-				display.showChoice(screen);
 				if (event == keypadChannel){ // new key was pressed
 					auto input = keypadChannel.read();
 					if (input >= '0' && input <= '9'){ // input was numeric
