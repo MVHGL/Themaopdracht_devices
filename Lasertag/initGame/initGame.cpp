@@ -31,7 +31,9 @@ void initGame::main() {
 			temp = keypadChannel.read();
 			//hwlib::cout << "character read from channel: " << temp << '\n';
 			if (temp == 'C'){											//Wait for a C character. 
+				s=4;
 				state= ADJUST_TIME; 
+				
 				initTimer.set(15'000'000);
 				break; 
 			}
@@ -40,18 +42,19 @@ void initGame::main() {
 		case ADJUST_TIME: 												// Waits for time from keypad input.  
 		{
 			hwlib::cout << "state: adjust_time " << '\n';
-			s = 1;
+			s = 4;
 			auto event = wait(initTimer + keypadChannel);
 			if (event == keypadChannel){
 				//hwlib::cout << "state Adjust time, event == keypadChannel \n";
 				minute_tens = int(keypadChannel.read() - 48);			// Char to int minus the assci value gives a number between 0 and 9 
 				hwlib::cout << "min_tiental: " << minute_tens << '\n';
-				if (minute_tens >= 0 && minute_tens < 10)			//Checks for right input
+				if (minute_tens >= 0 && minute_tens < 3)			//Checks for right input
 				{
 					minute_tens *= 10;								//Makes the first input 10 times bigger because the first given nummer represents time per 10 minuts
 					time = minute_tens;
 					hwlib::cout << "minute_tens: " << minute_tens << '\n';
 					displayControl.showTime(minute_tens); 
+					s=5;
 					state = BUTTON_PRESSED_TWO; 
 					break;
 					
@@ -60,6 +63,8 @@ void initGame::main() {
 					state = ADJUST_TIME;
 					break;
 				}
+				break;
+				
 			}
 			else if (event == initTimer){ 							// When the timer and the input is timedout and program returns to IDLE
 				hwlib::cout << "returning to IDLE. \n";
@@ -69,6 +74,7 @@ void initGame::main() {
 		}
 		case BUTTON_PRESSED_TWO: 									// This state waits for the second time input in minutes 
 		{
+			s=5;
  			hwlib::cout << "state: Button_pressed_two \n";					
 			auto event = wait(initTimer + keypadChannel);
 			if(event == keypadChannel){								//checks for write input
@@ -102,13 +108,13 @@ void initGame::main() {
 				wait(keypadChannel);
 				if (keypadChannel.read()=='#')
 				{
-					hwlib::cout << "sending time.\n";
+					hwlib::cout << "sending time.\n" <<time;
 					transmitterControl.send(0,time);
 					break;
 				}
 				else if (keypadChannel.read()=='*')						//If * is pressed go to startgame state
 				{
-					transmitterControl.send(0,0); 
+					transmitterControl.send(0,31); 
 					hwlib::cout << "state = start_game.\n";
 					state= START_GAME; 
 					break; 
@@ -116,7 +122,9 @@ void initGame::main() {
 				else if(keypadChannel.read()=='D')
 				{
 					hwlib::cout << "returning to IDLE";
+					displayControl.showTime(0); 
 					state = IDLE;
+					
 					break;
 				}else{
 					break;
@@ -140,6 +148,7 @@ void initGame::main() {
 				else if(in=='D')					// With D pressed go back to IDLE
 				{
 					hwlib::cout << "D pressed. returning to IDLE.\n";
+					displayControl.showTime(0); 
 					state=IDLE; 
 					break; 
 				}
