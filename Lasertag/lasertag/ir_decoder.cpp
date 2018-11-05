@@ -28,7 +28,7 @@ void ir_decoder::check_message() {
 			//hwlib::cout << "Received 2nd time containing: " << data << ' ' << player_id << '\n';
 
 		} else {
-			hwlib::cout << "{ERROR}\n";
+			hwlib::cout << "{ERROR}: checksum not valid\n";
 		}
 	}	
 }

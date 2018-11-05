@@ -59,8 +59,6 @@ void displayTask::main(){
 				else if(display_event == choiceFlag){
 					hwlib::cout << "choiceflag\n";
 					screen = choicePool.read();
-					//player_id[0] = playerIdPool.read();
-					//player_id[1] = playerIdPool.read();
 					state_d = CHOICE;
 				}
 				break;
@@ -103,10 +101,10 @@ void displayTask::main(){
 						<< "\t0000" << "Choose ID: "
 						<< "\t0002" << "[PID]> "
 						<< hwlib::flush;
-					wait(numberFlag);
+					//wait(numberFlag);
 					char user_number = numberPool.read(); // read number to display on screen
 					display << "\t0702" << user_number << hwlib::flush; // read first number
-					wait(numberFlag);
+					//wait(numberFlag);
 					user_number = numberPool.read();
 					display << "\t0802" << user_number << hwlib::flush; // read second number
 					
@@ -115,7 +113,7 @@ void displayTask::main(){
 						<< "\t0000" << "Choose a weapon:"
 						<< "\t0002" << "[W]> "
 						<< hwlib::flush;
-					wait(numberFlag);
+					//wait(numberFlag);
 					char user_number = numberPool.read();
 					display << "\t0502" << user_number<< hwlib::flush;
 					
@@ -125,10 +123,12 @@ void displayTask::main(){
 					<< "\t0002" << "[A]: Player ID"
 					<< "\t0004" << "[B]: Weapon ID"
 					<< hwlib::flush;
+					hwlib::cout << "nu in display show menu ding\n";
+
 				}
-				hwlib::cout << "nu in display show menu ding\n";
+				hwlib::cout << "display terug naar idle!\n";
 				state_d = IDLE;
-				display << hwlib::flush;
+				//display << hwlib::flush;
 				break;
 			}
 				

@@ -40,6 +40,7 @@ void mainGameControlTask::triggered() {
 void mainGameControlTask::handleMessageReceived() {
 	uint16_t playerID = messages.read();
 	uint16_t data = messages.read();
+	//hwlib::cout << "PLAYER_ID: " << playerID << "\nDATA: " << data << '\n';
 	if(playerID == 0 && data == 31){
 		timerControl.startGameTimer();
 	}else if(playerID == 0 && data < 21){
@@ -54,7 +55,7 @@ void mainGameControlTask::handleMessageReceived() {
 			gameOver();
 		}
 	}else{
-		hwlib::cout << "{ERROR} Invalid message received\n";
+		hwlib::cout << "{ERROR}: invalid message received\n";
 	}
 }
 
@@ -69,7 +70,7 @@ void mainGameControlTask::setPlayerParams(const uint16_t& playerID, const uint16
 }
 
 void mainGameControlTask::main() {
-	state = REGISTER_TIME;
+	state = REGISTER_GAME;
 	/*ownWeaponID = 2;
 	weaponLookup(ownWeaponID, ownWeapon);
 	display.showAmmo(ownWeapon.ammo);
@@ -82,10 +83,12 @@ void mainGameControlTask::main() {
 				wait(setPlayerParamsFlag);
 				player.p_id = playerIdPool.read();
 				ownWeaponID = weaponIdPool.read();
+				//hwlib::cout << "PLAYER ID: " << player.p_id << "\nWEAPON ID: " << ownWeaponID << '\n';
 				weaponLookup(ownWeaponID, ownWeapon);
 				display.showAmmo(ownWeapon.ammo);
 				display.showWeapon(ownWeapon.name);
 				display.showHealth(player.hp);
+				state = REGISTER_TIME;
 				break;
 			}
 			case REGISTER_TIME:{

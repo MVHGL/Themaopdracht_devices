@@ -42,6 +42,7 @@ void registerGameControl::main(){
 				}
 				else if (input == '#'){
 					hwlib::cout << "starting game!!\n";
+					hwlib::cout << "PID: " << player_id << "\nWID: " << weapon_id << '\n';
 					mainGame.setPlayerParams(player_id, weapon_id); // set the player parameters
 				}
 				break;
@@ -53,7 +54,7 @@ void registerGameControl::main(){
 			/* and 1 second (eventually followed by # in the IDLE state)   */
 			case GET_PLAYER_ID:{
 				screen = PLAYER;
-				registerTimer.set(10'000'000); // set timer for 10 seconds
+				//registerTimer.set(10'000'000); // set timer for 10 seconds
 				for(int i=0; i<2; i++){ // trying to read two chars from channel
 					display.showChoice(screen); // show it on the oled
 					auto event = wait(registerTimer + keypadChannel);
@@ -63,7 +64,7 @@ void registerGameControl::main(){
 							display.setNumber(input); 		// show the number on the screen
 							player_id += uint16_t(input-48); //typecast to int
 							if (i==0){
-								player_id *= 10; // first num is base 10
+						 		player_id *= 10; // first num is base 10
 							}
 						}
 						else{
@@ -72,7 +73,7 @@ void registerGameControl::main(){
 						}
 					}
 				}
-				hwlib::cout << "je moedertje!!\n";
+				hwlib::cout << "{DEBUG}: going back to menu!\n";
 				screen = MENU;
 				display.showChoice(screen);
 				
@@ -87,7 +88,7 @@ void registerGameControl::main(){
 			/* weapon ID.                                   */
 			case GET_WEAPON:{
 				screen = WEAPON;
-				registerTimer.set(10'000'000); // set timer for 10 seconds
+				//registerTimer.set(10'000'000); // set timer for 10 seconds
 				auto event = wait(registerTimer + keypadChannel);
 				display.showChoice(screen);
 				if (event == keypadChannel){ // new key was pressed
@@ -101,7 +102,7 @@ void registerGameControl::main(){
 						weapon_id = 0; // reset weapon ID
 					}
 				}
-
+				hwlib::cout << "{DEBUG}: going back to menu!\n";
 				screen = MENU;
 				display.showChoice(screen);
 				
