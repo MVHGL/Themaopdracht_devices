@@ -136,7 +136,7 @@ void initGame::main() {
 				else if(keypadChannel.read()=='*')				// if * is pressed the start message will be send again. 
 				{
 					hwlib::cout << "sending start_message...\n";
-					transmitterControl.send(0,0);
+					transmitterControl.send(0,31);
 					break;
 				}
 				else{
