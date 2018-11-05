@@ -92,9 +92,11 @@ void mainGameControlTask::main() {
 				break;
 			}
 			case REGISTER_TIME:{
+				display.showString("Waiting for\n    settings");
 				wait(channelFullFlag); // Wait for a message to set time
 				handleMessageReceived(); // Handle the message
-				display.showString("Waiting");
+				display.returnIdle();
+				display.showString("Waiting for\n    start");
 				wait(channelFullFlag); // Wait for a message to start the game
 				handleMessageReceived(); // Handle the message
 				display.returnIdle();

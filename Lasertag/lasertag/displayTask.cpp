@@ -89,7 +89,7 @@ void displayTask::main(){
 			}
 			case MESSAGE:{
 				display << "\f"
-						<< "\t0302" << msg
+						<< "\t0203" << msg
 						<< hwlib::flush;
 				wait(idleFlag);
 				state_d = IDLE;
