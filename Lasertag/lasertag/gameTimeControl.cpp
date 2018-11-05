@@ -30,7 +30,7 @@ void gameTimeControl::main() {
 				wait(clock);
 				time.updateTime();  	// clock waited one second, so edit the time
 				if (isGameTimeOver()) {	// if time has ended
-					display.gameOver();
+					display.showString("GAME OVER");
 					state = IDLE;
 				} else {
 					display.showGameTime(time);

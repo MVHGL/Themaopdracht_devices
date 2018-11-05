@@ -15,7 +15,8 @@ private:
 	rtos::flag showWeaponFlag;
 	rtos::pool<uint16_t> healthPool;
 	rtos::flag healthFlag;
-	rtos::flag gameOverFlag;
+	rtos::flag messageFlag;
+	rtos::pool<hwlib::string<40>> messagePool;
 	rtos::pool<hwlib::string<40>> enemyWeaponNamePool;
 	rtos::pool<uint16_t> enemyPlayerIdPool;
 	rtos::flag shotByFlag;
@@ -23,10 +24,10 @@ private:
 	rtos::pool<int> choicePool;
 	rtos::flag choiceFlag;
 	rtos::pool<uint16_t> playerIdPool;
-	rtos::flag startNewGameFlag;
+	rtos::flag idleFlag;
 	rtos::pool<char> numberPool;
 	rtos::flag numberFlag;
-	enum display_state {IDLE, SHOW, SHOT, GAME_OVER, CHOICE};
+	enum display_state {IDLE, SHOW, SHOT, MESSAGE, CHOICE};
 	display_state state_d = IDLE;
 	// Variables
 	uint16_t ammo = 0;
@@ -37,7 +38,7 @@ private:
 	uint16_t weapon_id[1];
 	int screen; // which menu screen to show at beginning of game
 	Time time;
-	hwlib::string<40> enemyWeaponName, weaponName;
+	hwlib::string<40> enemyWeaponName, weaponName, msg;
 public:
 	displayTask(hwlib::window_ostream & display);
 	void main() override;
@@ -45,7 +46,8 @@ public:
 	void showAmmo(const uint16_t & ammo);
 	void showWeapon(hwlib::string<40> weapon);
 	void showHealth(const uint16_t & hp);
-	void gameOver(void);
+	void showString(hwlib::string<40> msg);
+	void returnIdle(void);
 	void shotBy(const uint16_t & player_id, hwlib::string<40> w_name);
 	void showChoice(const int & screen);
 	void setNumber(const char & number);

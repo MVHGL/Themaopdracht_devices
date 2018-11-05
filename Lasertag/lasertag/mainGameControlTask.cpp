@@ -2,16 +2,16 @@
 
 mainGameControlTask::mainGameControlTask(ir_transmitter& transmitter, displayTask& display, gameTimeControl& timerControl):
 	task("Maingame control task"),
+	transmitter(transmitter),
+	display(display),
+	timerControl(timerControl),
 	messages(this, "Main game task messages channel"),
 	timeCompletedFlag(this, "Time completed flag"),
-	transmitter(transmitter),
 	triggerFlag(this, "Triggerflag"),
-	display(display),
 	playerIdPool("playerId pool"),
 	weaponIdPool("WeaponId pool"),
 	setPlayerParamsFlag(this, "Set player params flag"),
-	channelFullFlag(this, "Message channel full"),
-	timerControl(timerControl)
+	channelFullFlag(this, "Message channel full")
 	{}
 
 void mainGameControlTask::IRMessageReceived(const uint16_t& playerID, const uint16_t& data) {
@@ -40,15 +40,21 @@ void mainGameControlTask::triggered() {
 void mainGameControlTask::handleMessageReceived() {
 	uint16_t playerID = messages.read();
 	uint16_t data = messages.read();
-	
-	weaponLookup(data, enemyWeapon); // check enemy weapon, and edit the struct by reference
-	player.hp -= enemyWeapon.damage;
-	
-	if (player.hp > 0 && player.hp <= 100) {
-		display.showHealth(player.hp);
-		display.shotBy(playerID, enemyWeapon.name);
-	} else {
-		gameOver();
+	if(playerID == 0 && data == 31){
+		timerControl.startGameTimer();
+	}else if(playerID == 0 && data < 21){
+		timerControl.setTime(Time(data, 0));
+	}else if(playerID > 0){
+		weaponLookup(data, enemyWeapon); // check enemy weapon, and edit the struct by reference
+		player.hp -= enemyWeapon.damage;
+		if (player.hp > 0 && player.hp <= 100) {
+			display.showHealth(player.hp);
+			display.shotBy(playerID, enemyWeapon.name);
+		} else {
+			gameOver();
+		}
+	}else{
+		hwlib::cout << "{ERROR} Invalid message received\n";
 	}
 }
 
@@ -63,8 +69,7 @@ void mainGameControlTask::setPlayerParams(const uint16_t& playerID, const uint16
 }
 
 void mainGameControlTask::main() {
-	state = REGISTER_GAME;
-	timerControl.setTime(Time(10,0));
+	state = REGISTER_TIME;
 	/*ownWeaponID = 2;
 	weaponLookup(ownWeaponID, ownWeapon);
 	display.showAmmo(ownWeapon.ammo);
@@ -83,8 +88,17 @@ void mainGameControlTask::main() {
 				display.showHealth(player.hp);
 				break;
 			}
+			case REGISTER_TIME:{
+				wait(channelFullFlag); // Wait for a message to set time
+				handleMessageReceived(); // Handle the message
+				display.showString("Waiting");
+				wait(channelFullFlag); // Wait for a message to start the game
+				handleMessageReceived(); // Handle the message
+				display.returnIdle();
+				state = IDLE;
+				break;
+			}
 			case IDLE:{
-				timerControl.startGameTimer();
 				if (!timerControl.isGameTimeOver()) {
 					/*display.showHealth(player.hp);
 					display.showAmmo(ownWeapon.ammo);
@@ -115,7 +129,7 @@ void mainGameControlTask::main() {
 				state = IDLE;
 				break;
 			case GAME_OVER:
-				display.gameOver();
+				display.showString("GAME OVER");
 				break;
 		}
 	}

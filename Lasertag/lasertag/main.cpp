@@ -7,7 +7,6 @@
 #include "displayTask.hpp"
 #include "TriggerTask.hpp"
 #include "keypadTask.hpp"
-
 int main( void ){
    // kill the watchdog
 	WDT->WDT_MR = WDT_MR_WDDIS;
@@ -16,10 +15,12 @@ int main( void ){
 	auto tsop_signal	= target::pin_in(target::pins::d10);
 	auto ir_led			= target::d2_36kHz();
 	auto trigger		= target::pin_in(target::pins::d9);
+	auto tx_data		= target::pin_out(target::pins::d3);
+	auto tx_clock		= target::pin_out(target::pins::d4);
 	
 	// Display configuration
-	auto scl			= hwlib::target::pin_oc(hwlib::target::pins::scl);
-	auto sda			= hwlib::target::pin_oc(hwlib::target::pins::sda);
+	auto scl			= target::pin_oc(target::pins::scl);
+	auto sda			= target::pin_oc(target::pins::sda);
 	auto i2c			= hwlib::i2c_bus_bit_banged_scl_sda(scl, sda);
 	auto oled			= hwlib::glcd_oled(i2c, 0x3c);
 	auto font			= hwlib::font_default_8x8();
