@@ -51,6 +51,7 @@ void initGame::main() {
 					minute_tens *= 10;								//Makes the first input 10 times bigger because the first given nummer represents time per 10 minuts
 					time = minute_tens;
 					hwlib::cout << "minute_tens: " << minute_tens << '\n';
+					displayControl.showTime(minute_tens); 
 					state = BUTTON_PRESSED_TWO; 
 					break;
 					
@@ -128,24 +129,25 @@ void initGame::main() {
 				s = 3;
 				hwlib::cout << "state = START_GAME\n";
 				wait(keypadChannel);
-				if(keypadChannel.read()=='*')				// if * is pressed the start message will be send again. 
+				auto in = (keypadChannel.read()); 
+				if(in=='*')				// if * is pressed the start message will be send again. 
 				{
 					hwlib::cout << "sending start_message...\n";
 					transmitterControl.send(0,31);
-					hwlib::wait_ms(500);
+					//hwlib::wait_ms(500);
 					break;
 				}
-				else if(keypadChannel.read()=='D')					// With D pressed go back to IDLE
+				else if(in=='D')					// With D pressed go back to IDLE
 				{
 					hwlib::cout << "D pressed. returning to IDLE.\n";
 					state=IDLE; 
 					break; 
 				}
 				
-				/*else{
+				else{
 					s = 9;
 					break;
-				}*/
+				}
 			}
 		}
 	}

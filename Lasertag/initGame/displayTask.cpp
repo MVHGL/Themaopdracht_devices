@@ -25,9 +25,13 @@ void displayTask::main(){
 				}
 				if(event == commandFlag){
 					c = commandPool.read();
+					state_display = DISPLAY;
+					break; 
 				}
 				if(event == stateFlag){
 					state = statePool.read();
+					state_display = DISPLAY;
+					break;
 				}
 				state_display = DISPLAY;
 				break;
@@ -55,6 +59,7 @@ void displayTask::main(){
 					hwlib::flush;
 					state_display = IDLE;
 					break;
+				}
 				if(state == 3){
 					oled_display 
 					<<"\f" << "\t0000" << "time set: " << time
@@ -68,13 +73,13 @@ void displayTask::main(){
 				if(state == 9){
 					oled_display <<"\f" <<"invalid keypress!"
 					<< hwlib::flush;
+					break; 
 				}
 					
 				}
 			}
 		}
-	}
-};
+}
 
 void displayTask::showTime(const int & t){
 	timePool.write(t);
