@@ -37,7 +37,7 @@ void initGame::main() {
 				initTimer.set(15'000'000);
 				break; 
 			}
-			break;
+			//break;
 		}
 		case ADJUST_TIME: 												// Waits for time from keypad input.  
 		{
@@ -96,7 +96,7 @@ void initGame::main() {
 			}
 			else if (event == initTimer) 							// When the timer and the input is timedout and program returns to IDLE
 			{
-				s = 7;
+				s = 1;
 				state=IDLE;
 				break;
 			} 
@@ -106,23 +106,24 @@ void initGame::main() {
 				s = 2;
 				hwlib::cout << "state = SEND_IR_TIME\n";
 				wait(keypadChannel);
-				if (keypadChannel.read()=='#')
+				auto given= (keypadChannel.read());
+				if (given=='#')
 				{
 					hwlib::cout << "sending time.\n" <<time;
 					transmitterControl.send(0,time);
 					break;
 				}
-				else if (keypadChannel.read()=='*')						//If * is pressed go to startgame state
+				else if (given=='*')						//If * is pressed go to startgame state
 				{
 					transmitterControl.send(0,31); 
 					hwlib::cout << "state = start_game.\n";
 					state= START_GAME; 
 					break; 
 				}
-				else if(keypadChannel.read()=='D')
+				else if(given=='D')
 				{
 					hwlib::cout << "returning to IDLE";
-					displayControl.showTime(0); 
+					//displayControl.showTime(0); 
 					state = IDLE;
 					
 					break;
