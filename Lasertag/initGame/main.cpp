@@ -24,6 +24,7 @@ int main() {
 	displayTask displaytask(oled);
 	initGame initGameTask(displaytask, transmitter);
 	keypadTask keypad_task(initGameTask);
-
+	
+	//
 	rtos::run();
 }
