@@ -124,25 +124,28 @@ void initGame::main() {
 			
 		case START_GAME:									//State to start the game
 			{
+				//transmitterControl.send(0,31); 
 				s = 3;
-				wait(keypadChannel);
 				hwlib::cout << "state = START_GAME\n";
-				if(keypadChannel.read()=='D')					// With D pressed go back to IDLE
+				wait(keypadChannel);
+				if(keypadChannel.read()=='*')				// if * is pressed the start message will be send again. 
+				{
+					hwlib::cout << "sending start_message...\n";
+					transmitterControl.send(0,31);
+					hwlib::wait_ms(500);
+					break;
+				}
+				else if(keypadChannel.read()=='D')					// With D pressed go back to IDLE
 				{
 					hwlib::cout << "D pressed. returning to IDLE.\n";
 					state=IDLE; 
 					break; 
 				}
-				else if(keypadChannel.read()=='*')				// if * is pressed the start message will be send again. 
-				{
-					hwlib::cout << "sending start_message...\n";
-					transmitterControl.send(0,31);
-					break;
-				}
-				else{
+				
+				/*else{
 					s = 9;
 					break;
-				}
+				}*/
 			}
 		}
 	}
