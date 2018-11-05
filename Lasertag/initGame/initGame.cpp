@@ -77,6 +77,7 @@ void initGame::main() {
 					time = minute_tens + min; 					//adds the two given time variabeles togheter 
 					if(time <= 31 && time >0){						
 						hwlib::cout <<"time: " << time << '\n';
+						displayControl.showTime(time); 
 						state= SEND_IR_TIME;
 						break; 
 					}else{
