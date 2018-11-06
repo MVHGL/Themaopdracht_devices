@@ -38,10 +38,10 @@ void initGame::main() {
 		}
 		case ADJUST_TIME: 												// Waits for time from keypad input.  
 		{
+			initTimer.set(7'500'000);
 			displayControl.showTime(0); 
 			hwlib::cout << "state: adjust_time " << '\n';
 			displayControl.showState(4);
-			initTimer.set(15'000'000);
 			auto event = wait(initTimer + keypadChannel);
 			if (event == keypadChannel){
 				keyButtonOne=keypadChannel.read(); 
@@ -73,6 +73,7 @@ void initGame::main() {
 			}
 			else if (event == initTimer){ 							// When the timer and the input is timedout and program returns to IDLE
 				hwlib::cout << "returning to IDLE. \n";
+				displayControl.showState(7);
 				state=IDLE;
 				break;
 			}
@@ -80,6 +81,7 @@ void initGame::main() {
 		}
 		case BUTTON_PRESSED_TWO: 									// This state waits for the second time input in minutes 
 		{
+			initTimer.set(7'500'000);
 			displayControl.showState(5);
  			hwlib::cout << "state: Button_pressed_two \n";					
 			auto event = wait(initTimer + keypadChannel);
@@ -90,6 +92,12 @@ void initGame::main() {
 				{
 					state= IDLE; 
 					break;
+				}
+				if (keyButtonTwo=='#')
+				{
+					transmitterControl.send(0,time);
+					state=SEND_IR_TIME;
+					break; 
 				}
 				if (min >= 0 && min <10)
 				{
@@ -105,15 +113,12 @@ void initGame::main() {
 					hwlib::cout << "Time to big(over 31), returning to BUTTON_PRESSED_TWO.\n";
 					displayControl.showState(6);
 					min=0;
-					minute_tens=0;
-					time=0; 
-					state = ADJUST_TIME;
 					break;
 				}
 			}
 			else if (event == initTimer) 							// When the timer and the input is timedout and program returns to IDLE
 			{
-				displayControl.showState(1);
+				displayControl.showState(7);
 				state=IDLE;
 				break;
 			}
@@ -146,6 +151,7 @@ void initGame::main() {
 					break;
 				}
 				else{
+					displayControl.showState(6);
 					break;
 				}
 			}

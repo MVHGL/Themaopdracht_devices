@@ -103,6 +103,18 @@ void displayTask::main(){
 					state_display = IDLE;
 					break;
 				}
+				if (state==7)
+				{
+					oled_display 
+					<<"\f" << "\t0000" << "Game Time: " //<< time
+					/*<< "\t0002" << "command: "<< c */
+					<< "\t0003" << "Timed Out"
+					<<
+					hwlib::flush;
+					hwlib::wait_ms(2000);
+					state_display = IDLE;
+					break;
+				}
 				else{
 					state_display=IDLE;
 					break;
