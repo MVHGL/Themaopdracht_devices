@@ -9,10 +9,10 @@
 #############################################################################
 
 # source files in this project (main.cpp is automatically assumed)
-SOURCES := ../lasertag/ir_transmitter.cpp initGame.cpp initDisplayTask.cpp keypadTask.cpp
+SOURCES := ../lasertag/ir_transmitter.cpp initGame.cpp initDisplayTask.cpp initKeypadTask.cpp
 
 # header files in this project
-HEADERS := hwlib.hpp ../lasertag/ir_transmitter.hpp initGame.hpp initDisplayTask.hpp keypadTask.hpp
+HEADERS := hwlib.hpp ../lasertag/ir_transmitter.hpp initGame.hpp initDisplayTask.hpp initKeypadTask.hpp
 
 # other places to look for files for this project
 SEARCH  :=

@@ -3,7 +3,7 @@
 #include "rtos.hpp"
 #include "initGame.hpp"
 #include "initDisplayTask.hpp"
-#include "keypadTask.hpp"
+#include "initKeypadTask.hpp"
 
 int main() {
 	// kill the watchdog
@@ -21,15 +21,10 @@ int main() {
 	auto IRLed= hwlib::target::pin_out(hwlib::target::pins::d5);
 	auto transmitter = ir_transmitter(IRLed); 
 	
-<<<<<<< HEAD
 	
-	
-	displayTask displaytask(oled);
-=======
 	initDisplayTask displaytask(oled);
->>>>>>> 0df15eec715f1f393e9e6a2c840f6557b1c5ffb7
 	initGame initGameTask(displaytask, transmitter);
-	keypadTask keypad_task(initGameTask);
+	initKeypadTask keypad_task(initGameTask);
 	
 	//
 	rtos::run();
