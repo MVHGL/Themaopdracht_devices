@@ -41,10 +41,12 @@ void mainGameControlTask::handleMessageReceived() {
 	uint16_t playerID = messages.read();
 	uint16_t data = messages.read();
 	//hwlib::cout << "PLAYER_ID: " << playerID << "\nDATA: " << data << '\n';
-	if(playerID == 0 && data == 31){
+	if(playerID == 0 && data == 31 && validTime){
 		timerControl.startGameTimer();
-	}else if(playerID == 0 && data < 21){
+		validStart = true;
+	}else if(playerID == 0 && data > 0 && data < 21){
 		timerControl.setTime(Time(data, 0));
+		validTime = true;
 	}else if(playerID > 0){
 		weaponLookup(data, enemyWeapon); // check enemy weapon, and edit the struct by reference
 		player.hp -= enemyWeapon.damage;
@@ -71,6 +73,8 @@ void mainGameControlTask::setPlayerParams(const uint16_t& playerID, const uint16
 
 void mainGameControlTask::main() {
 	state = REGISTER_GAME;
+	validStart = false;
+	validTime = false;
 	/*ownWeaponID = 2;
 	weaponLookup(ownWeaponID, ownWeapon);
 	display.showAmmo(ownWeapon.ammo);
@@ -96,11 +100,17 @@ void mainGameControlTask::main() {
 				wait(channelFullFlag); // Wait for a message to set time
 				handleMessageReceived(); // Handle the message
 				display.returnIdle();
+				if(!validTime){
+					hwlib::cout << "{ERROR}: invalid time message recieved, try again!\n";
+					break;
+				}
 				display.showString("Waiting for\n    start");
 				wait(channelFullFlag); // Wait for a message to start the game
 				handleMessageReceived(); // Handle the message
 				display.returnIdle();
-				state = IDLE;
+				if(validStart){
+					state = IDLE;
+				}
 				break;
 			}
 			case IDLE:{

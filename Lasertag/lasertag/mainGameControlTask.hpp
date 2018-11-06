@@ -23,7 +23,7 @@ private:
 	Weapon enemyWeapon;
 	Weapon ownWeapon;
 	Player player;
-	
+	bool validTime, validStart;
 	void handleMessageReceived();
 	void handleTriggerButton();
 public:

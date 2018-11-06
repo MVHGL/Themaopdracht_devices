@@ -30,7 +30,7 @@ void displayTask::main(){
 	while(true){
 		switch(state_d){
 			case IDLE:{
-				hwlib::cout << "back in idle\n";
+				//hwlib::cout << "back in idle\n";
 				auto display_event = wait(timeLeftFlag + ammoFlag + showWeaponFlag + healthFlag + messageFlag + shotByFlag + choiceFlag);
 				if(display_event == timeLeftFlag){
 					time = timeLeftPool.read();
@@ -83,7 +83,8 @@ void displayTask::main(){
 						<< "\t0006" << weaponName
 						<< "\t0007" << "Ammo: " << ammo
 						<< hwlib::flush;
-				wait(shotByClock);
+				//wait(shotByClock);
+				hwlib::wait_ms(2000); // Show the shot by message for 2 seconds
 				state_d = SHOW;
 				break;
 			}
@@ -116,7 +117,7 @@ void displayTask::main(){
 					
 				}else if (screen == 2){
 					display << "\f"
-					<< "\t0400" << "MENU:"
+					<< "\t0400" << "  MENU:"
 					<< "\t0002" << "[A]: Player ID"
 					<< "\t0004" << "[B]: Weapon ID"
 					<< "\t0006" << "[#]: Done"
