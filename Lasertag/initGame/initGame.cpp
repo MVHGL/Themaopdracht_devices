@@ -38,8 +38,8 @@ void initGame::main() {
 		}
 		case ADJUST_TIME: 												// Waits for time from keypad input.  
 		{
+			displayControl.showTime(0); 
 			hwlib::cout << "state: adjust_time " << '\n';
-			//s = 4;
 			displayControl.showState(4);
 			initTimer.set(15'000'000);
 			auto event = wait(initTimer + keypadChannel);
@@ -63,7 +63,6 @@ void initGame::main() {
 					
 				}else /*if (minute_tens <0 && minute_tens >3)*/{
 					hwlib::cout << "Input a number.\n";
-					//s=4;
 					displayControl.showState(6);
 					minute_tens=0;
 					time=0;
@@ -71,8 +70,6 @@ void initGame::main() {
 					state = ADJUST_TIME;
 					break;
 				}
-				//break;
-				
 			}
 			else if (event == initTimer){ 							// When the timer and the input is timedout and program returns to IDLE
 				hwlib::cout << "returning to IDLE. \n";
@@ -88,45 +85,42 @@ void initGame::main() {
 			auto event = wait(initTimer + keypadChannel);
 			if(event == keypadChannel){								//checks for write input
 				keyButtonTwo =keypadChannel.read();
-				min = int(keypadChannel.read() - 48); 				// Char to int minus the assci value gives a number between 0 and 9 
+				min = int(keyButtonTwo - 48); 				// Char to int minus the assci value gives a number between 0 and 9 
 				if (keyButtonTwo=='D')
 				{
 					state= IDLE; 
 					break;
 				}
-
-				else if (min >= 0 && min <10)
+				if (min >= 0 && min <10)
 				{
-					time  += min; 					//adds the two given time variabeles togheter 
-					/*if(time <= 31 && time >0){*/						
+					time  += min; 					//adds the two given time variabeles togheter 					
 					hwlib::cout <<"time: " << time << '\n';
 					displayControl.showTime(time);
-					displayControl.showState(2);
+					//displayControl.showState(2);
 					state= SEND_IR_TIME;
 					break; 
 				}
-				else{
-					hwlib::cout << "Time to big(over 31), returning to ADJUST_TIME.\n";
+				else
+				{
+					hwlib::cout << "Time to big(over 31), returning to BUTTON_PRESSED_TWO.\n";
 					displayControl.showState(6);
 					min=0;
-					state = BUTTON_PRESSED_TWO;
+					minute_tens=0;
+					time=0; 
+					state = ADJUST_TIME;
 					break;
-					}
+				}
 			}
-		
-			 
-			
 			else if (event == initTimer) 							// When the timer and the input is timedout and program returns to IDLE
 			{
 				displayControl.showState(1);
 				state=IDLE;
 				break;
-			} 
-			//break; 
+			}
+			else{break;}  
 		}
 		case SEND_IR_TIME:										//Sends the time to players when # pressed
 			{
-				//s = 2;
 				displayControl.showState(2);
 				hwlib::cout << "state = SEND_IR_TIME\n";
 				wait(keypadChannel);
@@ -150,15 +144,14 @@ void initGame::main() {
 					state = IDLE;
 					
 					break;
-				}else{
+				}
+				else{
 					break;
 				}
 			}
 			
 		case START_GAME:									//State to start the game
 			{
-				//transmitterControl.send(0,31); 
-				//s = 3;
 				displayControl.showState(3);
 				hwlib::cout << "state = START_GAME\n";
 				wait(keypadChannel);
