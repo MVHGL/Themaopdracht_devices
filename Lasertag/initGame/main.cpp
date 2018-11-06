@@ -21,6 +21,8 @@ int main() {
 	auto IRLed= hwlib::target::d2_36kHz();
 	auto transmitter = ir_transmitter(IRLed); 
 	
+	
+	
 	displayTask displaytask(oled);
 	initGame initGameTask(displaytask, transmitter);
 	keypadTask keypad_task(initGameTask);
