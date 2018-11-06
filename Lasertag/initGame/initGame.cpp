@@ -69,6 +69,7 @@ void initGame::main() {
 					minute_tens=0;
 					time=0;
 					min=0;
+					displayControl.showState(6);
 					state = ADJUST_TIME;
 					break;
 				}

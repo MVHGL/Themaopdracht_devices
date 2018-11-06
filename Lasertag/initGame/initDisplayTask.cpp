@@ -94,7 +94,7 @@ void initDisplayTask::main(){
 				}
 				if (state==6){
 					oled_display 
-					<<"\f" << "\t0000" << "Game Time: " << time
+					<<"\f" << "\t0000" << "Game Time:.."
 					/*<< "\t0002" << "command: "<< c */
 					<< "\t0003" << "Wrong input!!"
 					<<
