@@ -1,10 +1,10 @@
-#ifndef _DISPLAYTASK_HPP
-#define _DISPLAYTASK_HPP
+#ifndef _INITDISPLAYTASK_HPP
+#define _INITDISPLAYTASK_HPP
 
 #include "rtos.hpp"
 #include "hwlib.hpp"
 
-class displayTask : public rtos::task<> {
+class initDisplayTask : public rtos::task<> {
 private:
 	rtos::flag timeFlag;
 	rtos::pool<int> timePool;
@@ -20,7 +20,7 @@ private:
 	state_t state_display = IDLE;
 	
 public:
-	displayTask(hwlib::window_ostream & oled_display);
+	initDisplayTask(hwlib::window_ostream & oled_display);
 	
 	void main();
 	void showTime(const int &t);
