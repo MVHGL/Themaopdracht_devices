@@ -41,7 +41,7 @@ void displayTask::main(){
 			{
 				if(state == 1){
 					oled_display 
-					<<"\f" << "\t0000" << "Game Time:"
+					<<"\f" << "\t0000" << "Game Time: .."
 					/*<< "\t0002" << "command: "<< c */
 					<< "\t0003" << "[C] to set play"
 					<< "\t0005" << "time." <<
@@ -75,7 +75,7 @@ void displayTask::main(){
 				if(state==4)  // Menu for setting the first digit of time
 				{
 					oled_display 
-					<<"\f" << "\t0000" << "Game Time: " << time
+					<<"\f" << "\t0000" << "Game Time: " <<time
 					/*<< "\t0002" << "command: "<< c */
 					<< "\t0003" << "Give first time"
 					<< "\t0004" << "digit (0-2)."
@@ -93,6 +93,18 @@ void displayTask::main(){
 					<< "\t0004" << "digit (0-9)." 
 					<< "\t0004" << "[#] to send" 
 					<< "\t0005" << "[D] exit"<<
+					hwlib::flush;
+					state_display = IDLE;
+					break;
+				}
+				if (state==6){
+					oled_display 
+					<<"\f" << "\t0000" << "Game Time: " << time
+					/*<< "\t0002" << "command: "<< c */
+					<< "\t0003" << "Wrong input!!"
+					<< "\t0004" << "" 
+					<< "\t0004" << "" 
+					<< "\t0005" << ""<<
 					hwlib::flush;
 					state_display = IDLE;
 					break;
