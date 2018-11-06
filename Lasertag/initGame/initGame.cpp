@@ -21,7 +21,7 @@ void initGame::main() {
 	enum state_t {IDLE, ADJUST_TIME, BUTTON_PRESSED_TWO, SEND_IR_TIME, START_GAME};
 	state_t state = IDLE;
 	buttonPressed(' ');
-	
+	auto buzzer= hwlib::target::pin_out(hwlib::target::pins::d6) ;
 	//de loop
 	while(1){
 		switch(state){
@@ -95,8 +95,10 @@ void initGame::main() {
 				}
 				if (keyButtonTwo=='#')
 				{
+					buzzer.set(1);
 					transmitterControl.send(0,time);
 					state=SEND_IR_TIME;
+					buzzer.set(0); 
 					break; 
 				}
 				if (min >= 0 && min <10)
@@ -131,15 +133,19 @@ void initGame::main() {
 				auto given= (keypadChannel.read());
 				if (given=='#')
 				{
+					buzzer.set(1); 
 					hwlib::cout << "sending time.\n" <<time;
 					transmitterControl.send(0,time);
+					buzzer.set(0);
 					break;
 				}
 				else if (given=='*')						//If * is pressed go to startgame state
 				{
+					buzzer.set(1);
 					transmitterControl.send(0,31); 
 					hwlib::cout << "state = start_game.\n";
 					state= START_GAME; 
+					buzzer.set(0);
 					break; 
 				}
 				else if(given=='D')
@@ -163,8 +169,10 @@ void initGame::main() {
 				auto in = (keypadChannel.read()); 
 				if(in=='*')				// if * is pressed the start message will be send again. 
 				{
+					buzzer.set(1);
 					hwlib::cout << "sending start_message...\n";
 					transmitterControl.send(0,31);
+					buzzer.set(0);
 					break;
 				}
 				else if(in=='D')					// With D pressed go back to IDLE
@@ -176,7 +184,7 @@ void initGame::main() {
 				}
 				
 				else{
-					displayControl.showState(6);
+					//displayControl.showState(6);
 					break;
 				}
 			}
