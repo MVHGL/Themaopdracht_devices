@@ -12,7 +12,7 @@ void keypadTask::main(){
 			case IDLE:
 			{
 				c = keypad.getc();	//poll keypad for keypress.
-				hwlib::cout << "button pressed: " << c << " \n";
+				//hwlib::cout << "button pressed: " << c << " \n";
 				state = BUTTON_PRESSED;
 				break;
 			}

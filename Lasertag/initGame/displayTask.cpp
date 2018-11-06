@@ -33,8 +33,6 @@ void displayTask::main(){
 					state_display = DISPLAY;
 					break;
 				}
-				state_display = DISPLAY;
-				break;
 			}
 
 			case DISPLAY:
@@ -42,7 +40,6 @@ void displayTask::main(){
 				if(state == 1){
 					oled_display 
 					<<"\f" << "\t0000" << "Game Time: .."
-					/*<< "\t0002" << "command: "<< c */
 					<< "\t0003" << "[C] to set play"
 					<< "\t0005" << "time." <<
 					hwlib::flush;
@@ -53,9 +50,9 @@ void displayTask::main(){
 					oled_display 
 					<<"\f" << "\t0000" << "Game Time: " << time
 					/*<< "\t0002" << "command: "<< c*/ 
-					<< "\t0003" << "[#]to send Time"
-					<< "\t0004" << "[*]to start game "
-					<< "\t0005" << "[D] exit" 
+					<< "\t0004" << "[#]to send Time"
+					<< "\t0005" << "[*]to start game "
+					<< "\t0006" << "[D] exit" 
 					<<
 					hwlib::flush;
 					state_display = IDLE;
@@ -64,10 +61,9 @@ void displayTask::main(){
 				if(state == 3){
 					oled_display 
 					<<"\f" << "\t0000" << "Game Time: " << time
-					/*<< "\t0002" << "command: "<< c */
-					<< "\t0003" << "[*] start the"
+					<< "\t0003" <<"[*] start the"
 					<<"\t0004" <<"game"
-					<< "\t0005" << "[D] exit" <<
+					<< "\t0006" << "[D] exit" <<
 					hwlib::flush;
 					state_display = IDLE;
 					break;
@@ -76,10 +72,9 @@ void displayTask::main(){
 				{
 					oled_display 
 					<<"\f" << "\t0000" << "Game Time: " <<time
-					/*<< "\t0002" << "command: "<< c */
 					<< "\t0003" << "Give first time"
 					<< "\t0004" << "digit (0-2)."
-					<< "\t0005" << "[D] exit"<<
+					<< "\t0007" << "[D] exit"<<
 					hwlib::flush;
 					state_display = IDLE;
 					break;
@@ -91,8 +86,8 @@ void displayTask::main(){
 					/*<< "\t0002" << "command: "<< c */
 					<< "\t0003" << "Give second time"
 					<< "\t0004" << "digit (0-9)." 
-					<< "\t0004" << "[#] to send" 
-					<< "\t0005" << "[D] exit"<<
+					<< "\t0006" << "[#] to send" 
+					<< "\t0007" << "[D] exit"<<
 					hwlib::flush;
 					state_display = IDLE;
 					break;
@@ -102,19 +97,27 @@ void displayTask::main(){
 					<<"\f" << "\t0000" << "Game Time: " << time
 					/*<< "\t0002" << "command: "<< c */
 					<< "\t0003" << "Wrong input!!"
-					<< "\t0004" << "" 
-					<< "\t0004" << "" 
-					<< "\t0005" << ""<<
+					<<
 					hwlib::flush;
+					hwlib::wait_ms(2000);
 					state_display = IDLE;
 					break;
 				}
-				if(state == 9){
-					oled_display <<"\f" <<"invalid keypress!"
-					<< hwlib::flush;
-					break; 
+				if (state==7)
+				{
+					oled_display 
+					<<"\f" << "\t0000" << "Game Time: " //<< time
+					<< "\t0003" << "Timed Out"
+					<<
+					hwlib::flush;
+					hwlib::wait_ms(2000);
+					state_display = IDLE;
+					break;
 				}
-					
+				else{
+					state_display=IDLE;
+					break;
+				}
 				}
 			}
 		}
