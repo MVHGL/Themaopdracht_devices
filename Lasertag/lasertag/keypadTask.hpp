@@ -1,3 +1,4 @@
+/// @file keypadTask.hpp
 #ifndef KEYPADTASK_HPP
 #define KEYPADTASK_HPP
 
@@ -5,6 +6,10 @@
 #include "hwlib.hpp"
 #include "registerGameControl.hpp"
 
+/// \brief
+/// keypadTask class.
+/// \details
+/// keypadTask class which is used to detect button presses from the keyboard matrix. Implements rtos::task<>.
 class keypadTask : public rtos::task<>
 {
 private:
@@ -28,7 +33,15 @@ private:
 	char c;
 	
 public:
+	/// \brief
+	/// keypadTask constructor.
+	/// \details
+	/// This constructor requires a reference to a registerGameControl.
 	keypadTask(registerGameControl & registerGame);
+	/// \brief
+	/// Main implementation.
+	/// \details
+	/// Main implementation which is inherited from rtos::task<>.
 	void main();
 
 };

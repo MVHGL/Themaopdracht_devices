@@ -10,7 +10,7 @@
 /// \brief
 /// gameTimeControl class
 /// \details
-/// Class for controlling the main game, which implements the rtos::task<> class.
+/// Class for controlling the game time, which implements the rtos::task<> class.
 class gameTimeControl : public rtos::task<> {
 private:
 	Time time;
@@ -45,7 +45,7 @@ public:
 	/// \brief
 	/// Main implementation
 	/// \details
-	/// This method overrides the rtos::task<> virtual function.
+	/// This method overrides the inherited rtos::task<> virtual main function.
 	void main() override;
 };
 #endif
