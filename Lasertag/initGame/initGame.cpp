@@ -21,10 +21,7 @@ void initGame::main() {
 	enum state_t {IDLE, ADJUST_TIME, BUTTON_PRESSED_TWO, SEND_IR_TIME, START_GAME};
 	state_t state = IDLE;
 	buttonPressed(' ');
-<<<<<<< HEAD
-	auto buzzer= hwlib::target::pin_out(hwlib::target::pins:d6);
-=======
->>>>>>> 0df15eec715f1f393e9e6a2c840f6557b1c5ffb7
+	//auto buzzer= hwlib::target::pin_out(hwlib::target::pins:d6);
 	//de loop
 	while(1){
 		switch(state){
@@ -105,14 +102,11 @@ void initGame::main() {
 				wait(keypadChannel);
 				if (keypadChannel.read()=='#')
 				{
-<<<<<<< HEAD
-					buzzer.set(1);
+					//buzzer.set(1);
 					hwlib::cout << "sending time.\n" <<time;
-=======
 					hwlib::cout << "sending time.\n";
->>>>>>> 0df15eec715f1f393e9e6a2c840f6557b1c5ffb7
 					transmitterControl.send(0,time);
-					buzzer.set(0); 
+					//buzzer.set(0); 
 					break;
 				}
 				else if (keypadChannel.read()=='*')						//If * is pressed go to startgame state
