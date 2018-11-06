@@ -50,9 +50,9 @@ void displayTask::main(){
 					oled_display 
 					<<"\f" << "\t0000" << "Game Time: " << time
 					/*<< "\t0002" << "command: "<< c*/ 
-					<< "\t0003" << "[#]to send Time"
-					<< "\t0004" << "[*]to start game "
-					<< "\t0005" << "[D] exit" 
+					<< "\t0004" << "[#]to send Time"
+					<< "\t0005" << "[*]to start game "
+					<< "\t0006" << "[D] exit" 
 					<<
 					hwlib::flush;
 					state_display = IDLE;
@@ -61,9 +61,9 @@ void displayTask::main(){
 				if(state == 3){
 					oled_display 
 					<<"\f" << "\t0000" << "Game Time: " << time
-					<< "\t0003" << "[*] start the"
+					<< "\t0003" <<"[*] start the"
 					<<"\t0004" <<"game"
-					<< "\t0005" << "[D] exit" <<
+					<< "\t0006" << "[D] exit" <<
 					hwlib::flush;
 					state_display = IDLE;
 					break;
@@ -107,7 +107,6 @@ void displayTask::main(){
 				{
 					oled_display 
 					<<"\f" << "\t0000" << "Game Time: " //<< time
-					/*<< "\t0002" << "command: "<< c */
 					<< "\t0003" << "Timed Out"
 					<<
 					hwlib::flush;

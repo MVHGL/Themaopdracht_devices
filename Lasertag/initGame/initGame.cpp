@@ -38,7 +38,7 @@ void initGame::main() {
 		}
 		case ADJUST_TIME: 												// Waits for time from keypad input.  
 		{
-			initTimer.set(7'500'000);
+			initTimer.set(10'500'000);
 			displayControl.showTime(0); 
 			hwlib::cout << "state: adjust_time " << '\n';
 			displayControl.showState(4);
@@ -81,7 +81,7 @@ void initGame::main() {
 		}
 		case BUTTON_PRESSED_TWO: 									// This state waits for the second time input in minutes 
 		{
-			initTimer.set(7'500'000);
+			initTimer.set(10'500'000);
 			displayControl.showState(5);
  			hwlib::cout << "state: Button_pressed_two \n";					
 			auto event = wait(initTimer + keypadChannel);
@@ -104,7 +104,6 @@ void initGame::main() {
 					time  += min; 					//adds the two given time variabeles togheter 					
 					hwlib::cout <<"time: " << time << '\n';
 					displayControl.showTime(time);
-					//displayControl.showState(2);
 					state= SEND_IR_TIME;
 					break; 
 				}
