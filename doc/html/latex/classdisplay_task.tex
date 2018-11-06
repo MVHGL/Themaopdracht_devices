@@ -1,0 +1,184 @@
+\hypertarget{classdisplay_task}{}\section{display\+Task Class Reference}
+\label{classdisplay_task}\index{display\+Task@{display\+Task}}
+
+
+Display control.  
+
+
+
+
+{\ttfamily \#include $<$display\+Task.\+hpp$>$}
+
+Inheritance diagram for display\+Task\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classdisplay_task}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classdisplay_task_a6eaac17d19e3292654fb5c1bb952f5a7}{display\+Task}} (hwlib\+::window\+\_\+ostream \&display)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classdisplay_task}{display\+Task}} constructor \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_a8197696b737d9ff890833e2dcf93b546}{main}} () override
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classdisplay_task}{display\+Task}}\textquotesingle{}s main method \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_a367b1904f141adf0817c16ad8fb1eb44}{show\+Game\+Time}} (const \mbox{\hyperlink{class_time}{Time}} \&t)
+\begin{DoxyCompactList}\small\item\em Shows the current game time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_a8cbad9cd4eb7783c2619550bb5e9fe04}{show\+Ammo}} (const uint16\+\_\+t \&ammo)
+\begin{DoxyCompactList}\small\item\em Shows the current ammunition. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_adefc6996b2cd23e2996bd93ef10a0bb8}{show\+Weapon}} (hwlib\+::string$<$ 40 $>$ weapon)
+\begin{DoxyCompactList}\small\item\em Shows the current weapon. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_aa202bda76b1663f4be2b009fb358bd0f}{show\+Health}} (const uint16\+\_\+t \&hp)
+\begin{DoxyCompactList}\small\item\em Shows current health. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_acccd3bfbaa4ad2b4c93ad229da70c531}{show\+String}} (hwlib\+::string$<$ 40 $>$ msg)
+\begin{DoxyCompactList}\small\item\em Shows a message. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_a67990960198f75d5a9815dc4e5a9e375}{return\+Idle}} (void)
+\begin{DoxyCompactList}\small\item\em Returns to idle state. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_ab9aebca5a9d98bfb5c7fafe5b25ed2c4}{shot\+By}} (const uint16\+\_\+t \&player\+\_\+id, hwlib\+::string$<$ 40 $>$ w\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Shows who shot you. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_ad34fd92a96e6aa1017db7a6af2ca2125}{show\+Choice}} (const int \&screen)
+\begin{DoxyCompactList}\small\item\em Shows a choice menu. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classdisplay_task_ae47b5facd84033ed17a473e40d67e838}{set\+Number}} (const char \&number)
+\begin{DoxyCompactList}\small\item\em Sets a number on the screen. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classdisplay_task_ac381d382075cc9257f2169e1338a2501}\label{classdisplay_task_ac381d382075cc9257f2169e1338a2501}} 
+{\bfseries display\+Task} (hwlib\+::window\+\_\+ostream \&oled\+\_\+display)
+\item 
+\mbox{\Hypertarget{classdisplay_task_a08c7eab7bef446ebac2bc1653e4f1227}\label{classdisplay_task_a08c7eab7bef446ebac2bc1653e4f1227}} 
+void {\bfseries main} ()
+\item 
+\mbox{\Hypertarget{classdisplay_task_a893409edcd5df80efc7f199c7cd9c697}\label{classdisplay_task_a893409edcd5df80efc7f199c7cd9c697}} 
+void {\bfseries show\+Time} (const int \&t)
+\item 
+\mbox{\Hypertarget{classdisplay_task_a00a8fbd798e3b50ab4868ae288da296f}\label{classdisplay_task_a00a8fbd798e3b50ab4868ae288da296f}} 
+void {\bfseries show\+Command} (const char \&c)
+\item 
+\mbox{\Hypertarget{classdisplay_task_a93807cbd6151cce058e3a86cb023a1e7}\label{classdisplay_task_a93807cbd6151cce058e3a86cb023a1e7}} 
+void {\bfseries show\+State} (const int \&s)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Display control. 
+
+This class implements the rtos\+::task$<$$>$ class and controls a 128x64 O\+L\+ED display. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classdisplay_task_a6eaac17d19e3292654fb5c1bb952f5a7}\label{classdisplay_task_a6eaac17d19e3292654fb5c1bb952f5a7}} 
+\index{display\+Task@{display\+Task}!display\+Task@{display\+Task}}
+\index{display\+Task@{display\+Task}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{display\+Task()}{displayTask()}}
+{\footnotesize\ttfamily display\+Task\+::display\+Task (\begin{DoxyParamCaption}\item[{hwlib\+::window\+\_\+ostream \&}]{display }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classdisplay_task}{display\+Task}} constructor 
+
+This constructor requires a reference to a hwlib\+::window\+\_\+ostream object. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classdisplay_task_a8197696b737d9ff890833e2dcf93b546}\label{classdisplay_task_a8197696b737d9ff890833e2dcf93b546}} 
+\index{display\+Task@{display\+Task}!main@{main}}
+\index{main@{main}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily void display\+Task\+::main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\mbox{\hyperlink{classdisplay_task}{display\+Task}}\textquotesingle{}s main method 
+
+This method implements the rtos\+::task$<$$>$ method. \mbox{\Hypertarget{classdisplay_task_a67990960198f75d5a9815dc4e5a9e375}\label{classdisplay_task_a67990960198f75d5a9815dc4e5a9e375}} 
+\index{display\+Task@{display\+Task}!return\+Idle@{return\+Idle}}
+\index{return\+Idle@{return\+Idle}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{return\+Idle()}{returnIdle()}}
+{\footnotesize\ttfamily void display\+Task\+::return\+Idle (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Returns to idle state. 
+
+This function is used to return to the idle state. Use this method in combination with show\+String. \mbox{\Hypertarget{classdisplay_task_ae47b5facd84033ed17a473e40d67e838}\label{classdisplay_task_ae47b5facd84033ed17a473e40d67e838}} 
+\index{display\+Task@{display\+Task}!set\+Number@{set\+Number}}
+\index{set\+Number@{set\+Number}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{set\+Number()}{setNumber()}}
+{\footnotesize\ttfamily void display\+Task\+::set\+Number (\begin{DoxyParamCaption}\item[{const char \&}]{number }\end{DoxyParamCaption})}
+
+
+
+Sets a number on the screen. 
+
+This method will show a number on the scree according to its parameters passed by. \mbox{\Hypertarget{classdisplay_task_ab9aebca5a9d98bfb5c7fafe5b25ed2c4}\label{classdisplay_task_ab9aebca5a9d98bfb5c7fafe5b25ed2c4}} 
+\index{display\+Task@{display\+Task}!shot\+By@{shot\+By}}
+\index{shot\+By@{shot\+By}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{shot\+By()}{shotBy()}}
+{\footnotesize\ttfamily void display\+Task\+::shot\+By (\begin{DoxyParamCaption}\item[{const uint16\+\_\+t \&}]{player\+\_\+id,  }\item[{hwlib\+::string$<$ 40 $>$}]{w\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Shows who shot you. 
+
+This method shows who you were shot by, according to its parameters passed. \mbox{\Hypertarget{classdisplay_task_a8cbad9cd4eb7783c2619550bb5e9fe04}\label{classdisplay_task_a8cbad9cd4eb7783c2619550bb5e9fe04}} 
+\index{display\+Task@{display\+Task}!show\+Ammo@{show\+Ammo}}
+\index{show\+Ammo@{show\+Ammo}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{show\+Ammo()}{showAmmo()}}
+{\footnotesize\ttfamily void display\+Task\+::show\+Ammo (\begin{DoxyParamCaption}\item[{const uint16\+\_\+t \&}]{ammo }\end{DoxyParamCaption})}
+
+
+
+Shows the current ammunition. 
+
+Shows the current ammunition according to its parameters passed. \mbox{\Hypertarget{classdisplay_task_ad34fd92a96e6aa1017db7a6af2ca2125}\label{classdisplay_task_ad34fd92a96e6aa1017db7a6af2ca2125}} 
+\index{display\+Task@{display\+Task}!show\+Choice@{show\+Choice}}
+\index{show\+Choice@{show\+Choice}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{show\+Choice()}{showChoice()}}
+{\footnotesize\ttfamily void display\+Task\+::show\+Choice (\begin{DoxyParamCaption}\item[{const int \&}]{screen }\end{DoxyParamCaption})}
+
+
+
+Shows a choice menu. 
+
+Shows a choice menu according to which screen number is passed by. \mbox{\Hypertarget{classdisplay_task_a367b1904f141adf0817c16ad8fb1eb44}\label{classdisplay_task_a367b1904f141adf0817c16ad8fb1eb44}} 
+\index{display\+Task@{display\+Task}!show\+Game\+Time@{show\+Game\+Time}}
+\index{show\+Game\+Time@{show\+Game\+Time}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{show\+Game\+Time()}{showGameTime()}}
+{\footnotesize\ttfamily void display\+Task\+::show\+Game\+Time (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_time}{Time}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Shows the current game time. 
+
+This method shows the current game time according to its parameters passed. \mbox{\Hypertarget{classdisplay_task_aa202bda76b1663f4be2b009fb358bd0f}\label{classdisplay_task_aa202bda76b1663f4be2b009fb358bd0f}} 
+\index{display\+Task@{display\+Task}!show\+Health@{show\+Health}}
+\index{show\+Health@{show\+Health}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{show\+Health()}{showHealth()}}
+{\footnotesize\ttfamily void display\+Task\+::show\+Health (\begin{DoxyParamCaption}\item[{const uint16\+\_\+t \&}]{hp }\end{DoxyParamCaption})}
+
+
+
+Shows current health. 
+
+This method shows the current health according to its parameters passed. \mbox{\Hypertarget{classdisplay_task_acccd3bfbaa4ad2b4c93ad229da70c531}\label{classdisplay_task_acccd3bfbaa4ad2b4c93ad229da70c531}} 
+\index{display\+Task@{display\+Task}!show\+String@{show\+String}}
+\index{show\+String@{show\+String}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{show\+String()}{showString()}}
+{\footnotesize\ttfamily void display\+Task\+::show\+String (\begin{DoxyParamCaption}\item[{hwlib\+::string$<$ 40 $>$}]{msg }\end{DoxyParamCaption})}
+
+
+
+Shows a message. 
+
+This method shows a string on the screen according to its parameters passed. \mbox{\Hypertarget{classdisplay_task_adefc6996b2cd23e2996bd93ef10a0bb8}\label{classdisplay_task_adefc6996b2cd23e2996bd93ef10a0bb8}} 
+\index{display\+Task@{display\+Task}!show\+Weapon@{show\+Weapon}}
+\index{show\+Weapon@{show\+Weapon}!display\+Task@{display\+Task}}
+\subsubsection{\texorpdfstring{show\+Weapon()}{showWeapon()}}
+{\footnotesize\ttfamily void display\+Task\+::show\+Weapon (\begin{DoxyParamCaption}\item[{hwlib\+::string$<$ 40 $>$}]{weapon }\end{DoxyParamCaption})}
+
+
+
+Shows the current weapon. 
+
+Shows the current weapon according to the parameters hwlib\+::string$<$40$>$ passed. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lasertag/display\+Task.\+hpp\item 
+lasertag/display\+Task.\+cpp\end{DoxyCompactItemize}

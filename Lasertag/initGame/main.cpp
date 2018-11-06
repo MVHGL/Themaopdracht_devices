@@ -2,7 +2,7 @@
 #include "hwlib.hpp"
 #include "rtos.hpp"
 #include "initGame.hpp"
-#include "displayTask.hpp"
+#include "initDisplayTask.hpp"
 #include "keypadTask.hpp"
 
 int main() {
@@ -18,12 +18,16 @@ int main() {
 	auto oled= hwlib::window_ostream(display, font);
 	
 	//pin voor het verzenden van ir signal. 
-	auto IRLed= hwlib::target::d2_36kHz();
+	auto IRLed= hwlib::target::pin_out(hwlib::target::pins::d5);
 	auto transmitter = ir_transmitter(IRLed); 
 	
+<<<<<<< HEAD
 	
 	
 	displayTask displaytask(oled);
+=======
+	initDisplayTask displaytask(oled);
+>>>>>>> 0df15eec715f1f393e9e6a2c840f6557b1c5ffb7
 	initGame initGameTask(displaytask, transmitter);
 	keypadTask keypad_task(initGameTask);
 	
