@@ -2,11 +2,9 @@
 Repo for the HU cursus Devices
 
 ## Folder structure 
-**doc/:** Generated outputs of a source documentation utility like Doxygen go here.</br>
-**include/:** All project header files. All necessary third-party header files that do not exist under `/usr/local/include` are also placed here.</br>
-**lib/:** A folder that contains statically linkable .lib files (precompiled code) and is part of a library.</br>
-**src/:** The application and only the application’s source files.</br>
-**test/:** All test code files.</br>
+**Lasertag/:** Main project folder, contains all the source files.</br>
+**Practicum/:** This folder contains the osciloscope practicum.</br>
+**doc/:** Has the genarated Doxygen documentation and a ir-protocol diagram</br>
 
 # Prerequisites
 * [hwlib](https://github.com/wovo/hwlib)
