@@ -96,7 +96,7 @@ void mainGameControlTask::main() {
 				break;
 			}
 			case REGISTER_TIME:{
-				display.showString("Waiting for\n    game time");
+				display.showString("Waiting for\n   game time");
 				wait(channelFullFlag); // Wait for a message to set time
 				handleMessageReceived(); // Handle the message
 				display.returnIdle();
