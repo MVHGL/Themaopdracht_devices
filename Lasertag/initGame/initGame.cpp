@@ -11,7 +11,7 @@ initGame::initGame(initDisplayTask& displayControl, ir_transmitter & transmitter
 void initGame::buttonPressed(const char c){
 	displayControl.showTime(time);
 	displayControl.showCommand(c);
-	displayControl.showState(s);
+	//displayControl.showState(s);
 	keypadChannel.write(c);
 };
 
@@ -27,6 +27,7 @@ void initGame::main() {
 		switch(state){
 		case IDLE:														//IDLE state  (program starts here
 		{
+			// 
 			displayControl.showState(1);
 			wait(keypadChannel);
 			temp = keypadChannel.read();
@@ -38,7 +39,7 @@ void initGame::main() {
 		}
 		case ADJUST_TIME: 												// Waits for time from keypad input.  
 		{
-			initTimer.set(10'500'000);
+			//initTimer.set(15'500'000);
 			displayControl.showTime(0); 
 			hwlib::cout << "state: adjust_time " << '\n';
 			displayControl.showState(4);
@@ -61,7 +62,8 @@ void initGame::main() {
 					state = BUTTON_PRESSED_TWO; 
 					break;
 					
-				}else /*if (minute_tens <0 && minute_tens >3)*/{
+				}
+				else{
 					hwlib::cout << "Input a number.\n";
 					displayControl.showState(6);
 					minute_tens=0;
@@ -81,7 +83,7 @@ void initGame::main() {
 		}
 		case BUTTON_PRESSED_TWO: 									// This state waits for the second time input in minutes 
 		{
-			initTimer.set(10'500'000);
+			//initTimer.set(15'500'000);
 			displayControl.showState(5);
  			hwlib::cout << "state: Button_pressed_two \n";					
 			auto event = wait(initTimer + keypadChannel);
@@ -98,7 +100,8 @@ void initGame::main() {
 					buzzer.set(1);
 					transmitterControl.send(0,time);
 					state=SEND_IR_TIME;
-					buzzer.set(0); 
+					buzzer.set(0);
+					
 					break; 
 				}
 				if (min >= 0 && min <10)
@@ -106,6 +109,7 @@ void initGame::main() {
 					time  += min; 					//adds the two given time variabeles togheter 					
 					hwlib::cout <<"time: " << time << '\n';
 					displayControl.showTime(time);
+					
 					state= SEND_IR_TIME;
 					break; 
 				}
@@ -127,6 +131,7 @@ void initGame::main() {
 		}
 		case SEND_IR_TIME:										//Sends the time to players when # pressed
 			{
+				
 				displayControl.showState(2);
 				hwlib::cout << "state = SEND_IR_TIME\n";
 				wait(keypadChannel);
@@ -146,6 +151,7 @@ void initGame::main() {
 					hwlib::cout << "state = start_game.\n";
 					state= START_GAME; 
 					buzzer.set(0);
+					
 					break; 
 				}
 				else if(given=='D')
@@ -184,7 +190,7 @@ void initGame::main() {
 				}
 				
 				else{
-					//displayControl.showState(6);
+					displayControl.showState(6);
 					break;
 				}
 			}
