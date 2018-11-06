@@ -18,9 +18,8 @@ int main() {
 	auto oled= hwlib::window_ostream(display, font);
 	
 	//pin voor het verzenden van ir signal. 
-	auto IRLed= hwlib::target::pin_out(hwlib::target::pins::d5);
+	auto IRLed= hwlib::target::d2_36kHz();
 	auto transmitter = ir_transmitter(IRLed); 
-	
 	
 	initDisplayTask displaytask(oled);
 	initGame initGameTask(displaytask, transmitter);

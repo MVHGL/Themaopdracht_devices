@@ -16,6 +16,7 @@ private:
 	int minute_tens = 0;
 	int min = 0;
 	int time = 0; 
+	char keyButtonOne,keyButtonTwo;
 
 public:
 	initGame(initDisplayTask& displayControl, ir_transmitter & transmitterControl);

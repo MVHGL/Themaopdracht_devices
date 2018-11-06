@@ -25,56 +25,103 @@ void initDisplayTask::main(){
 				}
 				if(event == commandFlag){
 					c = commandPool.read();
+					state_display = DISPLAY;
+					break; 
 				}
 				if(event == stateFlag){
 					state = statePool.read();
+					state_display = DISPLAY;
+					break;
 				}
-				state_display = DISPLAY;
-				break;
 			}
 
 			case DISPLAY:
 			{
 				if(state == 1){
 					oled_display 
-					<<"\f" << "\t0000" << "time set: " << time
-					<< "\t0002" << "command: "<< c 
-					<< "\t0003" << "setting time..."
-					<< "\t0005" << "press C" <<
+					<<"\f" << "\t0000" << "Game Time: .."
+					<< "\t0003" << "[C] to set play"
+					<< "\t0005" << "time." <<
 					hwlib::flush;
 					state_display = IDLE;
 					break;
 				}
 				if(state == 2){
 					oled_display 
-					<<"\f" << "\t0000" << "time set: " << time
-					<< "\t0002" << "command: "<< c 
-					<< "\t0003" << "send the time "
-					<< "\t0004" << "to player."
-					<< "\t0005" << "press #" <<
+					<<"\f" << "\t0000" << "Game Time: " << time
+					/*<< "\t0002" << "command: "<< c*/ 
+					<< "\t0004" << "[#]to send Time"
+					<< "\t0005" << "[*]to start game "
+					<< "\t0006" << "[D] exit" 
+					<<
 					hwlib::flush;
 					state_display = IDLE;
 					break;
+				}
 				if(state == 3){
 					oled_display 
-					<<"\f" << "\t0000" << "time set: " << time
-					<< "\t0002" << "command: "<< c 
-					<< "\t0003" << "start the game "
-					<< "\t0005" << "press *" <<
+					<<"\f" << "\t0000" << "Game Time: " << time
+					<< "\t0003" <<"[*] start the"
+					<<"\t0004" <<"game"
+					<< "\t0006" << "[D] exit" <<
 					hwlib::flush;
 					state_display = IDLE;
-					break;					
+					break;
 				}
-				if(state == 9){
-					oled_display <<"\f" <<"invalid keypress!"
-					<< hwlib::flush;
+				if(state==4)  // Menu for setting the first digit of time
+				{
+					oled_display 
+					<<"\f" << "\t0000" << "Game Time: " <<time
+					<< "\t0003" << "Give first time"
+					<< "\t0004" << "digit (0-2)."
+					<< "\t0007" << "[D] exit"<<
+					hwlib::flush;
+					state_display = IDLE;
+					break;
 				}
-					
+				if (state==5) // Menu for second time digit
+				{
+					oled_display 
+					<<"\f" << "\t0000" << "Game Time: " << time
+					/*<< "\t0002" << "command: "<< c */
+					<< "\t0003" << "Give second time"
+					<< "\t0004" << "digit (0-9)." 
+					<< "\t0006" << "[#] to send" 
+					<< "\t0007" << "[D] exit"<<
+					hwlib::flush;
+					state_display = IDLE;
+					break;
+				}
+				if (state==6){
+					oled_display 
+					<<"\f" << "\t0000" << "Game Time: " << time
+					/*<< "\t0002" << "command: "<< c */
+					<< "\t0003" << "Wrong input!!"
+					<<
+					hwlib::flush;
+					hwlib::wait_ms(2000);
+					state_display = IDLE;
+					break;
+				}
+				if (state==7)
+				{
+					oled_display 
+					<<"\f" << "\t0000" << "Game Time: " //<< time
+					<< "\t0003" << "Timed Out"
+					<<
+					hwlib::flush;
+					hwlib::wait_ms(2000);
+					state_display = IDLE;
+					break;
+				}
+				else{
+					state_display=IDLE;
+					break;
+				}
 				}
 			}
 		}
-	}
-};
+}
 
 void initDisplayTask::showTime(const int & t){
 	timePool.write(t);
