@@ -7,7 +7,6 @@ class registerGameControl : public rtos::task<> {
 private:
 	mainGameControlTask & mainGame;
 	displayTask & display;
-	rtos::timer registerTimer;
 	rtos::channel<char, 10> keypadChannel;
 	enum state_t {IDLE, GET_PLAYER_ID, GET_WEAPON};
 public:

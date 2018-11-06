@@ -4,7 +4,6 @@ registerGameControl::registerGameControl(mainGameControlTask & mainGame, display
 	task("Register game parameters"),
 	mainGame(mainGame),
 	display(display),
-	registerTimer(this, "timeout timer for registering"),
 	keypadChannel(this, "channel for user input")
 	{}
 
@@ -17,8 +16,8 @@ void registerGameControl::main(){
 	enum screen_t {PLAYER, WEAPON, MENU};
 	screen_t screen = MENU;
 	
-	uint16_t player_id = 0;
-	uint16_t weapon_id = 0;
+	uint16_t player_id = 0; // this will be the player ID parameter
+	uint16_t weapon_id = 0; // this will be the weapon ID parameter
 	
 	state_t state = IDLE;
 	
@@ -31,8 +30,6 @@ void registerGameControl::main(){
 			/* either a command to set the player ID or weapon ID.  */
 			/* else it can send these parameters to the game with # */
 			case IDLE:{
-				//screen = MENU;
-				//display.showChoice(screen);
 				auto input = (keypadChannel.read());
 				if (input == 'A'){ 	// this command means we want a player ID
 					state = GET_PLAYER_ID;
@@ -41,8 +38,6 @@ void registerGameControl::main(){
 					state = GET_WEAPON;
 				}
 				else if (input == '#'){
-					hwlib::cout << "starting game!!\n";
-					hwlib::cout << "PID: " << player_id << "\nWID: " << weapon_id << '\n';
 					mainGame.setPlayerParams(player_id, weapon_id); // set the player parameters
 				}
 				break;
@@ -56,25 +51,22 @@ void registerGameControl::main(){
 				screen = PLAYER;
 				display.showChoice(screen); // show it on the oled
 
-				registerTimer.set(10'000'000); // set timer for 10 seconds
 				for(int i=0; i<2; i++){ // trying to read two chars from channel
-					auto event = wait(registerTimer + keypadChannel);
-					if (event == keypadChannel){   // new key was pressed
-						auto input = keypadChannel.read();
-						if (input >= '0' && input <= '9'){ // input was numeric
-							display.setNumber(input); 		// show the number on the screen
-							player_id += uint16_t(input-48); //typecast to int
-							if (i==0){
-						 		player_id *= 10; // first num is base 10
-							}
-						}
-						else{
-							hwlib::cout << "{DEBUG}: non numeric input given when numeric was expected!\n";
-							player_id = 0; // reset player ID
+					auto input = keypadChannel.read();
+					if (input >= '0' && input <= '9'){ // input was numeric
+						display.setNumber(input); 		// show the number on the screen
+						player_id += uint16_t(input-48); //typecast to int
+						if (i==0){
+							player_id *= 10; // first num is base 10
 						}
 					}
+					else{
+						hwlib::cout << "{DEBUG}: non numeric input given when numeric was expected!\n";
+						player_id = 0; // reset player ID
+					}
 				}
-				hwlib::cout << "{DEBUG}: going back to menu!\n";
+				
+				//hwlib::cout << "{DEBUG}: going back to menu!\n";
 				screen = MENU;
 				display.showChoice(screen);
 				
@@ -90,20 +82,17 @@ void registerGameControl::main(){
 			case GET_WEAPON:{
 				screen = WEAPON;
 				display.showChoice(screen);
-				registerTimer.set(10'000'000); // set timer for 10 seconds
-				auto event = wait(registerTimer + keypadChannel);
-				if (event == keypadChannel){ // new key was pressed
-					auto input = keypadChannel.read();
-					if (input >= '0' && input <= '9'){ // input was numeric
-						display.setNumber(input);
-						weapon_id += uint16_t(input-48); //typecast to int
-					}
-					else{ // input was not numeric
-						hwlib::cout << "{DEBUG}: non numeric input given when numeric was expected!\n";
-						weapon_id = 0; // reset weapon ID
-					}
+				auto input = keypadChannel.read();
+				if (input >= '0' && input <= '9'){ // input was numeric
+					display.setNumber(input);
+					weapon_id += uint16_t(input-48); //typecast to int
 				}
-				hwlib::cout << "{DEBUG}: going back to menu!\n";
+				else{ // input was not numeric
+					hwlib::cout << "{DEBUG}: non numeric input given when numeric was expected!\n";
+					weapon_id = 0; // reset weapon ID
+				}
+				
+				//hwlib::cout << "{DEBUG}: going back to menu!\n";
 				screen = MENU;
 				display.showChoice(screen);
 				

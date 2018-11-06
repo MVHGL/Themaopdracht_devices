@@ -54,3 +54,6 @@ __codelite.workspace
 *.bat
 Makefile.*
 .DS_Store
+
+# doxygen documentation
+doc/html/
