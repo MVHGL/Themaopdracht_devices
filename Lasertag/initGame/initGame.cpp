@@ -21,7 +21,7 @@ void initGame::main() {
 	enum state_t {IDLE, ADJUST_TIME, BUTTON_PRESSED_TWO, SEND_IR_TIME, START_GAME};
 	state_t state = IDLE;
 	buttonPressed(' ');
-	auto buzzer= hwlib::target::pin_out(hwlib::target::pins::d6) ;
+	
 	//de loop
 	while(1){
 		switch(state){
