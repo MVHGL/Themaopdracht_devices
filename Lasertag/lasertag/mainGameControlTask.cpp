@@ -44,7 +44,7 @@ void mainGameControlTask::handleMessageReceived() {
 	if(playerID == 0 && data == 31 && validTime){
 		timerControl.startGameTimer();
 		validStart = true;
-	}else if(playerID == 0 && data > 0 && data < 21){
+	}else if(playerID == 0 && data > 0 && data < 30){
 		timerControl.setTime(Time(data, 0));
 		validTime = true;
 	}else if(playerID > 0){
