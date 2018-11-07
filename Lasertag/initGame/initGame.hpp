@@ -41,6 +41,12 @@ public:
 	/// \details
 	/// This method let you send play time to players and start the game with keypresses. 
 	void main();
+	/// \brief
+	/// Beep function
+	/// \details
+	/// this function needs a refrence to a due pin. 
+	/// and let is beep for a specified time given in milisecond. 
+	void beep(hwlib::target::pin_out & buzzer,const int & mseconds); 
 	
 };
 
