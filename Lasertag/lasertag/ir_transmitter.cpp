@@ -23,8 +23,7 @@ void ir_transmitter::send_bit(const bool& value) {
 		hwlib::wait_us(1600);
 		transmitter.set(0);
 		hwlib::wait_us(800);
-	}
-	else {		// Send 0
+	} else {		// Send 0
 		transmitter.set(1);
 		hwlib::wait_us(800);
 		transmitter.set(0);
