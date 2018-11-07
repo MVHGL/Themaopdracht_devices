@@ -57,7 +57,7 @@ void displayTask::main(){
 					state_d = SHOT;
 				}
 				else if(display_event == choiceFlag){
-					hwlib::cout << "choiceflag\n";
+					//hwlib::cout << "choiceflag\n";
 					screen = choicePool.read();
 					state_d = CHOICE;
 				}
