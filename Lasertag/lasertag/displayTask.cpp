@@ -163,7 +163,6 @@ void displayTask::shotBy(const uint16_t & player_id, hwlib::string<40> w_name){
 /* make a display menu, show weapon or player ID choice. */
 /* set the bool true for weapon or false for player ID   */
 void displayTask::showChoice(const int & screen){
-	hwlib::cout << "choiceflag set\n";
 	choicePool.write(screen);
 	choiceFlag.set();
 }
