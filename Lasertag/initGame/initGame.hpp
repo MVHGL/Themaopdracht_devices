@@ -27,9 +27,19 @@ private:
 
 public:
 	/// \brief
-	/// Init game
+	/// Init game constructor. 
+	/// \details
+	/// The constructor requires a refrence to initDisplayTask and ir_transmitter. 
 	initGame(initDisplayTask& displayControl, ir_transmitter & transmitterControl);
+	/// \brief
+	/// buttonPressed 
+	///	\details
+	/// This function update the pools and flags on every keypress of the keypad. 
 	void buttonPressed(const char c);
+	/// \brief
+	/// initGame's main method.
+	/// \details
+	/// This method let you send play time to players and start the game with keypresses. 
 	void main();
 	
 };
