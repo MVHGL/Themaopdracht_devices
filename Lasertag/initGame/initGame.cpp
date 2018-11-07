@@ -31,7 +31,6 @@ void initGame::main() {
 		switch(state){
 		case IDLE:														//IDLE state  (program starts here
 		{
-			// 
 			displayControl.showState(1);
 			wait(keypadChannel);
 			temp = keypadChannel.read();
@@ -43,7 +42,6 @@ void initGame::main() {
 		}
 		case ADJUST_TIME: 												// Waits for time from keypad input.  
 		{
-			//initTimer.set(15'500'000);
 			displayControl.showTime(0); 
 			if(debug){hwlib::cout << "state: adjust_time " << '\n';}
 			displayControl.showState(4);
@@ -78,17 +76,9 @@ void initGame::main() {
 					break;
 				}
 			}
-			else if (event == initTimer){ 							// When the timer and the input is timedout and program returns to IDLE
-				if (debug)hwlib::cout << "returning to IDLE. \n";
-				displayControl.showState(7);
-				state=IDLE;
-				break;
-			}
-			break;
 		}
 		case BUTTON_PRESSED_TWO: 									// This state waits for the second time input in minutes 
 		{
-			//initTimer.set(15'500'000);
 			displayControl.showState(5);
  			if(debug)hwlib::cout << "state: Button_pressed_two \n";					
 			auto event = wait(initTimer + keypadChannel);
@@ -124,14 +114,7 @@ void initGame::main() {
 					min=0;
 					break;
 				}
-			}
-			else if (event == initTimer) 							// When the timer and the input is timedout and program returns to IDLE
-			{
-				displayControl.showState(7);
-				state=IDLE;
-				break;
-			}
-			else{break;}  
+			} 
 		}
 		case SEND_IR_TIME:										//Sends the time to players when # pressed
 			{
