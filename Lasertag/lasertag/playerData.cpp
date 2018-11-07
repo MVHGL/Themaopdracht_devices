@@ -20,7 +20,7 @@ void weaponLookup(const int & weaponID, Weapon& weapon){
 		case rpg:
 			weapon.name = "RPG";
 			weapon.damage = 100;
-			weapon.ammo = 2;
+			weapon.ammo = 5;
 			break;
 		case m107:
 			weapon.name = "Barrett .50 cal";
@@ -30,7 +30,7 @@ void weaponLookup(const int & weaponID, Weapon& weapon){
 		case bfg:
 			weapon.name = "BFG 9000";
 			weapon.damage = 100;
-			weapon.ammo = 1;
+			weapon.ammo = 3;
 			break;
 		default:
 			weapon.name = "UNKNOWN";
