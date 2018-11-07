@@ -75,12 +75,6 @@ void mainGameControlTask::main() {
 	state = REGISTER_GAME;
 	validStart = false;
 	validTime = false;
-	/*ownWeaponID = 2;
-	weaponLookup(ownWeaponID, ownWeapon);
-	display.showAmmo(ownWeapon.ammo);
-	display.showWeapon(ownWeapon.name);
-	display.showHealth(player.hp);
-	player.p_id = 3;*/
 	while (true) {
 		switch (state) {
 			case REGISTER_GAME:{
@@ -114,13 +108,9 @@ void mainGameControlTask::main() {
 				break;
 			}
 			case IDLE:{
-				if (!timerControl.isGameTimeOver()) {
-					/*display.showHealth(player.hp);
-					display.showAmmo(ownWeapon.ammo);
-					display.showWeapon(ownWeapon.name);
-					display.shotBy(2, enemyWeapon.name);*/
-				} else {
+				if (timerControl.isGameTimeOver()) {
 					state = GAME_OVER;
+					break;
 				}
 				auto event = wait(channelFullFlag + timeCompletedFlag + triggerFlag);
 				if 		(event == channelFullFlag) 		state = MESSAGE_RECEIVE;
@@ -128,10 +118,6 @@ void mainGameControlTask::main() {
 				else if (event == triggerFlag)			state = TRIGGER;
 				break;
 			}
-			case SET_PLAYER: 
-				break;
-			case SET_WEAPON: 
-				break;
 			case TRIGGER:
 				handleTriggerButton();
 				break;

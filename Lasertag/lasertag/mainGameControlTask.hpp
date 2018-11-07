@@ -23,7 +23,7 @@ private:
 	rtos::pool<uint16_t> weaponIdPool;
 	rtos::flag setPlayerParamsFlag;
 	rtos::flag channelFullFlag;
-	enum state_t {REGISTER_GAME, REGISTER_TIME, IDLE, SET_PLAYER, SET_WEAPON, TRIGGER, MESSAGE_RECEIVE, GAME_OVER};
+	enum state_t {REGISTER_GAME, REGISTER_TIME, IDLE, TRIGGER, MESSAGE_RECEIVE, GAME_OVER};
 	state_t state;
 	uint16_t ownWeaponID;
 	Weapon enemyWeapon;
