@@ -46,7 +46,7 @@ public:
 	/// \details
 	/// this function needs a refrence to a due pin. 
 	/// and let is beep for a specified time given in milisecond. 
-	void beep(hwlib::target::pin_out & buzzer,const int & mseconds); 
+	void beep(const int & mseconds); 
 	
 };
 

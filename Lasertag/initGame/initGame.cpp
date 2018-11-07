@@ -11,10 +11,10 @@ initGame::initGame(initDisplayTask& displayControl, ir_transmitter & transmitter
 void initGame::buttonPressed(const char c){
 	displayControl.showTime(time);
 	displayControl.showCommand(c);
-	//displayControl.showState(s);
+	beep(20);
 	keypadChannel.write(c);
 };
-void initGame::beep(hwlib::target::pin_out & buzzer, const int & msecond){ 
+void initGame::beep(const int & msecond){ 
 	buzzer.set(1);
 	hwlib::wait_ms(msecond);
 	buzzer.set(0); 
@@ -102,10 +102,9 @@ void initGame::main() {
 				}
 				if (keyButtonTwo=='#')
 				{
-					buzzer.set(1);
+					beep(100);
 					transmitterControl.send(0,time);
 					state=SEND_IR_TIME;
-					buzzer.set(0);
 					
 					break; 
 				}
@@ -143,14 +142,14 @@ void initGame::main() {
 				auto given= (keypadChannel.read());
 				if (given=='#')
 				{
-					beep(buzzer,100); 
+					beep(100); 
 					if(debug)hwlib::cout << "sending time.\n" <<time;
 					transmitterControl.send(0,time);
 					break;
 				}
 				else if (given=='*')						//If * is pressed go to startgame state
 				{
-					beep(buzzer,300);
+					beep(250);
 					transmitterControl.send(0,31); 
 					if(debug)hwlib::cout << "state = start_game.\n";
 					state= START_GAME; 					
@@ -176,7 +175,7 @@ void initGame::main() {
 				auto in = (keypadChannel.read()); 
 				if(in=='*')				// if * is pressed the start message will be send again. 
 				{
-					beep(buzzer, 300);
+					beep(250);
 					if (debug)hwlib::cout << "sending start_message...\n";
 					transmitterControl.send(0,31);
 					break;
