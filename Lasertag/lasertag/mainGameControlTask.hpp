@@ -60,6 +60,7 @@ public:
 	void setPlayerParams(const uint16_t& playerID, const uint16_t& weaponID);
 	/// \brief
 	/// Main method
+	/// \details
 	/// Implements the main method inherited from rtos::task<>.
 	void main() override;
 };
