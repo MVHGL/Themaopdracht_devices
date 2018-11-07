@@ -47,7 +47,7 @@ void mainGameControlTask::handleMessageReceived() {
 	}else if(playerID == 0 && data > 0 && data < 30){
 		timerControl.setTime(Time(data, 0));
 		validTime = true;
-	}else if(playerID > 0){
+	}else if(playerID > 0 && playerID != player.p_id){
 		weaponLookup(data, enemyWeapon); // check enemy weapon, and edit the struct by reference
 		player.hp -= enemyWeapon.damage;
 		if (player.hp > 0 && player.hp <= 100) {
