@@ -1,3 +1,4 @@
+/// @file initKeypadTask.hpp
 #ifndef INITKEYPADTASK_HPP
 #define INITKEYPADTASK_HPP
 
@@ -5,6 +6,10 @@
 #include "hwlib.hpp"
 #include "initGame.hpp"
 
+/// \brief
+/// keypad control
+/// \details
+/// This class implements the rtos::task<> class and reads the input of a 4 by 4 matrix keypad. 
 class initKeypadTask : public rtos::task<>
 {
 private:
@@ -29,7 +34,15 @@ private:
 	char c;
 	
 public:
+	/// \brief
+	/// initKeypadTask constructor
+	/// \details
+	/// This constructor needs a refrence to initGame object. 
 	initKeypadTask(initGame & initGameTask);
+	/// \brief
+	/// initKeypadTask's main method
+	/// \details
+	/// This method implements the rto::task<> method 
 	void main();
 
 };
